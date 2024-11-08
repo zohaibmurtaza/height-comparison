@@ -5,7 +5,7 @@ import { routes } from "@/misc/routes";
 
 const Header = () => {
   return (
-    <header className="flex items-center justify-between p-3 rounded-2xl bg-white shadow-sm">
+    <header className="flex items-center justify-between p-3 rounded-2xl bg-white shadow-sm border border-gray-200">
       <Logo />
       <nav className="flex items-center gap-6">
         {Object.values(routes).map((route, index) => (

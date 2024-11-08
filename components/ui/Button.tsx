@@ -1,14 +1,16 @@
+import clsx from "clsx";
 import React from "react";
 
 interface ButtonProps {
+  className?: string;
   children: React.ReactNode;
   onClick?: () => void;
 }
 
-const Button = ({ children, onClick }: ButtonProps) => {
+const Button = ({ className, children, onClick }: ButtonProps) => {
   return (
     <button
-      className="w-full rounded-xl bg-primary text-white p-3"
+      className={clsx("w-full rounded-xl bg-primary text-white p-3", className)}
       onClick={onClick}
     >
       {children}
