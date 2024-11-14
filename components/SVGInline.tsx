@@ -43,7 +43,7 @@ const SvgInline = ({ url, fill }: { url: string; fill: string }) => {
   return (
     <div
       ref={ref}
-      className={`h-full [&_svg]:h-full svgInline--${
+      className={`h-full [&_svg]:h-full [&_svg]:w-auto svgInline--${
         isLoaded ? "loaded" : "loading"
       } ${clsx(isErrored ? "svgInline--errored" : "")}`}
     />

@@ -51,7 +51,7 @@ const ScalesAndAvatars = () => {
       </div>
       <div
         className="absolute left-0 w-full h-full flex items-end justify-center z-20"
-        style={{ bottom: delta * 3 }}
+        style={{ bottom: "40px" }}
       >
         {avatars.map((avatar, index) => (
           <Avatar key={index} avatar={avatar} boardHeight={height} />
@@ -82,8 +82,8 @@ const Avatar = ({
             className="cursor-pointer"
           />
         </div>
-        <h2>{avatar.height.toFixed(0)} cm</h2>
-        <h2>{`${ftIn.ft}ft ${ftIn.in}in`}</h2>
+        <h2 className="whitespace-nowrap">{avatar.height.toFixed(0)} cm</h2>
+        <h2 className="whitespace-nowrap">{`${ftIn.ft}ft ${ftIn.in}in`}</h2>
         <hr className="w-full border-gray-500" />
       </div>
       {/* <Image
