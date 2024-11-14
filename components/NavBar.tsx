@@ -7,7 +7,7 @@ import { BsBox, BsImage, BsPersonFillAdd, BsStars } from "react-icons/bs";
 const NavBar = () => {
   const { selectedScreen, setSelectedScreen } = useGlobals();
   return (
-    <nav className="h-full w-auto bg-white rounded-2xl shadow-sm py-5 pr-2 pl-0 space-y-4 border border-gray-200">
+    <nav className="h-full w-auto bg-white rounded-2xl shadow-sm py-5 pr-2 pl-0 space-y-4 border border-gray-200 sticky top-0">
       {screens.map(({ title, icon }, index) => (
         <span
           key={index}
