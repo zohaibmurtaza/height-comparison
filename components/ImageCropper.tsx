@@ -18,6 +18,12 @@ const ImageCropper = ({
       image={imageUrl}
       crop={crop}
       aspect={1 / 2}
+      style={{
+        containerStyle: {
+          borderRadius: "10px 10px 0 0",
+          minHeight: 250,
+        },
+      }}
       onCropChange={setCrop}
       rotation={rotation}
       onRotationChange={setRotation}

@@ -94,44 +94,48 @@ const AddImageModel = ({
   };
 
   return (
-    <dialog
-      open
-      className="fixed z-[9999] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex min-w-[700px] h-[500px] border-none rounded-xl shadow-xl bg-white overflow-hidden"
-    >
-      <div className="w-1/2 h-full p-5 space-y-2.5">
-        <Input
-          name="name"
-          value={data.name}
-          onChange={(name) => setImageData("name", name)}
-          placeholder="Name"
-        />
-        <SectionTitle>Height</SectionTitle>
-        <TabStyleRadio
-          options={["cm", "ft"]}
-          value={data.unit}
-          onChange={(unit) => setImageData("unit", unit)}
-        />
-        <HeightInput
-          height={data.height}
-          unit={data.unit}
-          onChange={(height) => setImageData("height", height)}
-        />
-        <Button onClick={handleAddImage} className="">
-          Add Image
-        </Button>
-        <Button
-          className="bg-white !text-gray-500 border !border-gray-200"
-          onClick={onAdded}
-        >
-          Cancel
-        </Button>
-      </div>
-      <div className="w-1/2 h-full relative">
-        <ImageCropper
-          imageUrl={imageUrl}
-          setCroppedImage={(image) => setImageData("avatar", image || "")}
-        />
-      </div>
-    </dialog>
+    <>
+      <div className="fixed z-[9998] inset-0 w-full h-full bg-black/50 !m-0"></div>
+      <dialog
+        open
+        className="fixed z-[9999] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col-reverse md:flex-row w-[700px] max-w-[97vw] md:h-[500px] border-none rounded-xl shadow-xl bg-white overflow-hidden"
+      >
+        <div className="w-full md:w-1/2 h-full p-5 space-y-2.5">
+          <SectionTitle className="text-xl">Add Image</SectionTitle>
+          <Input
+            name="name"
+            value={data.name}
+            onChange={(name) => setImageData("name", name)}
+            placeholder="Name"
+          />
+          <SectionTitle>Height</SectionTitle>
+          <TabStyleRadio
+            options={["cm", "ft"]}
+            value={data.unit}
+            onChange={(unit) => setImageData("unit", unit)}
+          />
+          <HeightInput
+            height={data.height}
+            unit={data.unit}
+            onChange={(height) => setImageData("height", height)}
+          />
+          <Button onClick={handleAddImage} className="">
+            Add Image
+          </Button>
+          <Button
+            className="bg-white !text-gray-500 border !border-gray-200"
+            onClick={onAdded}
+          >
+            Cancel
+          </Button>
+        </div>
+        <div className="w-full md:w-1/2 h-full min-h-[250px] relative border-2 border-white overflow-hidden">
+          <ImageCropper
+            imageUrl={imageUrl}
+            setCroppedImage={(image) => setImageData("avatar", image || "")}
+          />
+        </div>
+      </dialog>
+    </>
   );
 };

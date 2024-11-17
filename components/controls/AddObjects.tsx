@@ -14,19 +14,26 @@ const AddObjects = () => {
   const [name, setName] = useState("");
   const { addAvatar } = useGlobals();
   const [allObjects, setAllObjects] = useState<ObjectData[]>([]);
-  const [objects, loading, error] = useData<ObjectData>({
+  const [page, setPage] = useState(1);
+  const [objectsData, loading, error] = useData<{
+    results: ObjectData[];
+    previous: string | null;
+    next: string | null;
+  }>({
     url: "https://api.heightcomparison.com/custom-objects/",
     method: "GET",
-    params: { search: name, page: 1 },
+    params: { search: name, page },
   });
 
   useEffect(() => {
     setAllObjects([]);
   }, [name]);
 
+  const objects = objectsData?.results || [];
+
   useEffect(() => {
     setAllObjects([...allObjects, ...objects]);
-  }, [objects]);
+  }, [objectsData]);
 
   return (
     <div className="w-full h-full space-y-2.5">
@@ -49,7 +56,7 @@ const AddObjects = () => {
                 <ImSpinner2 className="animate-spin" size={50} />
               </div>
             )}
-            {objects.map((obj, index) => {
+            {allObjects.map((obj, index) => {
               return (
                 <div
                   key={index}
@@ -81,7 +88,9 @@ const AddObjects = () => {
               );
             })}
           </div>
-          <Button onClick={() => setAllObjects([])}>Load MORE</Button>
+          {objectsData?.next && (
+            <Button onClick={() => setPage(page + 1)}>Load MORE</Button>
+          )}
         </>
       ) : (
         <h1 className="text-red-400 bg-red-100 border border-red-200 rounded-lg">

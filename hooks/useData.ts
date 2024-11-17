@@ -12,7 +12,7 @@ const useData = <T>({
   deps?: any[];
   params?: Record<string, any>;
 }) => {
-  const [data, setData] = useState<T[]>([]);
+  const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,12 +20,12 @@ const useData = <T>({
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await axios.request<{ results: T[] }>({
+        const res = await axios.request<T>({
           method,
           url,
           params,
         });
-        setData(res.data.results);
+        setData(res.data);
         setLoading(false);
       } catch (err) {
         if (err instanceof AxiosError) setError(err.message);
@@ -35,7 +35,7 @@ const useData = <T>({
     fetchData();
   }, [...deps, ...Object.values(params)]);
 
-  return [data, loading, error] as [T[], boolean, string | null];
+  return [data, loading, error] as [T | null, boolean, string | null];
 };
 
 export default useData;

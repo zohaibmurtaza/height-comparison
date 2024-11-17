@@ -10,7 +10,7 @@ import { Avatar as AvatarType } from "@/misc/interfaces";
 
 const Board = () => {
   return (
-    <div className="relative w-full h-[calc(100%-80px)] bg-gray-100 rounded-xl p-2 border border-gray-200">
+    <div className="relative w-full h-[calc(100%-80px)] min-h-[500px] bg-gray-100 rounded-xl p-2 border border-gray-200">
       <ScalesAndAvatars />
     </div>
   );
@@ -43,8 +43,8 @@ const ScalesAndAvatars = () => {
                 cm.toFixed(0) === "0" ? "border-primary" : "border-gray-200"
               )}`}
             >
-              <span>{cm.toFixed(0)}</span>
-              <span>{`${ftIn.ft}' ${ftIn.in}"`}</span>
+              <span className="text-xs">{cm.toFixed(0)}</span>
+              <span className="text-xs">{`${ftIn.ft}' ${ftIn.in}"`}</span>
             </div>
           );
         })}
