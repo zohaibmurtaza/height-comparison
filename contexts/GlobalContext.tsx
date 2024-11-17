@@ -11,6 +11,11 @@ interface GlobalContextType {
   setSelectedAvatar: (avatar: string | null) => void;
   avatars: Avatar[];
   setAvatars: (avatars: Avatar[]) => void;
+  avatarCounts: {
+    image: number;
+    person: number;
+    object: number;
+  };
   addAvatar: (avatar: Avatar) => void;
   updateAvatar: (avatar: Avatar) => void;
   removeAvatar: (id: string) => void;
@@ -27,6 +32,11 @@ const GlobalContext = createContext<GlobalContextType>({
   setSelectedAvatar: () => {},
   avatars: [],
   setAvatars: () => {},
+  avatarCounts: {
+    image: 0,
+    person: 0,
+    object: 0,
+  },
   addAvatar: () => {},
   updateAvatar: () => {},
   removeAvatar: () => {},
@@ -79,6 +89,19 @@ export const GlobalContextProvider = ({
     setAvatars(newAvatars);
   };
 
+  const avatarCounts = {
+    image: 0,
+    person: 0,
+    object: 0,
+  };
+
+  avatars.forEach((a) => {
+    const type = a.type;
+    if (type in avatarCounts) avatarCounts[type]++;
+  });
+
+  console.log("avatarCounts", avatarCounts);
+
   return (
     <GlobalContext.Provider
       value={{
@@ -88,6 +111,7 @@ export const GlobalContextProvider = ({
         setSelectedAvatar,
         avatars,
         setAvatars,
+        avatarCounts,
         addAvatar,
         updateAvatar,
         removeAvatar,

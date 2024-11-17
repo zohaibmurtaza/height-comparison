@@ -16,3 +16,14 @@ export interface ObjectData {
   adjust_position: number;
   datetime: string;
 }
+
+export interface Character {
+  id: string;
+  name: string;
+  gender: string;
+  height: string;
+  category: string;
+  subcat1: string;
+  subcat2: string | null;
+  extras: string;
+}

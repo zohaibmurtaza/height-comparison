@@ -1,4 +1,5 @@
-import axios, { AxiosError } from "axios";
+import { server } from "@/misc/axios";
+import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 
 const useData = <T>({
@@ -20,7 +21,7 @@ const useData = <T>({
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await axios.request<T>({
+        const res = await server.request<T>({
           method,
           url,
           params,

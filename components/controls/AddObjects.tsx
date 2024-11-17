@@ -9,10 +9,13 @@ import { v4 } from "uuid";
 import Button from "@/components/ui/Button";
 import SectionTitle from "@/components/ui/SectionTitle";
 import { ObjectData } from "@/misc/interfaces";
+import Message from "../ui/Message";
+import { useDebounce } from "@uidotdev/usehooks";
 
 const AddObjects = () => {
   const [name, setName] = useState("");
-  const { addAvatar } = useGlobals();
+  const debouncedName = useDebounce(name, 300);
+  const { addAvatar, avatarCounts } = useGlobals();
   const [allObjects, setAllObjects] = useState<ObjectData[]>([]);
   const [page, setPage] = useState(1);
   const [objectsData, loading, error] = useData<{
@@ -20,14 +23,14 @@ const AddObjects = () => {
     previous: string | null;
     next: string | null;
   }>({
-    url: "https://api.heightcomparison.com/custom-objects/",
+    url: "/custom-objects/",
     method: "GET",
-    params: { search: name, page },
+    params: { search: debouncedName, page },
   });
 
   useEffect(() => {
     setAllObjects([]);
-  }, [name]);
+  }, [debouncedName]);
 
   const objects = objectsData?.results || [];
 
@@ -61,7 +64,8 @@ const AddObjects = () => {
                 <div
                   key={index}
                   className="w-full h-full relative [&:hover>h3]:opacity-100 transition-opacity duration-300 flex justify-center items-center cursor-pointer"
-                  onClick={() =>
+                  onClick={() => {
+                    if (avatarCounts.object >= 3) return;
                     addAvatar({
                       avatar: obj.image,
                       name: obj.name,
@@ -70,8 +74,8 @@ const AddObjects = () => {
                       unit: "cm",
                       id: v4(),
                       type: "object",
-                    })
-                  }
+                    });
+                  }}
                 >
                   <h3 className="absolute left-0 top-0 w-full h-full text-center bg-primary/80 flex items-center justify-center text-[9px] font-semibold opacity-0 rounded-md transition-opacity duration-300">
                     {obj.name}
@@ -93,9 +97,12 @@ const AddObjects = () => {
           )}
         </>
       ) : (
-        <h1 className="text-red-400 bg-red-100 border border-red-200 rounded-lg">
-          {error?.toString()}
-        </h1>
+        <Message variant="error">{error?.toString()}</Message>
+      )}
+      {avatarCounts.object >= 3 && (
+        <Message variant="error">
+          Max 3 objects at a time. Remove one to add another.
+        </Message>
       )}
     </div>
   );

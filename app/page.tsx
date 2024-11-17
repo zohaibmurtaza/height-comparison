@@ -8,6 +8,7 @@ import { useGlobals } from "@/contexts/GlobalContext";
 import AddImage from "@/components/controls/AddImage";
 import BoardUtilities from "@/components/controls/BoardUtilities";
 import EditPersons from "@/components/controls/EditPersons";
+import Celebrities from "@/components/controls/Celebrities";
 
 export default function Home() {
   const { selectedScreen } = useGlobals();
@@ -31,7 +32,7 @@ export default function Home() {
 const screens = {
   "Add Person": <AddPerson />,
   "Edit Persons": <EditPersons />,
-  Celebrities: <div>Celebrities</div>,
+  Celebrities: <Celebrities />,
   Objects: <AddObjects />,
   Image: <AddImage />,
 };

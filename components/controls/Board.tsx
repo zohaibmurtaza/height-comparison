@@ -50,7 +50,7 @@ const ScalesAndAvatars = () => {
         })}
       </div>
       <div
-        className="absolute left-0 w-full h-[calc(100%-40px)] flex items-end justify-center z-[20] empty:hidden"
+        className="absolute left-0 w-full h-[calc(100%-40px)] flex items-end justify-center gap-1 z-[20] empty:hidden"
         style={{ bottom: "40px" }}
       >
         {avatars.map(
@@ -61,7 +61,7 @@ const ScalesAndAvatars = () => {
         )}
       </div>
       <div
-        className="absolute left-0 w-full h-[calc(100%-40px)] flex items-end justify-center z-[10] empty:hidden"
+        className="absolute left-0 w-full h-[calc(100%-40px)] flex items-end justify-center gap-1 z-[10] empty:hidden"
         style={{ bottom: "40px" }}
       >
         {avatars.map(
@@ -87,12 +87,12 @@ const Avatar = ({
   const { removeAvatar, setSelectedAvatar, setSelectedScreen } = useGlobals();
   return (
     <div className="relative" style={{ height: `${height}%` }}>
-      <div className="absolute -top-[58px] left-0 w-full flex flex-col items-center font-semibold text-xs">
-        <div className="border border-gray-200 bg-white rounded-md flex items-center gap-3 p-1">
+      <div className="absolute -top-[81px] left-0 w-full flex flex-col items-center text-xs">
+        <div className="border border-gray-200 bg-white rounded-md flex items-center">
           {avatar.type === "person" && (
             <LuPen
-              size={15}
-              className="cursor-pointer"
+              size={30}
+              className="cursor-pointer p-2 border-r border-gray-200"
               onClick={() => {
                 setSelectedAvatar(avatar.id);
                 setSelectedScreen("Edit Persons");
@@ -100,19 +100,17 @@ const Avatar = ({
             />
           )}
           <LuTrash2
-            size={15}
+            size={30}
+            className="cursor-pointer p-2"
             onClick={() => removeAvatar(avatar.id)}
-            className="cursor-pointer"
           />
         </div>
 
-        <h2 className="whitespace-nowrap">{avatar.name}</h2>
-        <div className="flex items-center gap-2">
-          <h2 className="whitespace-nowrap border-r border-gray-600 pr-2">
-            {Math.round(avatar.height * 100) / 100} cm
-          </h2>
-          <h2 className="whitespace-nowrap">{`${ftIn.ft}ft ${ftIn.in}in`}</h2>
-        </div>
+        <h2 className="whitespace-nowrap font-semibold">{avatar.name}</h2>
+        <h2 className="whitespace-nowrap">
+          {Math.round(avatar.height * 100) / 100} cm
+        </h2>
+        <h2 className="whitespace-nowrap">{`${ftIn.ft}ft ${ftIn.in}in`}</h2>
         <hr className="w-full border-gray-500" />
       </div>
       {avatar.type === "person" ? (

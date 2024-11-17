@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Switch from "@/components/ui/Switch";
+// import Switch from "@/components/ui/Switch";
 import Button from "@/components/ui/Button";
 import SectionTitle from "@/components/ui/SectionTitle";
 import Colors from "@/components/Colors";
@@ -12,6 +12,7 @@ import { useGlobals } from "@/contexts/GlobalContext";
 import toast from "react-hot-toast";
 import { v4 } from "uuid";
 import Input from "@/components/ui/Input";
+import Message from "../ui/Message";
 
 interface AddPersonData {
   gender: "Male" | "Female";
@@ -24,7 +25,7 @@ interface AddPersonData {
 }
 
 const AddPerson = () => {
-  const { addAvatar } = useGlobals();
+  const { avatarCounts, addAvatar } = useGlobals();
   const [data, setData] = useState<AddPersonData>({
     gender: "Male",
     unit: "cm",
@@ -103,7 +104,7 @@ const AddPerson = () => {
       />
 
       {/* Display Avatar */}
-      <div className="w-full rounded-xl border p-3 py-4 border-gray-200">
+      {/* <div className="w-full rounded-xl border p-3 py-4 border-gray-200">
         <div className="flex items-center justify-between gap-1.5">
           <h1 className="text-base font-medium leading-none">Display Avatar</h1>
           <Switch
@@ -114,7 +115,7 @@ const AddPerson = () => {
         <span className="text-xs font-light">
           Lorem Ipsum is simply dummy text.
         </span>
-      </div>
+      </div> */}
 
       {/* Select Avatar */}
       <AvatarSelector
@@ -122,7 +123,13 @@ const AddPerson = () => {
         onAvatarChange={(avatar) => setState("avatar", avatar)}
       />
       <hr className="border-gray-200" />
-      <Button onClick={handleAddAvatar}>Add Person</Button>
+      {avatarCounts.person < 10 ? (
+        <Button onClick={handleAddAvatar}>Add Person</Button>
+      ) : (
+        <Message variant="error">
+          Max 12 people at a time. Remove one to add another.
+        </Message>
+      )}
     </div>
   );
 };
