@@ -12,12 +12,12 @@ const NavBar = () => {
         <span
           key={index}
           onClick={() => setSelectedScreen(title)}
-          className={`flex flex-col justify-center items-center gap-2 p-2 pl-4 w-full border-l-4 border-transparent transition-all duration-300 cursor-pointer hover:text-primary hover:border-primary/40 ${clsx(
+          className={`flex flex-col justify-center items-center gap-2 p-2 pl-3 w-full border-l-4 border-transparent transition-all duration-300 cursor-pointer hover:text-primary hover:border-primary/40 ${clsx(
             selectedScreen === title && "!text-primary !border-primary"
           )}`}
         >
           {icon}
-          <span className="text-xs">{title}</span>
+          <span className="text-xs text-center">{title}</span>
         </span>
       ))}
     </nav>

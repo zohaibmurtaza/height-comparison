@@ -15,7 +15,7 @@ const HeightInput = ({ height, unit, onChange }: HeightInputProps) => {
   });
 
   const handleChange = (name: keyof typeof heights, value: number) => {
-    let newHeights: typeof heights = { ...heights, [name]: value };
+    const newHeights: typeof heights = { ...heights, [name]: value };
 
     if (name === "ft" || name === "in") {
       const cmValue = ftToCm(newHeights.ft, newHeights.in);

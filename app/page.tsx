@@ -1,9 +1,13 @@
 "use client";
 import AddPerson from "@/components/controls/AddPerson";
 import Board from "@/components/controls/Board";
+import AddObjects from "@/components/controls/AddObjects";
 import Header from "@/components/Header";
 import NavBar from "@/components/NavBar";
 import { useGlobals } from "@/contexts/GlobalContext";
+import AddImage from "@/components/controls/AddImage";
+import BoardUtilities from "@/components/controls/BoardUtilities";
+import EditPersons from "@/components/controls/EditPersons";
 
 export default function Home() {
   const { selectedScreen } = useGlobals();
@@ -15,7 +19,10 @@ export default function Home() {
         <div className="w-full h-full max-w-[300px] bg-white rounded-2xl shadow-sm p-4 border border-gray-200 overflow-y-auto">
           {screens[selectedScreen as keyof typeof screens]}
         </div>
-        <Board />
+        <div className="flex-grow space-y-2">
+          <BoardUtilities />
+          <Board />
+        </div>
       </div>
     </main>
   );
@@ -23,7 +30,8 @@ export default function Home() {
 
 const screens = {
   "Add Person": <AddPerson />,
+  "Edit Persons": <EditPersons />,
   Celebrities: <div>Celebrities</div>,
-  Objects: <div>Objects</div>,
-  Image: <div>Image</div>,
+  Objects: <AddObjects />,
+  Image: <AddImage />,
 };

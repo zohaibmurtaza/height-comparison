@@ -10,7 +10,10 @@ interface ButtonProps {
 const Button = ({ className, children, onClick }: ButtonProps) => {
   return (
     <button
-      className={clsx("w-full rounded-xl bg-primary text-white p-3", className)}
+      className={clsx(
+        "w-full rounded-xl bg-primary text-white p-3 cursor-pointer",
+        className
+      )}
       onClick={onClick}
     >
       {children}

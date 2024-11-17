@@ -6,53 +6,62 @@ import Button from "@/components/ui/Button";
 import SectionTitle from "@/components/ui/SectionTitle";
 import Colors from "@/components/Colors";
 import TabStyleRadio from "@/components/ui/TabStyleRadio";
-import AvatarSelector from "../AvatarSelector";
-import HeightInput from "../HeightInput";
+import AvatarSelector from "@/components/AvatarSelector";
+import HeightInput from "@/components/HeightInput";
 import { useGlobals } from "@/contexts/GlobalContext";
 import toast from "react-hot-toast";
+import { v4 } from "uuid";
+import Input from "@/components/ui/Input";
 
 interface AddPersonData {
   gender: "Male" | "Female";
   unit: "cm" | "ft";
   displayAvatar: boolean;
-  bodyType: "Ectomorph" | "Mesomorph" | "Endomorph";
   avatar: string | null;
   color: string | null;
   height: number;
+  name: string;
 }
 
 const AddPerson = () => {
-  const { avatars, setAvatars } = useGlobals();
+  const { addAvatar } = useGlobals();
   const [data, setData] = useState<AddPersonData>({
     gender: "Male",
     unit: "cm",
     displayAvatar: true,
-    bodyType: "Ectomorph",
     avatar: null,
     color: null,
     height: 0,
+    name: "",
   });
 
-  console.log("Add Person Data", data);
-
-  const setState = (key: keyof AddPersonData, value: any) => {
+  const setState = (
+    key: keyof AddPersonData,
+    value: AddPersonData[keyof AddPersonData]
+  ) => {
     setData({ ...data, [key]: value });
   };
 
   const handleAddAvatar = () => {
-    if (!data.avatar || !data.color || !data.height || !data.unit) {
+    if (
+      !data.avatar ||
+      !data.color ||
+      !data.height ||
+      !data.unit ||
+      !data.name
+    ) {
       toast.error("Please fill all the fields");
       return;
     }
-    setAvatars([
-      ...avatars,
-      {
-        avatar: data.avatar,
-        color: data.color,
-        height: data.height,
-        unit: data.unit,
-      } as Avatar,
-    ]);
+    addAvatar({
+      id: v4(),
+      name: data.name,
+      avatar: data.avatar,
+      color: data.color,
+      height: data.height,
+      unit: data.unit,
+      type: "person",
+    });
   };
   return (
     <div className="w-full min-h-full space-y-6">
@@ -80,6 +89,13 @@ const AddPerson = () => {
         onChange={(height) => setState("height", height)}
       />
 
+      <Input
+        name="name"
+        placeholder="Name"
+        value={data.name}
+        onChange={(value) => setState("name", value)}
+      />
+
       {/* Color */}
       <Colors
         selectedColor={data.color || "#fff"}
@@ -102,9 +118,7 @@ const AddPerson = () => {
 
       {/* Select Avatar */}
       <AvatarSelector
-        bodyType={data.bodyType}
         selectedAvatar={data.avatar}
-        onBodyTypeChange={(bodyType) => setState("bodyType", bodyType)}
         onAvatarChange={(avatar) => setState("avatar", avatar)}
       />
       <hr className="border-gray-200" />

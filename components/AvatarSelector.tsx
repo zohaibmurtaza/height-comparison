@@ -1,28 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import SectionTitle from "./ui/SectionTitle";
 import TabStyleRadio from "./ui/TabStyleRadio";
 import Image from "next/image";
 
 interface AvatarSelectorProps {
-  bodyType: string;
   selectedAvatar: string | null;
-  onBodyTypeChange: (bodyType: string) => void;
   onAvatarChange: (avatar: string) => void;
 }
 
 const AvatarSelector = ({
-  bodyType,
   selectedAvatar,
-  onBodyTypeChange,
   onAvatarChange,
 }: AvatarSelectorProps) => {
+  const [bodyType, setBodyType] = useState<string>("Ectomorph");
   return (
     <div className="space-y-2">
       <SectionTitle>Select Avatar</SectionTitle>
       <TabStyleRadio
         options={["Ectomorph", "Mesomorph", "Endomorph"]}
         value={bodyType}
-        onChange={(bodyType) => onBodyTypeChange(bodyType)}
+        onChange={(bodyType) => setBodyType(bodyType)}
         className="text-[12px]"
       />
 
