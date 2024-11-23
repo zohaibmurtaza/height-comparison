@@ -15,3 +15,5 @@ export const colors = [
   "#4b6029",
   "#3af0f0",
 ];
+
+export const ITEMS_PER_PAGE = 20;

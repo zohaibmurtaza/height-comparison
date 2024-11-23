@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from "react";
 
 interface InputProps {
@@ -6,6 +7,7 @@ interface InputProps {
   placeholder?: string;
   value?: string;
   onChange?: (value: string) => void;
+  className?: string;
 }
 
 const Input = ({
@@ -13,6 +15,7 @@ const Input = ({
   type = "text",
   placeholder = "",
   value = "",
+  className = "",
   onChange = () => {},
 }: InputProps) => {
   return (
@@ -22,7 +25,10 @@ const Input = ({
       placeholder={placeholder}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="w-full rounded-lg p-2 py-3 border border-gray-200"
+      className={clsx(
+        `w-full rounded-lg p-2 py-3 border border-gray-200`,
+        className
+      )}
     />
   );
 };

@@ -1,88 +1,122 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import SectionTitle from "./ui/SectionTitle";
-import TabStyleRadio from "./ui/TabStyleRadio";
 import useData from "@/hooks/useData";
 import Select from "react-select";
 import { useGlobals } from "@/contexts/GlobalContext";
 import { v4 } from "uuid";
-import { Character } from "@/misc/interfaces";
 import { colors } from "@/misc/data";
 import Message from "./ui/Message";
+import { ItemType } from "@/misc/enums";
+import { API_ENDPOINTS } from "@/misc/apiEndpoints";
+import { Celebrity } from "@/misc/interfaces";
+
+interface CelebrityCategory {
+  id: number;
+  slug: string;
+  name: string;
+}
+
+interface CelebrityOption {
+  label: string;
+  value: number;
+}
 
 const FilterCelebrities = () => {
   const { addAvatar, avatars } = useGlobals();
-  const [category, setCategory] = useState("");
-  const [subcat1, setSubcat1] = useState<string | null>(null);
-  const [subcat2, setSubcat2] = useState<string | null>(null);
+  const [category, setCategory] = useState<CelebrityOption | null>(null);
+  const [subcat1, setSubcat1] = useState<CelebrityOption | null>(null);
+  const [subcat2, setSubcat2] = useState<CelebrityOption | null>(null);
   const [randomColor, setRandomColor] = useState(0);
-  const [subcategories, loading, error] = useData<{
-    results: { subcat1: string }[];
-  }>({
-    url: "/subcat1/",
+  const [topCategories, topCategoriesLoading, topCategoriesError] = useData<
+    CelebrityCategory[]
+  >({
+    url: API_ENDPOINTS.celebrities.categories(0),
     method: "GET",
-    params: { category },
   });
 
-  const [subcagtegories2, loading2, error2] = useData<{
-    results: { subcat2: string }[];
-  }>({
-    url: "/subcat2/",
+  const [subcategories, subcategoriesLoading, subcategoriesError] = useData<
+    CelebrityCategory[]
+  >({
+    url: API_ENDPOINTS.celebrities.categories(category?.value || 0),
     method: "GET",
-    params: { category, subcat1 },
   });
 
-  const [characters, loading3, error3] = useData<{
-    results: Character[];
-  }>({
-    url: "/character/search",
+  const [subcagtegories2, loading2, error2] = useData<CelebrityCategory[]>({
+    url: API_ENDPOINTS.celebrities.categories(subcat1?.value || 0),
     method: "GET",
-    params: { subcat2 },
+  });
+
+  const [characters, loading3, error3] = useData<Celebrity[]>({
+    url: API_ENDPOINTS.celebrities.all(subcat2?.value || 0),
+    method: "GET",
   });
 
   useEffect(() => {
     setRandomColor(Math.floor(Math.random() * colors.length));
   }, [avatars]);
 
+  const classes = useMemo(() => {
+    return {
+      control: () =>
+        "!rounded-lg p-1 border-primary hover:!border-primary focus:!border-primary !outline-none",
+      singleValue: () => "capitalize",
+      option: () => "capitalize",
+    };
+  }, []);
+
   return (
     <div className="space-y-4">
       <SectionTitle>Select Category</SectionTitle>
-      <TabStyleRadio
-        options={["Celebrity", "Fictional"]}
-        value={category}
-        onChange={(category) => {
-          setSubcat1(null);
-          setSubcat2(null);
-          setCategory(category);
-        }}
-      />
+
+      {/* Top Categories */}
+      {topCategoriesError ? (
+        <Message variant="error">
+          Error fetching top categories: {topCategoriesError}
+        </Message>
+      ) : (
+        <div>
+          <SectionTitle className="capitalize">Select Category</SectionTitle>
+          <Select
+            options={(topCategories || [])?.map((cat) => ({
+              label: cat.name,
+              value: cat.id,
+            }))}
+            isSearchable={false}
+            classNames={classes}
+            isLoading={topCategoriesLoading}
+            placeholder="Select Category"
+            value={category}
+            onChange={(selectedOption) => {
+              setCategory(selectedOption || null);
+              setSubcat1(null);
+              setSubcat2(null);
+            }}
+          />
+        </div>
+      )}
 
       {/* Subcategories */}
       {category &&
-        (error ? (
+        (subcategoriesError ? (
           <Message variant="error">
-            Error fetching subcategories: {error}
+            Error fetching subcategories: {subcategoriesError}
           </Message>
         ) : (
           <div>
-            <SectionTitle className="capitalize">{category}</SectionTitle>
+            <SectionTitle className="capitalize">{category.label}</SectionTitle>
             <Select
-              options={subcategories?.results.map((subcat) => ({
-                label: subcat.subcat1,
-                value: subcat.subcat1,
+              options={(subcategories || [])?.map((subcat) => ({
+                label: subcat.name,
+                value: subcat.id,
               }))}
               isSearchable={false}
-              classNames={{
-                control: () =>
-                  "!rounded-lg p-1 border-primary hover:!border-primary focus:!border-primary !outline-none",
-                singleValue: () => "capitalize",
-                option: () => "capitalize",
-              }}
-              isLoading={loading}
+              classNames={classes}
+              isLoading={subcategoriesLoading}
               placeholder="Select Subcategory"
-              value={{ label: subcat1, value: subcat1 }}
+              value={subcat1}
               onChange={(selectedOption) => {
-                setSubcat1(selectedOption?.value || "");
-                setSubcat2("");
+                setSubcat1(selectedOption || null);
+                setSubcat2(null);
               }}
             />
           </div>
@@ -96,24 +130,19 @@ const FilterCelebrities = () => {
           </Message>
         ) : (
           <div>
-            <SectionTitle className="capitalize">{subcat1}</SectionTitle>
+            <SectionTitle className="capitalize">{subcat1.label}</SectionTitle>
             <Select
-              options={subcagtegories2?.results.map((subcat) => ({
-                label: subcat.subcat2,
-                value: subcat.subcat2,
+              options={subcagtegories2?.map((subcat) => ({
+                label: subcat.name,
+                value: subcat.id,
               }))}
               isSearchable={false}
-              classNames={{
-                control: () =>
-                  "!rounded-lg p-1 border-primary hover:!border-primary focus:!border-primary !outline-none",
-                singleValue: () => "capitalize",
-                option: () => "capitalize",
-              }}
+              classNames={classes}
               isLoading={loading2}
               placeholder="Select Subcategory"
-              value={{ label: subcat2, value: subcat2 }}
+              value={subcat2}
               onChange={(selectedOption) => {
-                setSubcat2(selectedOption?.value || "");
+                setSubcat2(selectedOption || null);
               }}
             />
           </div>
@@ -127,33 +156,28 @@ const FilterCelebrities = () => {
           <div>
             <SectionTitle>Name</SectionTitle>
             <Select
-              options={characters?.results.map((character) => ({
-                label: character.name,
-                value: character.name,
+              options={characters?.map((character) => ({
+                label: character.title.rendered,
+                value: character.id,
                 data: character,
               }))}
               isSearchable={false}
-              classNames={{
-                control: () =>
-                  "!rounded-lg p-1 border-primary hover:!border-primary focus:!border-primary !outline-none",
-                singleValue: () => "capitalize",
-                option: () => "capitalize",
-              }}
+              classNames={classes}
               isLoading={loading3}
               placeholder="Select Subcategory"
               onChange={(character) =>
                 character &&
                 addAvatar({
                   id: v4(),
-                  name: character.data.name,
+                  name: character.data.title.rendered,
                   unit: "cm",
                   avatar:
-                    character.data.gender === "m"
+                    character.data.meta.gender === "male"
                       ? "/images/persons/person-1.svg"
                       : "/images/persons/person-4.svg",
                   color: colors[randomColor],
-                  height: parseFloat(character.data.height),
-                  type: "person",
+                  height: parseFloat(character.data.meta.height),
+                  type: ItemType.PERSON,
                 })
               }
             />

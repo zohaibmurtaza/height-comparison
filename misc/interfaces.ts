@@ -1,3 +1,5 @@
+import { ItemType } from "./enums";
+
 export interface Avatar {
   id: string;
   name: string;
@@ -5,7 +7,7 @@ export interface Avatar {
   avatar: string;
   color: string;
   height: number;
-  type: "person" | "object" | "image";
+  type: ItemType;
 }
 
 export interface ObjectData {
@@ -26,4 +28,15 @@ export interface Character {
   subcat1: string;
   subcat2: string | null;
   extras: string;
+}
+
+export interface Celebrity {
+  id: number;
+  title: {
+    rendered: string;
+  };
+  meta: {
+    height: string;
+    gender: string;
+  };
 }

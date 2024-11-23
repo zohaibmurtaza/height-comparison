@@ -1,8 +1,19 @@
 // context to store global states
 
+import { API_ENDPOINTS } from "@/misc/apiEndpoints";
+import { server } from "@/misc/axios";
+import { ItemType } from "@/misc/enums";
 import { Avatar } from "@/misc/interfaces";
 import { useHistoryState } from "@uidotdev/usehooks";
-import { createContext, useContext, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import {
+  createContext,
+  Suspense,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { CgSpinner } from "react-icons/cg";
 
 interface GlobalContextType {
   selectedScreen: string;
@@ -59,21 +70,37 @@ export const GlobalContextProvider = ({
     set: setAvatars,
     undo,
     redo,
-    clear,
     canUndo,
     canRedo,
   } = useHistoryState<Avatar[]>([]);
 
-  console.log("avatars", avatars);
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    const avatars = localStorage.getItem("avatars");
-    if (avatars) setAvatars(JSON.parse(avatars));
+    fetchSharedAvatars();
   }, []);
 
   useEffect(() => {
     localStorage.setItem("avatars", JSON.stringify(avatars));
   }, [avatars]);
+
+  const fetchSharedAvatars = async () => {
+    let isFetched = false;
+    if (searchParams.has("share")) {
+      try {
+        const shareId = searchParams.get("share");
+        const res = await server.get(API_ENDPOINTS.share + "/" + shareId);
+        if (res.data) setAvatars(JSON.parse(res.data.data));
+        isFetched = true;
+      } catch (error) {
+        isFetched = false;
+      }
+    }
+    if (!isFetched) {
+      const avatars = localStorage.getItem("avatars");
+      if (avatars) setAvatars(JSON.parse(avatars));
+    }
+  };
 
   const addAvatar = (avatar: Avatar) => {
     setAvatars([...avatars, avatar]);
@@ -89,18 +116,17 @@ export const GlobalContextProvider = ({
     setAvatars(newAvatars);
   };
 
-  const avatarCounts = {
+  const avatarCounts: Record<ItemType, number> = {
     image: 0,
     person: 0,
     object: 0,
+    animal: 0,
   };
 
   avatars.forEach((a) => {
     const type = a.type;
     if (type in avatarCounts) avatarCounts[type]++;
   });
-
-  console.log("avatarCounts", avatarCounts);
 
   return (
     <GlobalContext.Provider

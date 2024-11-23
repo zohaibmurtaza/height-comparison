@@ -1,7 +1,7 @@
 "use client";
 import { useGlobals } from "@/contexts/GlobalContext";
 import useData from "@/hooks/useData";
-import { Character } from "@/misc/interfaces";
+import { Celebrity } from "@/misc/interfaces";
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { v4 as uuidv4 } from "uuid";
@@ -9,6 +9,19 @@ import Message from "./ui/Message";
 import { colors } from "@/misc/data";
 import { useDebounce } from "@uidotdev/usehooks";
 import SectionTitle from "./ui/SectionTitle";
+import { ItemType } from "@/misc/enums";
+import { API_ENDPOINTS } from "@/misc/apiEndpoints";
+import { server } from "@/misc/axios";
+
+interface CelebritySearchResult {
+  id: number;
+  title: string;
+  _links: {
+    self: {
+      href: string;
+    }[];
+  };
+}
 
 const SearchCelebrities = () => {
   const [search, setSearch] = useState("");
@@ -16,21 +29,38 @@ const SearchCelebrities = () => {
   const [randomColor, setRandomColor] = useState(0);
   const { addAvatar, avatars } = useGlobals();
 
-  const [celebrities, loading, error] = useData<{
-    results: Character[];
-    previous: string | null;
-    next: string | null;
-  }>({
-    url: `/character/search`,
+  const [celebrities, loading, error] = useData<CelebritySearchResult[]>({
+    url: API_ENDPOINTS.celebrities.search(debouncedSearch),
     method: "GET",
-    params: {
-      name: debouncedSearch,
-    },
   });
 
   useEffect(() => {
     setRandomColor(Math.floor(Math.random() * colors.length));
   }, [avatars]);
+
+  const handleAddAvatar = async (celebrity: CelebritySearchResult | null) => {
+    if (celebrity) {
+      if (avatars.length >= 10) return;
+      const res = await server.get<Celebrity>(celebrity._links.self[0].href);
+      if (!res.data) return;
+      const {
+        title,
+        meta: { gender, height },
+      } = res.data;
+      addAvatar({
+        id: uuidv4(),
+        name: title.rendered,
+        unit: "cm",
+        avatar:
+          gender === "male"
+            ? "/images/persons/person-1.svg"
+            : "/images/persons/person-4.svg",
+        color: colors[randomColor],
+        height: parseFloat(height),
+        type: ItemType.PERSON,
+      });
+    }
+  };
 
   return (
     <div>
@@ -40,8 +70,8 @@ const SearchCelebrities = () => {
       )}
       <Select
         options={
-          celebrities?.results.map((c) => ({
-            label: c.name,
+          celebrities?.map((c) => ({
+            label: c.title,
             value: c.id,
             data: c,
           })) || []
@@ -55,24 +85,9 @@ const SearchCelebrities = () => {
         isLoading={loading}
         placeholder="Search for a celebrity"
         onInputChange={(value: string) => setSearch(value)}
-        onChange={(selectedOption) => {
-          const selectedData = selectedOption?.data as Character | undefined;
-          if (selectedData) {
-            if (avatars.length >= 10) return;
-            addAvatar({
-              id: uuidv4(),
-              name: selectedData.name,
-              unit: "cm",
-              avatar:
-                selectedData.gender === "m"
-                  ? "/images/persons/person-1.svg"
-                  : "/images/persons/person-4.svg",
-              color: colors[randomColor],
-              height: parseFloat(selectedData.height),
-              type: "person",
-            });
-          }
-        }}
+        onChange={(selectedOption) =>
+          handleAddAvatar(selectedOption?.data || null)
+        }
       />
     </div>
   );

@@ -34,7 +34,7 @@ const useData = <T>({
       }
     };
     fetchData();
-  }, [...deps, ...Object.values(params)]);
+  }, [...deps, ...Object.values(params), url]);
 
   return [data, loading, error] as [T | null, boolean, string | null];
 };

@@ -8,34 +8,37 @@ import { ImSpinner2 } from "react-icons/im";
 import { v4 } from "uuid";
 import Button from "@/components/ui/Button";
 import SectionTitle from "@/components/ui/SectionTitle";
-import { ObjectData } from "@/misc/interfaces";
 import Message from "../ui/Message";
 import { useDebounce } from "@uidotdev/usehooks";
+import { API_ENDPOINTS } from "@/misc/apiEndpoints";
+import { ItemType } from "@/misc/enums";
+import { ITEMS_PER_PAGE } from "@/misc/data";
 
-const AddObjects = () => {
+interface ItemData {
+  id: number;
+  name: string;
+  image: string;
+  height: number;
+}
+
+const AddItems = ({ type }: { type: ItemType }) => {
   const [name, setName] = useState("");
   const debouncedName = useDebounce(name, 300);
   const { addAvatar, avatarCounts } = useGlobals();
-  const [allObjects, setAllObjects] = useState<ObjectData[]>([]);
+  const [allObjects, setAllObjects] = useState<ItemData[]>([]);
   const [page, setPage] = useState(1);
-  const [objectsData, loading, error] = useData<{
-    results: ObjectData[];
-    previous: string | null;
-    next: string | null;
-  }>({
-    url: "/custom-objects/",
+  const [objectsData, loading, error] = useData<ItemData[]>({
+    url: API_ENDPOINTS.items(type, page),
     method: "GET",
-    params: { search: debouncedName, page },
+    params: { _cct_search: debouncedName },
   });
 
   useEffect(() => {
     setAllObjects([]);
   }, [debouncedName]);
 
-  const objects = objectsData?.results || [];
-
   useEffect(() => {
-    setAllObjects([...allObjects, ...objects]);
+    setAllObjects((prevState) => [...prevState, ...(objectsData || [])]);
   }, [objectsData]);
 
   return (
@@ -63,7 +66,7 @@ const AddObjects = () => {
               return (
                 <div
                   key={index}
-                  className="w-full h-full relative [&:hover>h3]:opacity-100 transition-opacity duration-300 flex justify-center items-center cursor-pointer"
+                  className="w-full relative [&:hover>h3]:opacity-100 transition-opacity duration-300 flex justify-center items-center cursor-pointer"
                   onClick={() => {
                     if (avatarCounts.object >= 3) return;
                     addAvatar({
@@ -73,7 +76,7 @@ const AddObjects = () => {
                       color: "#000",
                       unit: "cm",
                       id: v4(),
-                      type: "object",
+                      type,
                     });
                   }}
                 >
@@ -92,7 +95,7 @@ const AddObjects = () => {
               );
             })}
           </div>
-          {objectsData?.next && (
+          {objectsData?.length === ITEMS_PER_PAGE && (
             <Button onClick={() => setPage(page + 1)}>Load MORE</Button>
           )}
         </>
@@ -108,4 +111,4 @@ const AddObjects = () => {
   );
 };
 
-export default AddObjects;
+export default AddItems;

@@ -2,6 +2,7 @@
 
 import { useGlobals } from "@/contexts/GlobalContext";
 import clsx from "clsx";
+import { BiSolidDog } from "react-icons/bi";
 import { BsBox, BsImage, BsPersonFillAdd, BsStars } from "react-icons/bs";
 
 const NavBar = () => {
@@ -30,5 +31,6 @@ const screens = [
   { title: "Add Person", icon: <BsPersonFillAdd /> },
   { title: "Celebrities", icon: <BsStars /> },
   { title: "Objects", icon: <BsBox /> },
+  { title: "Animals", icon: <BiSolidDog /> },
   { title: "Image", icon: <BsImage /> },
 ];

@@ -7,6 +7,7 @@ import SvgInline from "@/components/SVGInline";
 import { LuPen, LuTrash2 } from "react-icons/lu";
 import Image from "next/image";
 import { Avatar as AvatarType } from "@/misc/interfaces";
+import { ItemType } from "@/misc/enums";
 
 const Board = () => {
   return (
@@ -55,7 +56,7 @@ const ScalesAndAvatars = () => {
       >
         {avatars.map(
           (avatar, index) =>
-            (avatar.type === "person" || avatar.type === "image") && (
+            avatar.type !== ItemType.OBJECT && (
               <Avatar key={index} avatar={avatar} boardHeight={height} />
             )
         )}
@@ -89,7 +90,7 @@ const Avatar = ({
     <div className="relative" style={{ height: `${height}%` }}>
       <div className="absolute -top-[81px] left-0 w-full flex flex-col items-center text-xs">
         <div className="border border-gray-200 bg-white rounded-md flex items-center">
-          {avatar.type === "person" && (
+          {avatar.type === ItemType.PERSON && (
             <LuPen
               size={30}
               className="cursor-pointer p-2 border-r border-gray-200"

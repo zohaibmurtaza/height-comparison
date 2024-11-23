@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import { v4 } from "uuid";
 import Input from "@/components/ui/Input";
 import Message from "../ui/Message";
+import { ItemType } from "@/misc/enums";
 
 interface AddPersonData {
   gender: "Male" | "Female";
@@ -61,7 +62,7 @@ const AddPerson = () => {
       color: data.color,
       height: data.height,
       unit: data.unit,
-      type: "person",
+      type: ItemType.PERSON,
     });
   };
   return (

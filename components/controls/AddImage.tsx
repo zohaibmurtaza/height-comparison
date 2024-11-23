@@ -13,6 +13,7 @@ import { useGlobals } from "@/contexts/GlobalContext";
 import toast from "react-hot-toast";
 import { v4 } from "uuid";
 import { Avatar } from "@/misc/interfaces";
+import { ItemType } from "@/misc/enums";
 
 const AddImage = () => {
   const [image, setImage] = useState<File | null>(null);
@@ -22,7 +23,6 @@ const AddImage = () => {
     if (image) {
       getBase64FromFile(image)
         .then((data) => {
-          console.log("Image base64", data);
           setImageUrl(data as string);
           setModalOpen(true);
         })
@@ -77,7 +77,7 @@ const AddImageModel = ({
     color: "#eeeeee",
     height: 0,
     id: v4(),
-    type: "image",
+    type: ItemType.IMAGE,
   });
 
   const setImageData = (key: keyof Avatar, value: string | number) => {
