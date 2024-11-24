@@ -25,6 +25,7 @@ const FilterCelebrities = () => {
   const { addAvatar, avatars } = useGlobals();
   const [category, setCategory] = useState<CelebrityOption | null>(null);
   const [subcat, setSubcat] = useState<CelebrityOption | null>(null);
+  const [subcat2, setSubcat2] = useState<CelebrityOption | null>(null);
   const [randomColor, setRandomColor] = useState(0);
   const [topCategories, topCategoriesLoading, topCategoriesError] = useData<
     CelebrityCategory[]
@@ -40,8 +41,16 @@ const FilterCelebrities = () => {
     method: "GET",
   });
 
+  const [subcagtegories2, loading2, error2] = useData<CelebrityCategory[]>({
+    url: API_ENDPOINTS.celebrities.categories(subcat?.value || 0),
+    method: "GET",
+  });
+
+  const parentId =
+    category?.label === "Celebrities" ? subcat?.value : subcat2?.value;
+
   const [characters, loading3, error3] = useData<Celebrity[]>({
-    url: API_ENDPOINTS.celebrities.all(subcat?.value || 0),
+    url: API_ENDPOINTS.celebrities.all(parentId || 0),
     method: "GET",
   });
 
@@ -57,6 +66,8 @@ const FilterCelebrities = () => {
       option: () => "capitalize",
     };
   }, []);
+
+  const isUnderSubcat2 = category?.label === "Celebrities" && subcat2;
 
   return (
     <div className="space-y-4">
@@ -109,13 +120,41 @@ const FilterCelebrities = () => {
               value={subcat}
               onChange={(selectedOption) => {
                 setSubcat(selectedOption || null);
+                setSubcat2(null);
+              }}
+            />
+          </div>
+        ))}
+
+      {/* Subcategories 2 */}
+      {category?.label === "Fictional" &&
+        subcat &&
+        (error2 ? (
+          <Message variant="error">
+            Error fetching subcategories: {error2}
+          </Message>
+        ) : (
+          <div>
+            <SectionTitle className="capitalize">{subcat.label}</SectionTitle>
+            <Select
+              options={subcagtegories2?.map((subcat) => ({
+                label: subcat.name,
+                value: subcat.id,
+              }))}
+              isSearchable={false}
+              classNames={classes}
+              isLoading={loading2}
+              placeholder="Select Subcategory"
+              value={subcat2}
+              onChange={(selectedOption) => {
+                setSubcat2(selectedOption || null);
               }}
             />
           </div>
         ))}
 
       {/* Name */}
-      {subcat &&
+      {(isUnderSubcat2 || subcat) &&
         (error3 ? (
           <Message variant="error">Error fetching characters: {error3}</Message>
         ) : (
