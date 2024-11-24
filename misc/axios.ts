@@ -1,5 +1,6 @@
 import axios from "axios";
+import { SERVER_BASE_URL } from "./data";
 
 export const server = axios.create({
-  baseURL: "https://height.dollarbits.ca/wp-json/",
+  baseURL: SERVER_BASE_URL,
 });

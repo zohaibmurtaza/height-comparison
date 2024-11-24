@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "https://d2wm6oeclkrant.cloudfront.net/",
+        hostname: "height.dollarbits.ca",
       },
     ],
   },

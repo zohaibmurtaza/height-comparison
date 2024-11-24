@@ -13,10 +13,10 @@ import toast from "react-hot-toast";
 import { v4 } from "uuid";
 import Input from "@/components/ui/Input";
 import Message from "../ui/Message";
-import { ItemType } from "@/misc/enums";
+import { Gender, ItemType } from "@/misc/enums";
 
 interface AddPersonData {
-  gender: "Male" | "Female";
+  gender: Gender;
   unit: "cm" | "ft";
   displayAvatar: boolean;
   avatar: string | null;
@@ -28,7 +28,7 @@ interface AddPersonData {
 const AddPerson = () => {
   const { avatarCounts, addAvatar } = useGlobals();
   const [data, setData] = useState<AddPersonData>({
-    gender: "Male",
+    gender: Gender.MALE,
     unit: "cm",
     displayAvatar: true,
     avatar: null,
@@ -120,6 +120,7 @@ const AddPerson = () => {
 
       {/* Select Avatar */}
       <AvatarSelector
+        gender={data.gender}
         selectedAvatar={data.avatar}
         onAvatarChange={(avatar) => setState("avatar", avatar)}
       />

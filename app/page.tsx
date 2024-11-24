@@ -20,6 +20,7 @@ export default function Home() {
     "Edit Persons": <EditPersons key="edit-persons" />,
     Celebrities: <Celebrities key="celebrities" />,
     Objects: <AddItems type={ItemType.OBJECT} key="add-items-object" />,
+    Buildings: <AddItems type={ItemType.BUILDING} key="add-items-building" />,
     Animals: <AddItems type={ItemType.ANIMAL} key="add-items-animal" />,
     Image: <AddImage key="add-image" />,
   };

@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { v4 as uuidv4 } from "uuid";
 import Message from "./ui/Message";
-import { colors } from "@/misc/data";
+import { colors, FEMALE_AVATARS, MALE_AVATARS } from "@/misc/data";
 import { useDebounce } from "@uidotdev/usehooks";
 import SectionTitle from "./ui/SectionTitle";
 import { ItemType } from "@/misc/enums";
@@ -51,10 +51,7 @@ const SearchCelebrities = () => {
         id: uuidv4(),
         name: title.rendered,
         unit: "cm",
-        avatar:
-          gender === "male"
-            ? "/images/persons/person-1.svg"
-            : "/images/persons/person-4.svg",
+        avatar: gender === "male" ? MALE_AVATARS : FEMALE_AVATARS,
         color: colors[randomColor],
         height: parseFloat(height),
         type: ItemType.PERSON,

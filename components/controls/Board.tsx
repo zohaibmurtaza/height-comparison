@@ -5,7 +5,6 @@ import { cmToFtAndInch } from "@/utils/HeightConversion";
 import clsx from "clsx";
 import SvgInline from "@/components/SVGInline";
 import { LuPen, LuTrash2 } from "react-icons/lu";
-import Image from "next/image";
 import { Avatar as AvatarType } from "@/misc/interfaces";
 import { ItemType } from "@/misc/enums";
 
@@ -117,7 +116,7 @@ const Avatar = ({
       {avatar.type === "person" ? (
         <SvgInline url={avatar.avatar} fill={avatar.color} />
       ) : (
-        <Image
+        <img
           src={avatar.avatar}
           alt={avatar.name}
           width={200}

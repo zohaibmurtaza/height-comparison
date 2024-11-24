@@ -2,7 +2,6 @@
 import Input from "@/components/ui/Input";
 import { useGlobals } from "@/contexts/GlobalContext";
 import useData from "@/hooks/useData";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ImSpinner2 } from "react-icons/im";
 import { v4 } from "uuid";
@@ -12,7 +11,7 @@ import Message from "../ui/Message";
 import { useDebounce } from "@uidotdev/usehooks";
 import { API_ENDPOINTS } from "@/misc/apiEndpoints";
 import { ItemType } from "@/misc/enums";
-import { ITEMS_PER_PAGE } from "@/misc/data";
+import { fetchImageById, ITEMS_PER_PAGE } from "@/misc/data";
 
 interface ItemData {
   id: number;
@@ -70,7 +69,7 @@ const AddItems = ({ type }: { type: ItemType }) => {
                   onClick={() => {
                     if (avatarCounts.object >= 3) return;
                     addAvatar({
-                      avatar: obj.image,
+                      avatar: fetchImageById(obj.image),
                       name: obj.name,
                       height: obj.height,
                       color: "#000",
@@ -83,9 +82,9 @@ const AddItems = ({ type }: { type: ItemType }) => {
                   <h3 className="absolute left-0 top-0 w-full h-full text-center bg-primary/80 flex items-center justify-center text-[9px] font-semibold opacity-0 rounded-md transition-opacity duration-300">
                     {obj.name}
                   </h3>
-                  <Image
+                  <img
                     key={index}
-                    src={obj.image}
+                    src={fetchImageById(obj.image)}
                     alt="avatar"
                     width={100}
                     height={100}

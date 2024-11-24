@@ -3,7 +3,13 @@
 import { useGlobals } from "@/contexts/GlobalContext";
 import clsx from "clsx";
 import { BiSolidDog } from "react-icons/bi";
-import { BsBox, BsImage, BsPersonFillAdd, BsStars } from "react-icons/bs";
+import {
+  BsBox,
+  BsBuilding,
+  BsImage,
+  BsPersonFillAdd,
+  BsStars,
+} from "react-icons/bs";
 
 const NavBar = () => {
   const { selectedScreen, setSelectedScreen } = useGlobals();
@@ -31,6 +37,7 @@ const screens = [
   { title: "Add Person", icon: <BsPersonFillAdd /> },
   { title: "Celebrities", icon: <BsStars /> },
   { title: "Objects", icon: <BsBox /> },
+  { title: "Buildings", icon: <BsBuilding /> },
   { title: "Animals", icon: <BiSolidDog /> },
   { title: "Image", icon: <BsImage /> },
 ];

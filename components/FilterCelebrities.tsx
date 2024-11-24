@@ -4,7 +4,7 @@ import useData from "@/hooks/useData";
 import Select from "react-select";
 import { useGlobals } from "@/contexts/GlobalContext";
 import { v4 } from "uuid";
-import { colors } from "@/misc/data";
+import { colors, FEMALE_AVATARS, MALE_AVATARS } from "@/misc/data";
 import Message from "./ui/Message";
 import { ItemType } from "@/misc/enums";
 import { API_ENDPOINTS } from "@/misc/apiEndpoints";
@@ -24,8 +24,7 @@ interface CelebrityOption {
 const FilterCelebrities = () => {
   const { addAvatar, avatars } = useGlobals();
   const [category, setCategory] = useState<CelebrityOption | null>(null);
-  const [subcat1, setSubcat1] = useState<CelebrityOption | null>(null);
-  const [subcat2, setSubcat2] = useState<CelebrityOption | null>(null);
+  const [subcat, setSubcat] = useState<CelebrityOption | null>(null);
   const [randomColor, setRandomColor] = useState(0);
   const [topCategories, topCategoriesLoading, topCategoriesError] = useData<
     CelebrityCategory[]
@@ -41,13 +40,8 @@ const FilterCelebrities = () => {
     method: "GET",
   });
 
-  const [subcagtegories2, loading2, error2] = useData<CelebrityCategory[]>({
-    url: API_ENDPOINTS.celebrities.categories(subcat1?.value || 0),
-    method: "GET",
-  });
-
   const [characters, loading3, error3] = useData<Celebrity[]>({
-    url: API_ENDPOINTS.celebrities.all(subcat2?.value || 0),
+    url: API_ENDPOINTS.celebrities.all(subcat?.value || 0),
     method: "GET",
   });
 
@@ -88,8 +82,7 @@ const FilterCelebrities = () => {
             value={category}
             onChange={(selectedOption) => {
               setCategory(selectedOption || null);
-              setSubcat1(null);
-              setSubcat2(null);
+              setSubcat(null);
             }}
           />
         </div>
@@ -113,43 +106,16 @@ const FilterCelebrities = () => {
               classNames={classes}
               isLoading={subcategoriesLoading}
               placeholder="Select Subcategory"
-              value={subcat1}
+              value={subcat}
               onChange={(selectedOption) => {
-                setSubcat1(selectedOption || null);
-                setSubcat2(null);
-              }}
-            />
-          </div>
-        ))}
-
-      {/* Subcategories 2 */}
-      {subcat1 &&
-        (error2 ? (
-          <Message variant="error">
-            Error fetching subcategories: {error2}
-          </Message>
-        ) : (
-          <div>
-            <SectionTitle className="capitalize">{subcat1.label}</SectionTitle>
-            <Select
-              options={subcagtegories2?.map((subcat) => ({
-                label: subcat.name,
-                value: subcat.id,
-              }))}
-              isSearchable={false}
-              classNames={classes}
-              isLoading={loading2}
-              placeholder="Select Subcategory"
-              value={subcat2}
-              onChange={(selectedOption) => {
-                setSubcat2(selectedOption || null);
+                setSubcat(selectedOption || null);
               }}
             />
           </div>
         ))}
 
       {/* Name */}
-      {subcat2 &&
+      {subcat &&
         (error3 ? (
           <Message variant="error">Error fetching characters: {error3}</Message>
         ) : (
@@ -173,8 +139,8 @@ const FilterCelebrities = () => {
                   unit: "cm",
                   avatar:
                     character.data.meta.gender === "male"
-                      ? "/images/persons/person-1.svg"
-                      : "/images/persons/person-4.svg",
+                      ? MALE_AVATARS
+                      : FEMALE_AVATARS,
                   color: colors[randomColor],
                   height: parseFloat(character.data.meta.height),
                   type: ItemType.PERSON,

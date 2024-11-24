@@ -9,6 +9,7 @@ import { useState } from "react";
 import Colors from "./Colors";
 import AvatarSelector from "./AvatarSelector";
 import { FaCaretRight } from "react-icons/fa";
+import { Gender } from "@/misc/enums";
 
 const EditPersonForm = ({ avatar }: { avatar: Avatar }) => {
   const { removeAvatar, updateAvatar, selectedAvatar, setSelectedAvatar } =
@@ -95,6 +96,7 @@ const EditPersonForm = ({ avatar }: { avatar: Avatar }) => {
           {avatar.type === "person" && (
             <div className="space-y-1">
               <AvatarSelector
+                gender={Gender.MALE}
                 selectedAvatar={avatar.avatar}
                 onAvatarChange={(url) =>
                   updateAvatar({ ...avatar, avatar: url })

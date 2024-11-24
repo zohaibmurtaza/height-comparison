@@ -116,12 +116,13 @@ export const GlobalContextProvider = ({
     setAvatars(newAvatars);
   };
 
-  const avatarCounts: Record<ItemType, number> = {
-    image: 0,
-    person: 0,
-    object: 0,
-    animal: 0,
-  };
+  const avatarCounts: Record<ItemType, number> = Object.values(ItemType).reduce(
+    (acc, type) => {
+      acc[type] = 0;
+      return acc;
+    },
+    {} as Record<ItemType, number>
+  );
 
   avatars.forEach((a) => {
     const type = a.type;
