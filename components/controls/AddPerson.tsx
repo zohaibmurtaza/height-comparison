@@ -68,7 +68,7 @@ const AddPerson = () => {
   return (
     <div className="w-full min-h-full space-y-6">
       <TabStyleRadio
-        options={["Male", "Female"]}
+        options={Object.values(Gender)}
         value={data.gender}
         onChange={(gender) => setState("gender", gender)}
       />

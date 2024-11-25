@@ -71,7 +71,7 @@ const FilterCelebrities = () => {
 
   return (
     <div className="space-y-4">
-      <SectionTitle>Select Category</SectionTitle>
+      <SectionTitle>Filter by Category</SectionTitle>
 
       {/* Top Categories */}
       {topCategoriesError ? (
