@@ -16,3 +16,9 @@ export enum BodyType {
   MESOMORPH = "mesomorph",
   ENDOMORPH = "endomorph",
 }
+
+export enum AvatarCategory {
+  ADULT = "adult",
+  CHILD = "child",
+  PET = "pet",
+}

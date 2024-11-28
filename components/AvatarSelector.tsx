@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import SectionTitle from "./ui/SectionTitle";
 import TabStyleRadio from "./ui/TabStyleRadio";
 import Image from "next/image";
-import { Gender, BodyType } from "@/misc/enums";
+import { Gender, BodyType, AvatarCategory } from "@/misc/enums";
 
 interface AvatarSelectorProps {
   gender: Gender;
   selectedAvatar: string | null;
   onAvatarChange: (avatar: string) => void;
+  avatarCategory?: AvatarCategory;
+  onCategoryChange?: (category: AvatarCategory) => void;
 }
 
 const TOTAL_AVATARS = 9;
@@ -15,6 +17,7 @@ const TOTAL_AVATARS = 9;
 const AvatarSelector = ({
   selectedAvatar,
   gender,
+  avatarCategory,
   onAvatarChange,
 }: AvatarSelectorProps) => {
   const [bodyType, setBodyType] = useState<string>(BodyType.ECTOMORPH);
@@ -33,7 +36,7 @@ const AvatarSelector = ({
         {Array(TOTAL_AVATARS)
           .fill(null)
           .map((_, index) => {
-            const avatar = `/images/persons/${gender}/${bodyType}/person-${
+            const avatar = `/images/persons/${avatarCategory}/${gender}/${bodyType}/person-${
               index + 1
             }.svg`;
             return (

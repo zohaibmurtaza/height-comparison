@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 import { v4 } from "uuid";
 import Input from "@/components/ui/Input";
 import Message from "../ui/Message";
-import { Gender, ItemType } from "@/misc/enums";
+import { AvatarCategory, Gender, ItemType } from "@/misc/enums";
 
 interface AddPersonData {
   gender: Gender;
@@ -23,6 +23,7 @@ interface AddPersonData {
   color: string | null;
   height: number;
   name: string;
+  avatarCategory: AvatarCategory;
 }
 
 const AddPerson = () => {
@@ -35,6 +36,7 @@ const AddPerson = () => {
     color: null,
     height: 0,
     name: "",
+    avatarCategory: AvatarCategory.ADULT,
   });
 
   const setState = (
@@ -70,7 +72,17 @@ const AddPerson = () => {
       <TabStyleRadio
         options={Object.values(Gender)}
         value={data.gender}
+        className="capitalize"
         onChange={(gender) => setState("gender", gender)}
+      />
+
+      <TabStyleRadio
+        options={Object.values(AvatarCategory)}
+        value={data.avatarCategory}
+        className="capitalize"
+        onChange={(avatarCategory) =>
+          setState("avatarCategory", avatarCategory)
+        }
       />
 
       {/* Type */}
@@ -121,6 +133,7 @@ const AddPerson = () => {
       {/* Select Avatar */}
       <AvatarSelector
         gender={data.gender}
+        avatarCategory={data.avatarCategory}
         selectedAvatar={data.avatar}
         onAvatarChange={(avatar) => setState("avatar", avatar)}
       />
