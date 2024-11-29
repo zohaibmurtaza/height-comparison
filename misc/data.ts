@@ -23,5 +23,6 @@ export const ITEMS_PER_PAGE = 20;
 export const fetchImageById = (id: string) =>
   `${SERVER_BASE_URL}/custom/v2/get-media/${id}`;
 
-export const MALE_AVATARS = "/images/persons/male/ectomorph/person-2.svg";
-export const FEMALE_AVATARS = "/images/persons/female/ectomorph/person-2.svg";
+export const MALE_AVATARS = "/images/persons/adult/male/ectomorph/person-2.svg";
+export const FEMALE_AVATARS =
+  "/images/persons/adult/female/ectomorph/person-2.svg";

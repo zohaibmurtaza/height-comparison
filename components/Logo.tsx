@@ -6,7 +6,13 @@ import LogoIcon from "@/assets/logo.svg";
 const Logo = () => {
   return (
     <Link href="/">
-      <Image src={LogoIcon} alt="logo" width={194} height={24} />
+      <Image
+        src={LogoIcon}
+        alt="logo"
+        width={194}
+        height={24}
+        className="w-[150px] md:w-fit"
+      />
     </Link>
   );
 };
