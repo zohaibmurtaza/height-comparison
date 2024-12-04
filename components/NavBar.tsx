@@ -10,11 +10,12 @@ import {
   BsPersonFillAdd,
   BsStars,
 } from "react-icons/bs";
+import { MdCatchingPokemon } from "react-icons/md";
 
 const NavBar = () => {
   const { selectedScreen, setSelectedScreen } = useGlobals();
   return (
-    <nav className="md:h-full w-auto bg-white rounded-2xl shadow-sm p-1 pb-0 md:pb-0 md:space-y-4 border border-gray-200 sticky top-2 flex flex-row justify-center items-between z-20 overflow-x-auto min-h-fit">
+    <nav className="md:h-full w-auto bg-white rounded-2xl shadow-sm p-1 pb-0 md:pb-0 md:space-y-4 border border-gray-200 sticky top-2 flex flex-row justify-start items-between z-20 overflow-x-auto min-h-fit">
       {screens.map(({ title, icon }, index) => (
         <span
           key={index}
@@ -39,5 +40,6 @@ const screens = [
   { title: "Objects", icon: <BsBox /> },
   { title: "Buildings", icon: <BsBuilding /> },
   { title: "Animals", icon: <BiSolidDog /> },
+  { title: "Pokemon", icon: <MdCatchingPokemon /> },
   { title: "Image", icon: <BsImage /> },
 ];

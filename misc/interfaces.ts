@@ -38,5 +38,6 @@ export interface Celebrity {
   meta: {
     height: string;
     gender: string;
+    image?: string;
   };
 }

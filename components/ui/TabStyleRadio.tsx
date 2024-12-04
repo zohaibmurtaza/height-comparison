@@ -19,7 +19,7 @@ const TabStyleRadio = ({
         <span
           key={index}
           onClick={() => onChange(o)}
-          className={`${padding} rounded-xl cursor-pointer w-1/2 text-center ${
+          className={`${padding} rounded-[inherit] cursor-pointer w-1/2 h-full text-center flex items-center justify-center ${
             value === o && "bg-white"
           }`}
         >

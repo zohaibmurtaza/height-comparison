@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SectionTitle from "./ui/SectionTitle";
 import TabStyleRadio from "./ui/TabStyleRadio";
 import Image from "next/image";
@@ -21,10 +21,15 @@ const TOTAL_AVATARS = {
 const AvatarSelector = ({
   selectedAvatar,
   gender,
-  avatarCategory,
+  avatarCategory = AvatarCategory.ADULT,
   onAvatarChange,
 }: AvatarSelectorProps) => {
   const [bodyType, setBodyType] = useState<BodyType>(BodyType.ECTOMORPH);
+
+  useEffect(() => {
+    onAvatarChange(getAvatarPath(avatarCategory, gender, bodyType, 0));
+  }, [avatarCategory, gender, bodyType]);
+
   return (
     <div className="space-y-2">
       <SectionTitle>Select Avatar</SectionTitle>
@@ -36,8 +41,8 @@ const AvatarSelector = ({
       />
 
       {/* Avatars */}
-      <div className="rounded-lg border-gray-200 p-5 border grid grid-cols-4 gap-3 min-h-[200px] justify-items-center items-baseline">
-        {Array(TOTAL_AVATARS[avatarCategory || AvatarCategory.ADULT])
+      <div className="rounded-lg border-gray-200 p-5 border grid grid-cols-3 sm:grid-cols-4 gap-3 min-h-[200px] justify-items-center items-baseline">
+        {Array(TOTAL_AVATARS[avatarCategory])
           .fill(null)
           .map((_, index) => {
             const avatar = getAvatarPath(

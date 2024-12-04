@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-// import Switch from "@/components/ui/Switch";
 import Button from "@/components/ui/Button";
-import SectionTitle from "@/components/ui/SectionTitle";
 import Colors from "@/components/Colors";
 import TabStyleRadio from "@/components/ui/TabStyleRadio";
 import AvatarSelector from "@/components/AvatarSelector";
@@ -47,21 +45,15 @@ const AddPerson = () => {
   };
 
   const handleAddAvatar = () => {
-    if (
-      !data.avatar ||
-      !data.color ||
-      !data.height ||
-      !data.unit ||
-      !data.name
-    ) {
-      toast.error("Please fill all the fields");
+    if (!data.height) {
+      toast.error("Please enter height");
       return;
     }
     addAvatar({
       id: v4(),
-      name: data.name,
-      avatar: data.avatar,
-      color: data.color,
+      name: data?.name || "Unknown",
+      avatar: data.avatar || "",
+      color: data.color || "#000",
       height: data.height,
       unit: data.unit,
       type: ItemType.PERSON,
@@ -69,39 +61,38 @@ const AddPerson = () => {
   };
   return (
     <div className="w-full min-h-full space-y-6">
-      <TabStyleRadio
-        options={Object.values(Gender)}
-        value={data.gender}
-        className="capitalize"
-        onChange={(gender) => setState("gender", gender)}
-      />
-
-      <TabStyleRadio
-        options={Object.values(AvatarCategory)}
-        value={data.avatarCategory}
-        className="capitalize"
-        onChange={(avatarCategory) =>
-          setState("avatarCategory", avatarCategory)
-        }
-      />
-
-      {/* Type */}
-      <div className="flex items-center justify-between gap-2 w-full">
-        <SectionTitle>Unit</SectionTitle>
+      <div className="w-full flex items-center justify-center gap-2">
         <TabStyleRadio
-          options={["cm", "ft"]}
-          value={data.unit}
-          onChange={(unit) => setState("unit", unit)}
-          className="w-[100px]"
+          options={Object.values(Gender)}
+          value={data.gender}
+          className="capitalize w-full"
+          onChange={(gender) => setState("gender", gender)}
+        />
+        <TabStyleRadio
+          options={Object.values(AvatarCategory)}
+          value={data.avatarCategory}
+          className="capitalize w-full"
+          onChange={(avatarCategory) =>
+            setState("avatarCategory", avatarCategory)
+          }
         />
       </div>
 
       {/* Height */}
-      <HeightInput
-        height={data.height}
-        unit={data.unit}
-        onChange={(height) => setState("height", height)}
-      />
+      <div className="flex items-stretch justify-between gap-2 w-full">
+        <HeightInput
+          height={data.height}
+          unit={data.unit}
+          onChange={(height) => setState("height", height)}
+        />
+        {/* Type */}
+        <TabStyleRadio
+          options={["cm", "ft"]}
+          value={data.unit}
+          onChange={(unit) => setState("unit", unit)}
+          className="min-w-[100px] min-h-[50px]"
+        />
+      </div>
 
       <Input
         name="name"
@@ -115,20 +106,6 @@ const AddPerson = () => {
         selectedColor={data.color || "#fff"}
         onChange={(color) => setState("color", color)}
       />
-
-      {/* Display Avatar */}
-      {/* <div className="w-full rounded-xl border p-3 py-4 border-gray-200">
-        <div className="flex items-center justify-between gap-1.5">
-          <h1 className="text-base font-medium leading-none">Display Avatar</h1>
-          <Switch
-            value={data.displayAvatar}
-            onChange={() => setState("displayAvatar", !data.displayAvatar)}
-          />
-        </div>
-        <span className="text-xs font-light">
-          Lorem Ipsum is simply dummy text.
-        </span>
-      </div> */}
 
       {/* Select Avatar */}
       <AvatarSelector

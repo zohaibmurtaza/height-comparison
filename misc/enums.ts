@@ -3,6 +3,7 @@ export enum ItemType {
   OBJECT = "object",
   BUILDING = "building",
   ANIMAL = "animal",
+  POKEMON = "pokemon",
   IMAGE = "image",
 }
 

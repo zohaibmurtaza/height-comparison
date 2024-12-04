@@ -31,27 +31,23 @@ const HeightInput = ({ height, unit, onChange }: HeightInputProps) => {
     onChange(newHeights.cm);
   };
 
-  return (
-    <div className="flex gap-2.5">
-      {inputs[unit].map(({ name, placeholder }) => (
-        <input
-          key={name}
-          type="number"
-          className="w-full rounded-lg p-2 py-3 border border-gray-200"
-          placeholder={placeholder}
-          value={heights[name as keyof typeof heights] || ""}
-          min={0}
-          onChange={(e) => {
-            let newValue = e.target.valueAsNumber;
-            if (e.target.value === "") {
-              newValue = 0;
-            }
-            handleChange(name as keyof typeof heights, newValue);
-          }}
-        />
-      ))}
-    </div>
-  );
+  return inputs[unit].map(({ name, placeholder }) => (
+    <input
+      key={name}
+      type="number"
+      className="w-full rounded-lg p-2 py-3 border border-gray-200"
+      placeholder={placeholder}
+      value={heights[name as keyof typeof heights] || ""}
+      min={0}
+      onChange={(e) => {
+        let newValue = e.target.valueAsNumber;
+        if (e.target.value === "") {
+          newValue = 0;
+        }
+        handleChange(name as keyof typeof heights, newValue);
+      }}
+    />
+  ));
 };
 
 export default HeightInput;

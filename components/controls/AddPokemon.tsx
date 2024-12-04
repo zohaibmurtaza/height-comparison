@@ -11,25 +11,24 @@ import Message from "../ui/Message";
 import { useDebounce } from "@uidotdev/usehooks";
 import { API_ENDPOINTS } from "@/misc/apiEndpoints";
 import { ItemType } from "@/misc/enums";
-import { fetchImageById, ITEMS_PER_PAGE } from "@/misc/data";
+import {
+  FEMALE_AVATARS,
+  fetchImageById,
+  ITEMS_PER_PAGE,
+  MALE_AVATARS,
+} from "@/misc/data";
+import { Celebrity } from "@/misc/interfaces";
 
-interface ItemData {
-  id: number;
-  name: string;
-  image: string;
-  height: number;
-}
-
-const AddItems = ({ type }: { type: ItemType }) => {
+const AddPokemon = () => {
   const [name, setName] = useState("");
   const debouncedName = useDebounce(name, 300);
   const { addAvatar, avatarCounts } = useGlobals();
-  const [allObjects, setAllObjects] = useState<ItemData[]>([]);
+  const [allObjects, setAllObjects] = useState<Celebrity[]>([]);
   const [page, setPage] = useState(1);
-  const [objectsData, loading, error] = useData<ItemData[]>({
-    url: API_ENDPOINTS.items(type, page),
+  const [objectsData, loading, error] = useData<Celebrity[]>({
+    url: API_ENDPOINTS.celebrities.all(142),
     method: "GET",
-    params: { _cct_search: debouncedName },
+    params: { search: debouncedName },
   });
 
   useEffect(() => {
@@ -62,6 +61,11 @@ const AddItems = ({ type }: { type: ItemType }) => {
               </div>
             )}
             {allObjects.map((obj, index) => {
+              const avatarImage = obj.meta.image
+                ? fetchImageById(obj.meta.image)
+                : obj.meta.gender === "male"
+                ? MALE_AVATARS
+                : FEMALE_AVATARS;
               return (
                 <div
                   key={index}
@@ -69,22 +73,22 @@ const AddItems = ({ type }: { type: ItemType }) => {
                   onClick={() => {
                     if (avatarCounts.object >= 3) return;
                     addAvatar({
-                      avatar: fetchImageById(obj.image),
-                      name: obj.name,
-                      height: obj.height,
+                      avatar: avatarImage,
+                      name: obj.title.rendered,
+                      height: parseFloat(obj.meta.height),
                       color: "#000",
                       unit: "cm",
                       id: v4(),
-                      type,
+                      type: ItemType.POKEMON,
                     });
                   }}
                 >
                   <h3 className="absolute left-0 top-0 w-full h-full text-center bg-primary/80 flex items-center justify-center text-[9px] font-semibold opacity-0 rounded-md transition-opacity duration-300">
-                    {obj.name}
+                    {obj.title.rendered}
                   </h3>
                   <img
                     key={index}
-                    src={fetchImageById(obj.image)}
+                    src={avatarImage}
                     alt="avatar"
                     width={100}
                     height={100}
@@ -110,4 +114,4 @@ const AddItems = ({ type }: { type: ItemType }) => {
   );
 };
 
-export default AddItems;
+export default AddPokemon;
