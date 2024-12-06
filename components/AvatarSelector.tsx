@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SectionTitle from "./ui/SectionTitle";
 import TabStyleRadio from "./ui/TabStyleRadio";
 import Image from "next/image";
@@ -25,10 +25,6 @@ const AvatarSelector = ({
   onAvatarChange,
 }: AvatarSelectorProps) => {
   const [bodyType, setBodyType] = useState<BodyType>(BodyType.ECTOMORPH);
-
-  useEffect(() => {
-    onAvatarChange(getAvatarPath(avatarCategory, gender, bodyType, 0));
-  }, [avatarCategory, gender, bodyType]);
 
   return (
     <div className="space-y-2">

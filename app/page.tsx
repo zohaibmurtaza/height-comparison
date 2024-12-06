@@ -11,9 +11,11 @@ import EditPersons from "@/components/controls/EditPersons";
 import Celebrities from "@/components/controls/Celebrities";
 import { ItemType } from "@/misc/enums";
 import AddPokemon from "@/components/controls/AddPokemon";
+import { BsImage } from "react-icons/bs";
+import clsx from "clsx";
 
 export default function Home() {
-  const { selectedScreen } = useGlobals();
+  const { selectedScreen, setSelectedScreen } = useGlobals();
 
   // Define the screens inside the component
   const screens = {
@@ -35,9 +37,18 @@ export default function Home() {
         <div className="w-full h-full md:max-w-[400px] bg-white rounded-2xl shadow-sm p-4 border border-gray-200 overflow-y-auto">
           {screens[selectedScreen as keyof typeof screens]}
         </div>
-        <div className="flex flex-col-reverse md:flex-col flex-grow gap-2 order-first md:order-none">
+        <div className="flex flex-col flex-grow gap-2 order-first md:order-none">
           <BoardUtilities />
           <Board />
+          <span
+            onClick={() => setSelectedScreen("Image")}
+            className={`flex md:hidden w-full justify-center items-center gap-2 pb-4 pt-4 px-6 h-full !mt-0 border-b border-transparent bg-white rounded-2xl shadow-sm p-4 border border-gray-200 transition-all duration-300 cursor-pointer hover:text-primary hover:border-primary/40 ${clsx(
+              selectedScreen === "Image" && "!text-primary !border-primary"
+            )}`}
+          >
+            <BsImage />
+            <span className="text-xs text-center"> Add Image</span>
+          </span>
         </div>
       </div>
     </main>

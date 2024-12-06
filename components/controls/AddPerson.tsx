@@ -12,6 +12,8 @@ import { v4 } from "uuid";
 import Input from "@/components/ui/Input";
 import Message from "../ui/Message";
 import { AvatarCategory, Gender, ItemType } from "@/misc/enums";
+import { colors } from "@/misc/data";
+import { getAnonymouseAvatar } from "@/utils/getAnonymouseAvatar";
 
 interface AddPersonData {
   gender: Gender;
@@ -52,8 +54,9 @@ const AddPerson = () => {
     addAvatar({
       id: v4(),
       name: data?.name || "Unknown",
-      avatar: data.avatar || "",
-      color: data.color || "#000",
+      avatar: data.avatar || getAnonymouseAvatar(data.height, data.gender),
+      gender: data.gender,
+      color: data.color || colors[Math.floor(Math.random() * colors.length)],
       height: data.height,
       unit: data.unit,
       type: ItemType.PERSON,

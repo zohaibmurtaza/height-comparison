@@ -4,9 +4,10 @@ import { useGlobals } from "@/contexts/GlobalContext";
 import { cmToFtAndInch } from "@/utils/HeightConversion";
 import clsx from "clsx";
 import SvgInline from "@/components/SVGInline";
-import { LuPen, LuTrash2 } from "react-icons/lu";
 import { Avatar as AvatarType } from "@/misc/interfaces";
 import { ItemType } from "@/misc/enums";
+import { IoIosCloseCircleOutline } from "react-icons/io";
+import { BiSolidEdit } from "react-icons/bi";
 
 const Board = () => {
   return (
@@ -30,7 +31,7 @@ const ScalesAndAvatars = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-10px)] h-[calc(100%-10px)] rounded-lg overflow-hidden">
         <div className="w-full flex justify-between items-center font-bold">
           <span>cm</span>
-          <span>Height Comparison</span>
+          <span>Height Comparison Chart</span>
           <span>ft</span>
         </div>
         {Array.from({ length: TOTAL_SCALES - 1 }).map((_, index) => {
@@ -90,7 +91,7 @@ const Avatar = ({
       <div className="absolute -top-[81px] left-0 w-full flex flex-col items-center text-xs">
         <div className="border border-gray-200 bg-white rounded-md flex items-center">
           {avatar.type === ItemType.PERSON && (
-            <LuPen
+            <BiSolidEdit
               size={30}
               className="cursor-pointer p-2 border-r border-gray-200"
               onClick={() => {
@@ -99,7 +100,7 @@ const Avatar = ({
               }}
             />
           )}
-          <LuTrash2
+          <IoIosCloseCircleOutline
             size={30}
             className="cursor-pointer p-2"
             onClick={() => removeAvatar(avatar.id)}

@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import { v4 } from "uuid";
 import { Avatar } from "@/misc/interfaces";
 import { ItemType } from "@/misc/enums";
+import { removeBg } from "@/utils/removeBg";
 
 const AddImage = () => {
   const [image, setImage] = useState<File | null>(null);
@@ -70,6 +71,8 @@ const AddImageModel = ({
   onAdded: () => void;
 }) => {
   const { addAvatar } = useGlobals();
+  const [autoRemoveBg, setAutoRemoveBg] = useState(false);
+
   const [data, setData] = useState<Avatar>({
     avatar: "",
     name: "",
@@ -88,6 +91,18 @@ const AddImageModel = ({
     if (!data.avatar || data.height === 0 || !data.name) {
       toast.error("Please fill all the fields");
       return;
+    }
+    if (autoRemoveBg) {
+      const toastId = toast.loading("Removing background...");
+      try {
+        const blob = await removeBg(new Blob([imageUrl]));
+        setImageData("avatar", URL.createObjectURL(new Blob([blob])));
+      } catch (error) {
+        console.error(error);
+        toast.error("Failed to remove background", { id: toastId });
+      }
+    } else {
+      setImageData("avatar", imageUrl);
     }
     addAvatar(data);
     onAdded();
@@ -128,6 +143,16 @@ const AddImageModel = ({
           >
             Cancel
           </Button>
+          <div className="flex items-center gap-2 mt-3">
+            <input
+              type="checkbox"
+              id="auto-remove-bg"
+              checked={autoRemoveBg}
+              onChange={() => setAutoRemoveBg(!autoRemoveBg)}
+            />
+            set
+            <label htmlFor="auto-remove-bg">Auto remove background</label>
+          </div>
         </div>
         <div className="w-full md:w-1/2 h-full min-h-[250px] relative border-2 border-white overflow-hidden">
           <ImageCropper

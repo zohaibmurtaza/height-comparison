@@ -109,6 +109,7 @@ export const GlobalContextProvider = ({
   const removeAvatar = (id: string) => {
     const newAvatars = avatars.filter((a) => a.id !== id);
     setAvatars(newAvatars);
+    if (newAvatars.length === 0) setSelectedScreen("Add Person");
   };
 
   const updateAvatar = (avatar: Avatar) => {

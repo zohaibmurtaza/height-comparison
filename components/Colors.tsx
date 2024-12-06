@@ -27,7 +27,7 @@ const Colors = ({ onChange, selectedColor }: ColorsProps) => {
           onChange={(e) => onChange(e.target.value)}
         />
       </label>
-      {colors.map((c, index) => (
+      {colors.slice(0, 15).map((c, index) => (
         <div
           key={index}
           className={`flex items-center justify-center w-full aspect-square rounded-md cursor-pointer ${""}`}

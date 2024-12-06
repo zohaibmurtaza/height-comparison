@@ -1,4 +1,4 @@
-import { ItemType } from "./enums";
+import { Gender, ItemType } from "./enums";
 
 export interface Avatar {
   id: string;
@@ -8,6 +8,7 @@ export interface Avatar {
   color: string;
   height: number;
   type: ItemType;
+  gender?: Gender;
 }
 
 export interface ObjectData {

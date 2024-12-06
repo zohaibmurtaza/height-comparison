@@ -59,6 +59,19 @@ const EditPersonForm = ({ avatar }: { avatar: Avatar }) => {
             </div>
           )}
 
+          {avatar.type === "person" && (
+            <div className="space-y-1 mb-2">
+              <SectionTitle>Gender</SectionTitle>
+              <TabStyleRadio
+                options={[Gender.MALE, Gender.FEMALE]}
+                value={avatar.gender || Gender.MALE}
+                onChange={(gender) =>
+                  updateAvatar({ ...avatar, gender: gender as Gender })
+                }
+              />
+            </div>
+          )}
+
           {/* Height */}
           {(avatar.type === "person" || avatar.type === "image") && (
             <div className="space-y-1">
@@ -83,7 +96,7 @@ const EditPersonForm = ({ avatar }: { avatar: Avatar }) => {
 
           {/* Height */}
           {avatar.type === "person" && (
-            <div className="space-y-1">
+            <div className="space-y-1 mb-2">
               <SectionTitle>Color</SectionTitle>
               <Colors
                 selectedColor={avatar.color}
@@ -96,7 +109,7 @@ const EditPersonForm = ({ avatar }: { avatar: Avatar }) => {
           {avatar.type === "person" && (
             <div className="space-y-1">
               <AvatarSelector
-                gender={Gender.MALE}
+                gender={avatar.gender || Gender.MALE}
                 selectedAvatar={avatar.avatar}
                 onAvatarChange={(url) =>
                   updateAvatar({ ...avatar, avatar: url })
