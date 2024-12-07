@@ -12,8 +12,14 @@ import { FaCaretRight } from "react-icons/fa";
 import { Gender } from "@/misc/enums";
 
 const EditPersonForm = ({ avatar }: { avatar: Avatar }) => {
-  const { removeAvatar, updateAvatar, selectedAvatar, setSelectedAvatar } =
-    useGlobals();
+  const {
+    removeAvatar,
+    updateAvatar,
+    selectedAvatar,
+    setSelectedAvatar,
+    avatars,
+    setSelectedScreen,
+  } = useGlobals();
   const [unit, setUnit] = useState<"cm" | "ft">(avatar.unit);
   return (
     <div className="w-full rounded-lg overflow-hidden border border-gray-300">
@@ -39,7 +45,10 @@ const EditPersonForm = ({ avatar }: { avatar: Avatar }) => {
         <BiTrash
           className="px-2 cursor-pointer border-b border-gray-200"
           size={40}
-          onClick={() => removeAvatar(avatar.id)}
+          onClick={() => {
+            if (avatars.length === 1) setSelectedScreen("Add Person");
+            removeAvatar(avatar.id);
+          }}
         />
       </div>
 

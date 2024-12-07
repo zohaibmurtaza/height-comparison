@@ -1,14 +1,15 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import SectionTitle from "./ui/SectionTitle";
 import useData from "@/hooks/useData";
 import Select from "react-select";
 import { useGlobals } from "@/contexts/GlobalContext";
 import { v4 } from "uuid";
-import { colors, FEMALE_AVATARS, MALE_AVATARS } from "@/misc/data";
+import { colors, fetchImageById } from "@/misc/data";
 import Message from "./ui/Message";
 import { ItemType } from "@/misc/enums";
 import { API_ENDPOINTS } from "@/misc/apiEndpoints";
 import { Celebrity } from "@/misc/interfaces";
+import { getAnonymouseAvatar } from "@/utils/getAnonymouseAvatar";
 
 interface CelebrityCategory {
   id: number;
@@ -22,11 +23,10 @@ interface CelebrityOption {
 }
 
 const FilterCelebrities = () => {
-  const { addAvatar, avatars } = useGlobals();
+  const { addAvatar } = useGlobals();
   const [category, setCategory] = useState<CelebrityOption | null>(null);
   const [subcat, setSubcat] = useState<CelebrityOption | null>(null);
   const [subcat2, setSubcat2] = useState<CelebrityOption | null>(null);
-  const [randomColor, setRandomColor] = useState(0);
   const [topCategories, topCategoriesLoading, topCategoriesError] = useData<
     CelebrityCategory[]
   >({
@@ -53,10 +53,6 @@ const FilterCelebrities = () => {
     url: API_ENDPOINTS.celebrities.all(parentId || 0),
     method: "GET",
   });
-
-  useEffect(() => {
-    setRandomColor(Math.floor(Math.random() * colors.length));
-  }, [avatars]);
 
   const classes = useMemo(() => {
     return {
@@ -178,13 +174,15 @@ const FilterCelebrities = () => {
                   id: v4(),
                   name: character.data.title.rendered,
                   unit: "cm",
-                  avatar:
-                    character.data.meta.gender === "male"
-                      ? MALE_AVATARS
-                      : FEMALE_AVATARS,
-                  color: colors[randomColor],
+                  avatar: character.data.meta.image
+                    ? fetchImageById(character.data.meta.image)
+                    : getAnonymouseAvatar(
+                        parseFloat(character.data.meta.height),
+                        character.data.meta.gender || "male"
+                      ),
+                  color: colors[Math.floor(Math.random() * colors.length)],
                   height: parseFloat(character.data.meta.height),
-                  type: ItemType.PERSON,
+                  type: ItemType.OBJECT,
                 })
               }
             />
