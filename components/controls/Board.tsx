@@ -8,6 +8,8 @@ import { Avatar as AvatarType } from "@/misc/interfaces";
 import { ItemType } from "@/misc/enums";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { BiSolidEdit } from "react-icons/bi";
+import { Reorder } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 const Board = () => {
   return (
@@ -21,14 +23,40 @@ export default Board;
 
 const ScalesAndAvatars = () => {
   const TOTAL_SCALES = 27;
-  const { avatars } = useGlobals();
-  const tallestAvatar = avatars.sort((a, b) => b.height - a.height)[0];
+  const { avatars, setAvatars } = useGlobals();
+  const tallestAvatar = [...avatars].sort((a, b) => b.height - a.height)[0];
   const tallestAvatarHeight = Math.max(tallestAvatar?.height || 285, 285);
-  const height = tallestAvatarHeight * 1.21;
+  const [height, setHeight] = useState(tallestAvatarHeight * 1.25);
   const delta = height / TOTAL_SCALES;
+  const [avatarsLength, setAvatarsLength] = useState(avatars.length);
+
+  const boardRef = useRef<HTMLDivElement>(null);
+  const avatarsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (boardRef.current && avatarsRef.current) {
+      const boardWidth = boardRef.current.clientWidth;
+      const avatarsWidth =
+        avatarsRef.current?.querySelector(".avatarsContainer")?.clientWidth ||
+        0;
+      const added = avatars.length > avatarsLength;
+      const removed = avatars.length < avatarsLength;
+
+      if (added && avatarsWidth + 100 > boardWidth) {
+        setHeight(height * 1.25);
+      } else if (removed && height > tallestAvatarHeight * 1.25) {
+        setHeight(height * 0.9);
+      }
+    }
+    setAvatarsLength(avatars.length);
+  }, [avatars.length]);
+
   return (
     <>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-10px)] h-[calc(100%-10px)] rounded-lg overflow-hidden">
+      <div
+        ref={boardRef}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-10px)] h-[calc(100%-10px)] rounded-lg overflow-hidden"
+      >
         <div className="w-full flex justify-between items-center font-bold">
           <span>cm</span>
           <span>Height Comparison Chart</span>
@@ -50,27 +78,18 @@ const ScalesAndAvatars = () => {
           );
         })}
       </div>
-      <div
-        className="absolute left-0 w-full h-[calc(100%-40px)] flex items-end justify-center gap-1 z-[20] empty:hidden"
-        style={{ bottom: "40px" }}
-      >
-        {avatars.map(
-          (avatar, index) =>
-            avatar.type !== ItemType.OBJECT && (
-              <Avatar key={index} avatar={avatar} boardHeight={height} />
-            )
-        )}
-      </div>
-      <div
-        className="absolute left-0 w-full h-[calc(100%-40px)] flex items-end justify-center gap-1 z-[10] empty:hidden"
-        style={{ bottom: "40px" }}
-      >
-        {avatars.map(
-          (avatar, index) =>
-            avatar.type === "object" && (
-              <Avatar key={index} avatar={avatar} boardHeight={height} />
-            )
-        )}
+      <div ref={avatarsRef}>
+        <Reorder.Group
+          axis="x"
+          as="div"
+          values={avatars}
+          onReorder={setAvatars}
+          className="avatarsContainer absolute left-1/2 -translate-x-1/2 w-fit h-[calc(100%-40px)] flex items-end justify-center gap-1 z-[20] empty:hidden overflow-x-scroll bottom-0 pb-5"
+        >
+          {avatars.map((avatar) => (
+            <Avatar key={avatar.id} avatar={avatar} boardHeight={height} />
+          ))}
+        </Reorder.Group>
       </div>
     </>
   );
@@ -87,8 +106,13 @@ const Avatar = ({
   const height = (avatar.height / boardHeight) * 100;
   const { removeAvatar, setSelectedAvatar, setSelectedScreen } = useGlobals();
   return (
-    <div className="relative" style={{ height: `${height}%` }}>
-      <div className="absolute -top-[81px] left-0 w-full flex flex-col items-center text-xs">
+    <Reorder.Item
+      as="div"
+      value={avatar}
+      className="relative min-w-fit order-none [&:hover_.edit-avatar]:flex"
+      style={{ height: `${height}%` }}
+    >
+      <div className="edit-avatar absolute -top-[81px] left-0 w-full flex-col items-center text-[10px] hidden">
         <div className="border border-gray-200 bg-white rounded-md flex items-center">
           {avatar.type === ItemType.PERSON && (
             <BiSolidEdit
@@ -107,11 +131,13 @@ const Avatar = ({
           />
         </div>
 
-        <h2 className="whitespace-nowrap font-semibold">{avatar.name}</h2>
-        <h2 className="whitespace-nowrap">
+        <h2 className="text-[10px] whitespace-nowrap font-semibold">
+          {avatar.name}
+        </h2>
+        <h2 className="text-[10px] whitespace-nowrap">
           {Math.round(avatar.height * 100) / 100} cm
         </h2>
-        <h2 className="whitespace-nowrap">{`${ftIn.ft}ft ${ftIn.in}in`}</h2>
+        <h2 className="text-[10px] whitespace-nowrap">{`${ftIn.ft}ft ${ftIn.in}in`}</h2>
         <hr className="w-full border-gray-500" />
       </div>
       {avatar.type === "person" ? (
@@ -123,9 +149,10 @@ const Avatar = ({
           width={200}
           height={400}
           style={{ fill: avatar.color || "#000" }}
-          className="h-full w-auto"
+          className="h-full w-fit min-w-fit"
+          draggable={false}
         />
       )}
-    </div>
+    </Reorder.Item>
   );
 };

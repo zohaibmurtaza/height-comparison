@@ -118,11 +118,11 @@ const AddPerson = () => {
         onAvatarChange={(avatar) => setState("avatar", avatar)}
       />
       <hr className="border-gray-200" />
-      {avatarCounts.person < 10 ? (
+      {avatarCounts.person < MAX_PERSONS ? (
         <Button onClick={handleAddAvatar}>Add Person</Button>
       ) : (
         <Message variant="error">
-          Max 12 people at a time. Remove one to add another.
+          Max {MAX_PERSONS} people at a time. Remove one to add another.
         </Message>
       )}
     </div>
@@ -130,3 +130,5 @@ const AddPerson = () => {
 };
 
 export default AddPerson;
+
+const MAX_PERSONS = 20;
