@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from "react";
 
 const Board = () => {
   return (
-    <div className="relative w-full h-[calc(100%-80px)] min-h-[500px] bg-gray-100 rounded-xl p-2 border border-gray-200">
+    <div className="relative w-full h-[calc(100%-80px)] min-h-[500px] bg-gray-100 rounded-xl p-2 border border-gray-200 overflow-hidden">
       <ScalesAndAvatars />
     </div>
   );
@@ -34,6 +34,7 @@ const ScalesAndAvatars = () => {
   const avatarsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setHeight(tallestAvatarHeight * 1.25);
     if (boardRef.current && avatarsRef.current) {
       const boardWidth = boardRef.current.clientWidth;
       const avatarsWidth =
@@ -84,7 +85,7 @@ const ScalesAndAvatars = () => {
           as="div"
           values={avatars}
           onReorder={setAvatars}
-          className="avatarsContainer absolute left-1/2 -translate-x-1/2 w-fit h-[calc(100%-40px)] flex items-end justify-center gap-1 z-[20] empty:hidden overflow-x-scroll bottom-0 pb-5"
+          className="avatarsContainer absolute left-1/2 -translate-x-1/2 w-fit h-[calc(100%-40px)] flex items-end justify-center gap-1 z-[20] empty:hidden overflow-x-visible bottom-0 pb-[35px]"
         >
           {avatars.map((avatar) => (
             <Avatar key={avatar.id} avatar={avatar} boardHeight={height} />
