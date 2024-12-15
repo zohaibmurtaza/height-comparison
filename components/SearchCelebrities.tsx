@@ -50,7 +50,6 @@ const SearchCelebrities = () => {
       addAvatar({
         id: uuidv4(),
         name: title.rendered,
-        unit: "cm",
         avatar: gender === "male" ? MALE_AVATARS : FEMALE_AVATARS,
         color: colors[randomColor],
         height: parseFloat(height),

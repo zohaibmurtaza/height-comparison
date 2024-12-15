@@ -73,7 +73,6 @@ const AddItems = ({ type }: { type: ItemType }) => {
                       name: obj.name,
                       height: obj.height,
                       color: "#000",
-                      unit: "cm",
                       id: v4(),
                       type,
                     });

@@ -77,7 +77,6 @@ const AddPokemon = () => {
                       name: obj.title.rendered,
                       height: parseFloat(obj.meta.height),
                       color: "#000",
-                      unit: "cm",
                       id: v4(),
                       type: ItemType.POKEMON,
                     });

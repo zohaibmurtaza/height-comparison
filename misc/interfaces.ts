@@ -1,14 +1,15 @@
-import { Gender, ItemType } from "./enums";
+import { AvatarCategory, Gender, ItemType } from "./enums";
 
 export interface Avatar {
   id: string;
   name: string;
-  unit: "cm" | "ft";
   avatar: string;
   color: string;
   height: number;
   type: ItemType;
   gender?: Gender;
+  weight?: number | string;
+  category?: AvatarCategory;
 }
 
 export interface ObjectData {
@@ -40,5 +41,6 @@ export interface Celebrity {
     height: string;
     gender: string;
     image?: string;
+    weight?: string;
   };
 }

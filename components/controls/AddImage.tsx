@@ -73,7 +73,9 @@ const AddImageModel = ({
   const { addAvatar } = useGlobals();
   const [autoRemoveBg, setAutoRemoveBg] = useState(false);
 
-  const [data, setData] = useState<Avatar>({
+  const [data, setData] = useState<
+    Avatar & { weight?: number; unit: "ft" | "cm" }
+  >({
     avatar: "",
     name: "",
     unit: "ft",
@@ -127,7 +129,7 @@ const AddImageModel = ({
           <TabStyleRadio
             options={["cm", "ft"]}
             value={data.unit}
-            onChange={(unit) => setImageData("unit", unit)}
+            onChange={(unit) => setImageData("unit" as keyof Avatar, unit)}
           />
           <HeightInput
             height={data.height}

@@ -12,10 +12,12 @@ import {
 } from "react-icons/bs";
 import { MdCatchingPokemon } from "react-icons/md";
 
-const NavBar = () => {
+const NavBar = ({ className }: { className?: string }) => {
   const { selectedScreen, setSelectedScreen } = useGlobals();
   return (
-    <nav className="md:h-full max-w-fit bg-white rounded-2xl shadow-sm p-1 pb-0 md:pb-0 md:space-y-4 border border-gray-200 sticky top-2 flex flex-row justify-start items-between z-20 overflow-x-auto min-h-fit">
+    <nav
+      className={`md:h-full max-w-fit bg-white rounded-2xl shadow-sm p-1 pb-0 md:pb-0 md:space-y-4 border border-gray-200 sticky top-2 flex flex-row justify-start items-between z-20 overflow-x-auto min-h-fit ${className}`}
+    >
       {screens.map(({ title, icon }, index) => (
         <span
           key={index}

@@ -85,7 +85,7 @@ const ScalesAndAvatars = () => {
           as="div"
           values={avatars}
           onReorder={setAvatars}
-          className="avatarsContainer absolute left-1/2 -translate-x-1/2 w-fit h-[calc(100%-40px)] flex items-end justify-center gap-1 z-[20] empty:hidden overflow-x-visible bottom-0 pb-[35px]"
+          className="avatarsContainer absolute left-1/2 -translate-x-1/2 w-fit h-[calc(100%-40px)] flex items-end justify-center gap-1 z-[20] empty:hidden overflow-x-visible bottom-0 pb-[18px] lg:pb-[35px]"
         >
           {avatars.map((avatar) => (
             <Avatar key={avatar.id} avatar={avatar} boardHeight={height} />
@@ -113,7 +113,11 @@ const Avatar = ({
       className="relative min-w-fit order-none [&:hover_.edit-avatar]:flex"
       style={{ height: `${height}%` }}
     >
-      <div className="edit-avatar absolute -top-[81px] left-0 w-full flex-col items-center text-[10px] hidden">
+      <div
+        className={`edit-avatar absolute -top-[81px] left-0 w-full flex-col items-center text-[10px] hidden ${
+          avatar.weight ? "-top-[92px]" : "-top-[78px]"
+        }`}
+      >
         <div className="border border-gray-200 bg-white rounded-md flex items-center">
           {avatar.type === ItemType.PERSON && (
             <BiSolidEdit
@@ -138,6 +142,9 @@ const Avatar = ({
         <h2 className="text-[10px] whitespace-nowrap">
           {Math.round(avatar.height * 100) / 100} cm
         </h2>
+        {avatar.weight && (
+          <h2 className="text-[10px] whitespace-nowrap">{avatar.weight} kg</h2>
+        )}
         <h2 className="text-[10px] whitespace-nowrap">{`${ftIn.ft}ft ${ftIn.in}in`}</h2>
         <hr className="w-full border-gray-500" />
       </div>

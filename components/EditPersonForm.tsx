@@ -20,7 +20,7 @@ const EditPersonForm = ({ avatar }: { avatar: Avatar }) => {
     avatars,
     setSelectedScreen,
   } = useGlobals();
-  const [unit, setUnit] = useState<"cm" | "ft">(avatar.unit);
+  const [unit, setUnit] = useState<"cm" | "ft">("ft");
   return (
     <div className="w-full rounded-lg overflow-hidden border border-gray-300">
       <div className="flex items-center justify-between">
@@ -119,7 +119,11 @@ const EditPersonForm = ({ avatar }: { avatar: Avatar }) => {
             <div className="space-y-1">
               <AvatarSelector
                 gender={avatar.gender || Gender.MALE}
+                avatarCategory={avatar.category}
                 selectedAvatar={avatar.avatar}
+                onGenderChange={(gender) =>
+                  updateAvatar({ ...avatar, gender: gender as Gender })
+                }
                 onAvatarChange={(url) =>
                   updateAvatar({ ...avatar, avatar: url })
                 }

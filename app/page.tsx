@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <main className="p-2.5 space-y-2.5 flex flex-col h-screen items-stretch">
       <Header />
-      <NavBar />
+      <NavBar className="hidden md:flex" />
       <div className="flex flex-col md:flex-row gap-2.5  h-fit md:min-h-full relative z-10">
         <div className="w-full h-full md:max-w-[400px] bg-white rounded-2xl shadow-sm p-4 border border-gray-200 overflow-y-auto">
           {screens[selectedScreen as keyof typeof screens]}
@@ -40,6 +40,7 @@ export default function Home() {
         <div className="flex flex-col flex-grow gap-2 order-first md:order-none">
           <BoardUtilities />
           <Board />
+          <NavBar className="md:hidden" />
           <span
             onClick={() => setSelectedScreen("Image")}
             className={`flex md:hidden w-full justify-center items-center gap-2 pb-4 pt-4 px-6 h-full !mt-0 border-b border-transparent bg-white rounded-2xl shadow-sm p-4 border border-gray-200 transition-all duration-300 cursor-pointer hover:text-primary hover:border-primary/40 ${clsx(

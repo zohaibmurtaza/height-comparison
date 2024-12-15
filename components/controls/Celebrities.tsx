@@ -10,7 +10,7 @@ const Celebrities = () => {
 
       {avatars.length >= 10 && (
         <Message variant="error">
-          Max 12 people at a time. Remove one to add another.
+          Max 10 people at a time. Remove one to add another.
         </Message>
       )}
     </div>

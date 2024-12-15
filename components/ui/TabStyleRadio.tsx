@@ -6,7 +6,7 @@ const TabStyleRadio = ({
   className = "",
 }: {
   options: string[];
-  value: string;
+  value?: string;
   onChange: (value: string) => void;
   padding?: string;
   className?: string;

@@ -24,19 +24,21 @@ interface AddPersonData {
   height: number;
   name: string;
   avatarCategory: AvatarCategory;
+  weight: number;
 }
 
 const AddPerson = () => {
   const { avatarCounts, addAvatar } = useGlobals();
   const [data, setData] = useState<AddPersonData>({
     gender: Gender.MALE,
-    unit: "cm",
+    unit: "ft",
     displayAvatar: true,
     avatar: null,
     color: null,
     height: 0,
     name: "",
     avatarCategory: AvatarCategory.ADULT,
+    weight: 0,
   });
 
   const setState = (
@@ -58,31 +60,24 @@ const AddPerson = () => {
       gender: data.gender,
       color: data.color || colors[Math.floor(Math.random() * colors.length)],
       height: data.height,
-      unit: data.unit,
+      category: data.avatarCategory,
       type: ItemType.PERSON,
+      weight: data.weight,
     });
   };
   return (
-    <div className="w-full min-h-full space-y-6">
-      <div className="w-full flex items-center justify-center gap-2">
-        <TabStyleRadio
-          options={Object.values(Gender)}
-          value={data.gender}
-          className="capitalize w-full"
-          onChange={(gender) => setState("gender", gender)}
-        />
-        <TabStyleRadio
-          options={Object.values(AvatarCategory)}
-          value={data.avatarCategory}
-          className="capitalize w-full"
-          onChange={(avatarCategory) =>
-            setState("avatarCategory", avatarCategory)
-          }
-        />
-      </div>
+    <div className="w-full min-h-full space-y-3">
+      <TabStyleRadio
+        options={Object.values(AvatarCategory)}
+        value={data.avatarCategory}
+        className="capitalize w-full"
+        onChange={(avatarCategory) =>
+          setState("avatarCategory", avatarCategory)
+        }
+      />
 
       {/* Height */}
-      <div className="flex items-stretch justify-between gap-2 w-full">
+      <div className="flex items-stretch justify-between gap-2 w-full max-h-[45px]">
         <HeightInput
           height={data.height}
           unit={data.unit}
@@ -90,13 +85,20 @@ const AddPerson = () => {
         />
         {/* Type */}
         <TabStyleRadio
-          options={["cm", "ft"]}
+          options={["ft", "cm"]}
           value={data.unit}
           onChange={(unit) => setState("unit", unit)}
-          className="min-w-[100px] min-h-[50px]"
+          className="min-w-[100px]"
         />
       </div>
 
+      <Input
+        name="weight"
+        placeholder="Weight (kg)"
+        value={data.weight === 0 ? "" : data.weight}
+        type="number"
+        onChange={(value) => setState("weight", value)}
+      />
       <Input
         name="name"
         placeholder="Name"
@@ -116,8 +118,8 @@ const AddPerson = () => {
         avatarCategory={data.avatarCategory}
         selectedAvatar={data.avatar}
         onAvatarChange={(avatar) => setState("avatar", avatar)}
+        onGenderChange={(gender) => setState("gender", gender)}
       />
-      <hr className="border-gray-200" />
       {avatarCounts.person < MAX_PERSONS ? (
         <Button onClick={handleAddAvatar}>Add Person</Button>
       ) : (

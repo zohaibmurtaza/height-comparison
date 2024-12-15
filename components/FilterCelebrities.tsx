@@ -10,6 +10,9 @@ import { ItemType } from "@/misc/enums";
 import { API_ENDPOINTS } from "@/misc/apiEndpoints";
 import { Celebrity } from "@/misc/interfaces";
 import { getAnonymouseAvatar } from "@/utils/getAnonymouseAvatar";
+import TabStyleRadio from "./ui/TabStyleRadio";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 interface CelebrityCategory {
   id: number;
@@ -23,7 +26,7 @@ interface CelebrityOption {
 }
 
 const FilterCelebrities = () => {
-  const { addAvatar } = useGlobals();
+  const { addAvatar, avatarCounts } = useGlobals();
   const [category, setCategory] = useState<CelebrityOption | null>(null);
   const [subcat, setSubcat] = useState<CelebrityOption | null>(null);
   const [subcat2, setSubcat2] = useState<CelebrityOption | null>(null);
@@ -79,21 +82,27 @@ const FilterCelebrities = () => {
       ) : (
         <div>
           <SectionTitle className="capitalize">Select Category</SectionTitle>
-          <Select
-            options={(topCategories || [])?.map((cat) => ({
-              label: cat.name,
-              value: cat.id,
-            }))}
-            isSearchable={false}
-            classNames={classes}
-            isLoading={topCategoriesLoading}
-            placeholder="Select Category"
-            value={category}
-            onChange={(selectedOption) => {
-              setCategory(selectedOption || null);
-              setSubcat(null);
-            }}
-          />
+          {topCategoriesLoading ? (
+            <Skeleton className="mt-3 min-h-[40px]" borderRadius={10} />
+          ) : (
+            <TabStyleRadio
+              className="mt-3 min-h-[40px]"
+              options={topCategories?.map((cat) => cat.name) || []}
+              value={category?.label}
+              onChange={(value) => {
+                setCategory(() => {
+                  const selectedCategory =
+                    topCategories?.find((cat) => cat.name === value) || null;
+                  return {
+                    label: selectedCategory?.name || "Celebrities",
+                    value: selectedCategory?.id || 0,
+                  };
+                });
+                setSubcat(null);
+                setSubcat2(null);
+              }}
+            />
+          )}
         </div>
       )}
 
@@ -168,23 +177,25 @@ const FilterCelebrities = () => {
               classNames={classes}
               isLoading={loading3}
               placeholder="Select Subcategory"
-              onChange={(character) =>
-                character &&
+              onChange={(character) => {
+                if (avatarCounts.object >= 10 || !character) return;
                 addAvatar({
                   id: v4(),
                   name: character.data.title.rendered,
-                  unit: "cm",
                   avatar: character.data.meta.image
                     ? fetchImageById(character.data.meta.image)
                     : getAnonymouseAvatar(
                         parseFloat(character.data.meta.height),
                         character.data.meta.gender || "male"
                       ),
-                  color: colors[Math.floor(Math.random() * colors.length)],
+                  color: character.data.meta.image
+                    ? colors[Math.floor(Math.random() * colors.length)]
+                    : "white",
                   height: parseFloat(character.data.meta.height),
                   type: ItemType.OBJECT,
-                })
-              }
+                  weight: character.data.meta?.weight,
+                });
+              }}
             />
           </div>
         ))}

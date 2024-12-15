@@ -5,7 +5,7 @@ interface InputProps {
   name: string;
   type?: string;
   placeholder?: string;
-  value?: string;
+  value?: string | number;
   onChange?: (value: string) => void;
   className?: string;
 }
@@ -26,7 +26,7 @@ const Input = ({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       className={clsx(
-        `w-full rounded-lg p-2 py-3 border border-gray-200`,
+        `w-full rounded-lg p-2 border border-gray-200`,
         className
       )}
     />

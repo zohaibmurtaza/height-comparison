@@ -10,7 +10,7 @@ interface ColorsProps {
 
 const Colors = ({ onChange, selectedColor }: ColorsProps) => {
   return (
-    <div className="grid grid-cols-8 gap-1.5 relative">
+    <div className="grid grid-cols-12 gap-1.5 relative">
       <label
         htmlFor="color-picker"
         className="relative w-full aspect-square rounded-md border border-gray-300 flex items-center justify-center cursor-pointer"
@@ -27,7 +27,7 @@ const Colors = ({ onChange, selectedColor }: ColorsProps) => {
           onChange={(e) => onChange(e.target.value)}
         />
       </label>
-      {colors.slice(0, 15).map((c, index) => (
+      {colors.slice(0, 11).map((c, index) => (
         <div
           key={index}
           className={`flex items-center justify-center w-full aspect-square rounded-md cursor-pointer ${""}`}
