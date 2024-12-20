@@ -10,7 +10,7 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import { BiSolidEdit } from "react-icons/bi";
 import { Reorder } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-
+import { usePrevious } from "@uidotdev/usehooks";
 const Board = () => {
   return (
     <div className="relative w-full h-[calc(100%-80px)] min-h-[500px] bg-gray-100 rounded-xl p-2 border border-gray-200 overflow-hidden">
@@ -21,14 +21,18 @@ const Board = () => {
 
 export default Board;
 
+const TOTAL_SCALES = 27;
+const SCALE_HEIGHT_RATIO = 1.15;
+
 const ScalesAndAvatars = () => {
-  const TOTAL_SCALES = 27;
   const { avatars, setAvatars } = useGlobals();
   const tallestAvatar = [...avatars].sort((a, b) => b.height - a.height)[0];
   const tallestAvatarHeight = Math.max(tallestAvatar?.height || 285, 285);
-  const [height, setHeight] = useState(tallestAvatarHeight * 1.25);
+  const [height, setHeight] = useState(
+    tallestAvatarHeight * SCALE_HEIGHT_RATIO
+  );
   const delta = height / TOTAL_SCALES;
-  const [avatarsLength, setAvatarsLength] = useState(avatars.length);
+  const previousAvatarsLength = usePrevious(avatars.length);
 
   const boardRef = useRef<HTMLDivElement>(null);
   const avatarsRef = useRef<HTMLDivElement>(null);
@@ -40,8 +44,8 @@ const ScalesAndAvatars = () => {
       const avatarsWidth =
         avatarsRef.current?.querySelector(".avatarsContainer")?.clientWidth ||
         0;
-      const added = avatars.length > avatarsLength;
-      const removed = avatars.length < avatarsLength;
+      const added = avatars.length > previousAvatarsLength;
+      const removed = avatars.length < previousAvatarsLength;
 
       if (added && avatarsWidth + 100 > boardWidth) {
         setHeight(height * 1.25);
@@ -49,7 +53,6 @@ const ScalesAndAvatars = () => {
         setHeight(height * 0.9);
       }
     }
-    setAvatarsLength(avatars.length);
   }, [avatars.length]);
 
   return (
@@ -142,9 +145,9 @@ const Avatar = ({
         <h2 className="text-[10px] whitespace-nowrap">
           {Math.round(avatar.height * 100) / 100} cm
         </h2>
-        {avatar.weight && (
+        {avatar.weight ? (
           <h2 className="text-[10px] whitespace-nowrap">{avatar.weight} kg</h2>
-        )}
+        ) : null}
         <h2 className="text-[10px] whitespace-nowrap">{`${ftIn.ft}ft ${ftIn.in}in`}</h2>
         <hr className="w-full border-gray-500" />
       </div>

@@ -16,7 +16,7 @@ const NavBar = ({ className }: { className?: string }) => {
   const { selectedScreen, setSelectedScreen } = useGlobals();
   return (
     <nav
-      className={`md:h-full max-w-fit bg-white rounded-2xl shadow-sm p-1 pb-0 md:pb-0 md:space-y-4 border border-gray-200 sticky top-2 flex flex-row justify-start items-between z-20 overflow-x-auto min-h-fit ${className}`}
+      className={`md:h-full w-full bg-white rounded-2xl shadow-sm p-1 pb-0 md:pb-0 md:space-y-4 border border-gray-200 sticky top-2 flex flex-row justify-center items-between z-20 overflow-x-auto min-h-fit ${className}`}
     >
       {screens.map(({ title, icon }, index) => (
         <span
@@ -40,6 +40,7 @@ export default NavBar;
 const screens = [
   { title: "Add Person", icon: <BsPersonFillAdd /> },
   { title: "Celebrities", icon: <BsStars /> },
+  { title: "Fictional", icon: <BsStars /> },
   { title: "Objects", icon: <BsBox /> },
   { title: "Buildings", icon: <BsBuilding /> },
   { title: "Animals", icon: <BiSolidDog /> },

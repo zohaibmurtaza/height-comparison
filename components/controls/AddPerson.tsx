@@ -11,9 +11,10 @@ import toast from "react-hot-toast";
 import { v4 } from "uuid";
 import Input from "@/components/ui/Input";
 import Message from "../ui/Message";
-import { AvatarCategory, Gender, ItemType } from "@/misc/enums";
+import { AvatarCategory, BodyType, Gender, ItemType } from "@/misc/enums";
 import { colors } from "@/misc/data";
 import { getAnonymouseAvatar } from "@/utils/getAnonymouseAvatar";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 interface AddPersonData {
   gender: Gender;
@@ -25,6 +26,7 @@ interface AddPersonData {
   name: string;
   avatarCategory: AvatarCategory;
   weight: number;
+  bodyType: BodyType;
 }
 
 const AddPerson = () => {
@@ -38,6 +40,7 @@ const AddPerson = () => {
     height: 0,
     name: "",
     avatarCategory: AvatarCategory.ADULT,
+    bodyType: BodyType.ECTOMORPH,
     weight: 0,
   });
 
@@ -75,6 +78,12 @@ const AddPerson = () => {
           setState("avatarCategory", avatarCategory)
         }
       />
+      <TabStyleRadio
+        options={Object.values(Gender)}
+        value={data.gender}
+        onChange={(gender) => setState("gender", gender)}
+        className="capitalize w-full"
+      />
 
       {/* Height */}
       <div className="flex items-stretch justify-between gap-2 w-full max-h-[45px]">
@@ -92,19 +101,22 @@ const AddPerson = () => {
         />
       </div>
 
-      <Input
-        name="weight"
-        placeholder="Weight (kg)"
-        value={data.weight === 0 ? "" : data.weight}
-        type="number"
-        onChange={(value) => setState("weight", value)}
-      />
-      <Input
-        name="name"
-        placeholder="Name"
-        value={data.name}
-        onChange={(value) => setState("name", value)}
-      />
+      <div className="flex items-center justify-between gap-2">
+        <Input
+          name="name"
+          placeholder="Name"
+          value={data.name}
+          onChange={(value) => setState("name", value)}
+        />
+        <Input
+          name="weight"
+          placeholder="Weight (kg)"
+          value={data.weight === 0 ? "" : data.weight}
+          type="number"
+          onChange={(value) => setState("weight", value)}
+          className="w-2/3"
+        />
+      </div>
 
       {/* Color */}
       <Colors
@@ -121,7 +133,13 @@ const AddPerson = () => {
         onGenderChange={(gender) => setState("gender", gender)}
       />
       {avatarCounts.person < MAX_PERSONS ? (
-        <Button onClick={handleAddAvatar}>Add Person</Button>
+        <Button
+          onClick={handleAddAvatar}
+          className="flex items-center gap-2 justify-center"
+        >
+          Add
+          <IoMdAddCircleOutline />
+        </Button>
       ) : (
         <Message variant="error">
           Max {MAX_PERSONS} people at a time. Remove one to add another.

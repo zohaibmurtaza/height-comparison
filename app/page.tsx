@@ -21,7 +21,8 @@ export default function Home() {
   const screens = {
     "Add Person": <AddPerson key="add-person" />,
     "Edit Persons": <EditPersons key="edit-persons" />,
-    Celebrities: <Celebrities key="celebrities" />,
+    Celebrities: <Celebrities key="celebrities" category="Celebrities" />,
+    Fictional: <Celebrities key="fictional" category="Fictional" />,
     Objects: <AddItems type={ItemType.OBJECT} key="add-items-object" />,
     Buildings: <AddItems type={ItemType.BUILDING} key="add-items-building" />,
     Animals: <AddItems type={ItemType.ANIMAL} key="add-items-animal" />,

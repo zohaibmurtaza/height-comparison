@@ -4,12 +4,16 @@ import React from "react";
 const SectionTitle = ({
   className,
   children,
+  onClick,
 }: {
   className?: string;
   children: React.ReactNode;
+  onClick?: () => void;
 }) => {
   return (
-    <h1 className={clsx("text-base font-medium", className)}>{children}</h1>
+    <h1 className={clsx("text-base font-medium", className)} onClick={onClick}>
+      {children}
+    </h1>
   );
 };
 
