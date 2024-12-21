@@ -93,11 +93,11 @@ const Avatar = ({
     <Reorder.Item
       as="div"
       value={avatar}
-      className="relative min-w-fit order-none [&:hover_.edit-avatar]:flex"
+      className="relative min-w-fit order-none"
       style={{ height: `${height}%` }}
     >
       <div
-        className={`edit-avatar absolute -top-[78px] left-0 w-full flex-col items-center text-[10px] hidden ${
+        className={`edit-avatar absolute -top-[78px] left-0 w-full flex-col items-center text-[10px] flex ${
           avatar.weight ? "-top-[92px]" : "-top-[78px]"
         }`}
       >

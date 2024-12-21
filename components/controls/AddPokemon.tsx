@@ -16,13 +16,14 @@ import {
   fetchImageById,
   ITEMS_PER_PAGE,
   MALE_AVATARS,
+  MAX_AVATARS,
 } from "@/misc/data";
 import { Celebrity } from "@/misc/interfaces";
 
 const AddPokemon = () => {
   const [name, setName] = useState("");
   const debouncedName = useDebounce(name, 300);
-  const { addAvatar, avatarCounts } = useGlobals();
+  const { addAvatar, avatars } = useGlobals();
   const [allObjects, setAllObjects] = useState<Celebrity[]>([]);
   const [page, setPage] = useState(1);
   const [objectsData, loading, error] = useData<Celebrity[]>({
@@ -71,7 +72,7 @@ const AddPokemon = () => {
                   key={index}
                   className="w-full relative [&:hover>h3]:opacity-100 transition-opacity duration-300 flex justify-center items-center cursor-pointer"
                   onClick={() => {
-                    if (avatarCounts.object >= 3) return;
+                    if (avatars.length >= MAX_AVATARS) return;
                     addAvatar({
                       avatar: avatarImage,
                       name: obj.title.rendered,
@@ -104,9 +105,9 @@ const AddPokemon = () => {
       ) : (
         <Message variant="error">{error?.toString()}</Message>
       )}
-      {avatarCounts.object >= 3 && (
+      {avatars.length >= MAX_AVATARS && (
         <Message variant="error">
-          Max 3 objects at a time. Remove one to add another.
+          Max {MAX_AVATARS} objects at a time. Remove one to add another.
         </Message>
       )}
     </div>

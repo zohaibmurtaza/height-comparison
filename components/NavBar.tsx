@@ -8,8 +8,9 @@ import {
   BsBuilding,
   BsImage,
   BsPersonFillAdd,
-  BsStars,
+  BsPersonRaisedHand,
 } from "react-icons/bs";
+import { ImTv } from "react-icons/im";
 import { MdCatchingPokemon } from "react-icons/md";
 
 const NavBar = ({ className }: { className?: string }) => {
@@ -39,8 +40,8 @@ export default NavBar;
 
 const screens = [
   { title: "Add Person", icon: <BsPersonFillAdd /> },
-  { title: "Celebrities", icon: <BsStars /> },
-  { title: "Fictional", icon: <BsStars /> },
+  { title: "Celebrities", icon: <BsPersonRaisedHand /> },
+  { title: "Fictional", icon: <ImTv /> },
   { title: "Objects", icon: <BsBox /> },
   { title: "Buildings", icon: <BsBuilding /> },
   { title: "Animals", icon: <BiSolidDog /> },

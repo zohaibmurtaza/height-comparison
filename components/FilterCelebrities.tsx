@@ -4,7 +4,7 @@ import useData from "@/hooks/useData";
 import Select from "react-select";
 import { useGlobals } from "@/contexts/GlobalContext";
 import { v4 } from "uuid";
-import { colors, fetchImageById } from "@/misc/data";
+import { colors, fetchImageById, MAX_AVATARS } from "@/misc/data";
 import Message from "./ui/Message";
 import { ItemType } from "@/misc/enums";
 import { API_ENDPOINTS } from "@/misc/apiEndpoints";
@@ -23,7 +23,7 @@ interface CelebrityOption {
 }
 
 const FilterCelebrities = ({ category }: { category: string }) => {
-  const { addAvatar, avatarCounts } = useGlobals();
+  const { addAvatar, avatars } = useGlobals();
   const [subcat, setSubcat] = useState<CelebrityOption | null>(null);
   const [subcat2, setSubcat2] = useState<CelebrityOption | null>(null);
 
@@ -133,7 +133,7 @@ const FilterCelebrities = ({ category }: { category: string }) => {
               isLoading={loading3}
               placeholder="Select Subcategory"
               onChange={(character) => {
-                if (avatarCounts.object >= 10 || !character) return;
+                if (avatars.length >= MAX_AVATARS || !character) return;
                 addAvatar({
                   id: v4(),
                   name: character.data.title.rendered,

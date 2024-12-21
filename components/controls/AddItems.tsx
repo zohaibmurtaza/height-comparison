@@ -11,7 +11,7 @@ import Message from "../ui/Message";
 import { useDebounce } from "@uidotdev/usehooks";
 import { API_ENDPOINTS } from "@/misc/apiEndpoints";
 import { ItemType } from "@/misc/enums";
-import { fetchImageById, ITEMS_PER_PAGE } from "@/misc/data";
+import { fetchImageById, ITEMS_PER_PAGE, MAX_AVATARS } from "@/misc/data";
 
 interface ItemData {
   id: number;
@@ -23,7 +23,7 @@ interface ItemData {
 const AddItems = ({ type }: { type: ItemType }) => {
   const [name, setName] = useState("");
   const debouncedName = useDebounce(name, 300);
-  const { addAvatar, avatarCounts } = useGlobals();
+  const { addAvatar, avatars } = useGlobals();
   const [allObjects, setAllObjects] = useState<ItemData[]>([]);
   const [page, setPage] = useState(1);
   const [objectsData, loading, error] = useData<ItemData[]>({
@@ -67,7 +67,7 @@ const AddItems = ({ type }: { type: ItemType }) => {
                   key={index}
                   className="w-full relative [&:hover>h3]:opacity-100 transition-opacity duration-300 flex justify-center items-center cursor-pointer"
                   onClick={() => {
-                    if (avatarCounts.object >= 3) return;
+                    if (avatars.length >= MAX_AVATARS) return;
                     addAvatar({
                       avatar: fetchImageById(obj.image),
                       name: obj.name,
@@ -100,9 +100,9 @@ const AddItems = ({ type }: { type: ItemType }) => {
       ) : (
         <Message variant="error">{error?.toString()}</Message>
       )}
-      {avatarCounts.object >= 3 && (
+      {avatars.length >= MAX_AVATARS && (
         <Message variant="error">
-          Max 3 objects at a time. Remove one to add another.
+          Max {MAX_AVATARS} objects at a time. Remove one to add another.
         </Message>
       )}
     </div>

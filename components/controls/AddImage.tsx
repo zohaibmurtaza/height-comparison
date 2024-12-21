@@ -15,17 +15,22 @@ import { v4 } from "uuid";
 import { Avatar } from "@/misc/interfaces";
 import { ItemType } from "@/misc/enums";
 import { removeBg } from "@/utils/removeBg";
+import { MAX_AVATARS } from "@/misc/data";
+import Message from "../ui/Message";
 
 const AddImage = () => {
   const [image, setImage] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const { avatars } = useGlobals();
   useEffect(() => {
     if (image) {
+      if (avatars.length >= MAX_AVATARS) return;
       getBase64FromFile(image)
         .then((data) => {
           setImageUrl(data as string);
           setModalOpen(true);
+          setImage(null);
         })
         .catch(() => setImageUrl(null));
     }
@@ -34,11 +39,13 @@ const AddImage = () => {
     <div className="w-full h-full space-y-2.5">
       <SectionTitle>Add your own image</SectionTitle>
       <label className="border border-primary border-dashed  rounded-xl p-5 bg-primary/5 flex flex-col justify-center items-center gap-2.5 cursor-pointer min-h-[250px]">
-        <input
-          type="file"
-          className="hidden"
-          onChange={(e) => setImage(e.target.files?.[0] || null)}
-        />
+        {avatars.length < MAX_AVATARS && (
+          <input
+            type="file"
+            className="hidden"
+            onChange={(e) => setImage(e.target.files?.[0] || null)}
+          />
+        )}
         <BiUpload
           size={50}
           className="bg-primary p-3 rounded-lg"
@@ -56,6 +63,11 @@ const AddImage = () => {
             setModalOpen(false);
           }}
         />
+      )}
+      {avatars.length >= MAX_AVATARS && (
+        <Message variant="error">
+          Max {MAX_AVATARS} images at a time. Remove one to add another.
+        </Message>
       )}
     </div>
   );

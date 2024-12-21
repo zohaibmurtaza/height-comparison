@@ -77,8 +77,8 @@ const BoardUtilities = () => {
       >
         <input
           type="range"
-          value={2 - scalingFactor}
-          onChange={(e) => setScalingFactor(2 - Number(e.target.value))}
+          value={2 - scalingFactor + 0.3}
+          onChange={(e) => setScalingFactor(2 - Number(e.target.value) + 0.3)}
           min={0}
           max={2}
           step={0.01}

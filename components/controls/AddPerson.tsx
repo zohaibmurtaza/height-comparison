@@ -15,6 +15,7 @@ import { AvatarCategory, BodyType, Gender, ItemType } from "@/misc/enums";
 import { colors } from "@/misc/data";
 import { getAnonymouseAvatar } from "@/utils/getAnonymouseAvatar";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import SectionTitle from "../ui/SectionTitle";
 
 interface AddPersonData {
   gender: Gender;
@@ -30,7 +31,7 @@ interface AddPersonData {
 }
 
 const AddPerson = () => {
-  const { avatarCounts, addAvatar } = useGlobals();
+  const { avatars, addAvatar } = useGlobals();
   const [data, setData] = useState<AddPersonData>({
     gender: Gender.MALE,
     unit: "ft",
@@ -48,7 +49,7 @@ const AddPerson = () => {
     key: keyof AddPersonData,
     value: AddPersonData[keyof AddPersonData]
   ) => {
-    setData({ ...data, [key]: value });
+    setData((prev) => ({ ...prev, [key]: value }));
   };
 
   const handleAddAvatar = () => {
@@ -70,20 +71,25 @@ const AddPerson = () => {
   };
   return (
     <div className="w-full min-h-full space-y-3">
-      <TabStyleRadio
-        options={Object.values(AvatarCategory)}
-        value={data.avatarCategory}
-        className="capitalize w-full"
-        onChange={(avatarCategory) =>
-          setState("avatarCategory", avatarCategory)
-        }
-      />
-      <TabStyleRadio
-        options={Object.values(Gender)}
-        value={data.gender}
-        onChange={(gender) => setState("gender", gender)}
-        className="capitalize w-full"
-      />
+      <div className="flex items-center justify-between gap-2">
+        <TabStyleRadio
+          options={Object.values(Gender)}
+          value={data.gender}
+          onChange={(gender) => {
+            setState("gender", gender);
+            setState("avatarCategory", AvatarCategory.ADULT);
+          }}
+          className="capitalize w-2/3"
+        />
+        <TabStyleRadio
+          options={[AvatarCategory.CHILD, AvatarCategory.PET]}
+          value={data.avatarCategory}
+          className="capitalize w-1/3"
+          onChange={(avatarCategory) =>
+            setState("avatarCategory", avatarCategory)
+          }
+        />
+      </div>
 
       {/* Height */}
       <div className="flex items-stretch justify-between gap-2 w-full max-h-[45px]">
@@ -124,6 +130,15 @@ const AddPerson = () => {
         onChange={(color) => setState("color", color)}
       />
 
+      <SectionTitle>Gender</SectionTitle>
+      {data.avatarCategory === AvatarCategory.CHILD && (
+        <TabStyleRadio
+          options={Object.values(Gender)}
+          value={data.gender}
+          onChange={(gender) => setState("gender", gender)}
+          className="capitalize w-full"
+        />
+      )}
       {/* Select Avatar */}
       <AvatarSelector
         gender={data.gender}
@@ -132,7 +147,7 @@ const AddPerson = () => {
         onAvatarChange={(avatar) => setState("avatar", avatar)}
         onGenderChange={(gender) => setState("gender", gender)}
       />
-      {avatarCounts.person < MAX_PERSONS ? (
+      {avatars.length < MAX_PERSONS ? (
         <Button
           onClick={handleAddAvatar}
           className="flex items-center gap-2 justify-center"
@@ -151,4 +166,4 @@ const AddPerson = () => {
 
 export default AddPerson;
 
-const MAX_PERSONS = 20;
+const MAX_PERSONS = 6;
