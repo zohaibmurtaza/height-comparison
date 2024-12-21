@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import LogoIcon from "@/assets/logo.svg";
+import LogoIcon from "@/public/images/logo.png";
 
 const Logo = () => {
   return (
@@ -11,7 +11,7 @@ const Logo = () => {
         alt="logo"
         width={194}
         height={24}
-        className="w-[150px] md:w-fit"
+        className="h-[40px] w-auto"
       />
     </Link>
   );

@@ -1,6 +1,7 @@
 export const cmToFtAndInch = (cm: number) => {
-  const ft = Math.floor(cm / 30.48);
-  const inches = Math.round((cm % 30.48) / 2.54);
+  const totalInches = cm / 2.54;
+  const ft = Math.floor(totalInches / 12);
+  const inches = Math.round(totalInches % 12);
   return { ft, in: inches };
 };
 

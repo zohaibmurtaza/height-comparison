@@ -47,12 +47,14 @@ const AvatarSelector = ({
   return (
     <div>
       <SectionTitle className="">Select Avatar</SectionTitle>
-      <TabStyleRadio
-        options={Object.values(BodyType)}
-        value={bodyType}
-        onChange={(bodyType) => setBodyType(bodyType as BodyType)}
-        className="text-[12px] capitalize mb-2"
-      />
+      {avatarCategory === AvatarCategory.PET ? null : (
+        <TabStyleRadio
+          options={Object.values(BodyType)}
+          value={bodyType}
+          onChange={(bodyType) => setBodyType(bodyType as BodyType)}
+          className="text-[12px] capitalize mb-2"
+        />
+      )}
 
       {/* Avatars */}
       <div className="rounded-lg border-gray-200 p-5 border grid grid-cols-4 sm:grid-cols-5 gap-3 max-h-[300px] justify-items-center items-baseline overflow-y-auto">

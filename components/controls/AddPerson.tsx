@@ -129,15 +129,16 @@ const AddPerson = () => {
         selectedColor={data.color || "#fff"}
         onChange={(color) => setState("color", color)}
       />
-
-      <SectionTitle>Gender</SectionTitle>
       {data.avatarCategory === AvatarCategory.CHILD && (
-        <TabStyleRadio
-          options={Object.values(Gender)}
-          value={data.gender}
-          onChange={(gender) => setState("gender", gender)}
-          className="capitalize w-full"
-        />
+        <>
+          <SectionTitle>Gender</SectionTitle>
+          <TabStyleRadio
+            options={Object.values(Gender)}
+            value={data.gender}
+            onChange={(gender) => setState("gender", gender)}
+            className="capitalize w-full text-[12px]"
+          />
+        </>
       )}
       {/* Select Avatar */}
       <AvatarSelector
