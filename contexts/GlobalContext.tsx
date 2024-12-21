@@ -1,4 +1,4 @@
-// context to store global states
+"use client";
 
 import { API_ENDPOINTS } from "@/misc/apiEndpoints";
 import { server } from "@/misc/axios";
@@ -6,14 +6,7 @@ import { ItemType } from "@/misc/enums";
 import { Avatar } from "@/misc/interfaces";
 import { useHistoryState } from "@uidotdev/usehooks";
 import { useSearchParams } from "next/navigation";
-import {
-  createContext,
-  Suspense,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { CgSpinner } from "react-icons/cg";
+import { createContext, useContext, useEffect, useState } from "react";
 
 interface GlobalContextType {
   selectedScreen: string;
@@ -34,6 +27,8 @@ interface GlobalContextType {
   redo: () => void;
   canUndo: boolean;
   canRedo: boolean;
+  scalingFactor: number;
+  setScalingFactor: (factor: number) => void;
 }
 
 const GlobalContext = createContext<GlobalContextType>({
@@ -55,6 +50,8 @@ const GlobalContext = createContext<GlobalContextType>({
   redo: () => {},
   canUndo: false,
   canRedo: false,
+  scalingFactor: 100,
+  setScalingFactor: () => {},
 });
 
 // Provider for the global context
@@ -73,16 +70,24 @@ export const GlobalContextProvider = ({
     canUndo,
     canRedo,
   } = useHistoryState<Avatar[]>([]);
+  const [scalingFactor, setScalingFactor] = useState(1.25);
 
   const searchParams = useSearchParams();
 
   useEffect(() => {
     fetchSharedAvatars();
+    const scalingFactor = localStorage.getItem("scalingFactor");
+    if (scalingFactor) setScalingFactor(Number(scalingFactor));
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("avatars", JSON.stringify(avatars));
-  }, [avatars]);
+    if (avatars.length > 0) {
+      localStorage.setItem("avatars", JSON.stringify(avatars));
+    }
+    if (scalingFactor !== 1.25) {
+      localStorage.setItem("scalingFactor", scalingFactor.toString());
+    }
+  }, [avatars, scalingFactor]);
 
   const fetchSharedAvatars = async () => {
     let isFetched = false;
@@ -146,6 +151,8 @@ export const GlobalContextProvider = ({
         redo,
         canUndo,
         canRedo,
+        scalingFactor,
+        setScalingFactor,
       }}
     >
       {children}

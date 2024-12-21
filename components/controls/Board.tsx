@@ -9,8 +9,7 @@ import { ItemType } from "@/misc/enums";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { BiSolidEdit } from "react-icons/bi";
 import { Reorder } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { usePrevious } from "@uidotdev/usehooks";
+import { useRef } from "react";
 const Board = () => {
   return (
     <div className="relative w-full h-[calc(100%-80px)] min-h-[500px] bg-gray-100 rounded-xl p-2 border border-gray-200 overflow-hidden">
@@ -22,38 +21,18 @@ const Board = () => {
 export default Board;
 
 const TOTAL_SCALES = 27;
-const SCALE_HEIGHT_RATIO = 1.15;
 
 const ScalesAndAvatars = () => {
-  const { avatars, setAvatars } = useGlobals();
-  const tallestAvatar = [...avatars].sort((a, b) => b.height - a.height)[0];
-  const tallestAvatarHeight = Math.max(tallestAvatar?.height || 285, 285);
-  const [height, setHeight] = useState(
-    tallestAvatarHeight * SCALE_HEIGHT_RATIO
+  const { avatars, setAvatars, scalingFactor } = useGlobals();
+  const tallestAvatarHeight = Math.max(
+    ...avatars.map((avatar) => avatar.height),
+    285
   );
+  const height = tallestAvatarHeight * scalingFactor;
   const delta = height / TOTAL_SCALES;
-  const previousAvatarsLength = usePrevious(avatars.length);
 
   const boardRef = useRef<HTMLDivElement>(null);
   const avatarsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setHeight(tallestAvatarHeight * 1.25);
-    if (boardRef.current && avatarsRef.current) {
-      const boardWidth = boardRef.current.clientWidth;
-      const avatarsWidth =
-        avatarsRef.current?.querySelector(".avatarsContainer")?.clientWidth ||
-        0;
-      const added = avatars.length > previousAvatarsLength;
-      const removed = avatars.length < previousAvatarsLength;
-
-      if (added && avatarsWidth + 100 > boardWidth) {
-        setHeight(height * 1.25);
-      } else if (removed && height > tallestAvatarHeight * 1.25) {
-        setHeight(height * 0.9);
-      }
-    }
-  }, [avatars.length]);
 
   return (
     <>
@@ -88,7 +67,7 @@ const ScalesAndAvatars = () => {
           as="div"
           values={avatars}
           onReorder={setAvatars}
-          className="avatarsContainer absolute left-1/2 -translate-x-1/2 w-fit h-[calc(100%-40px)] flex items-end justify-center gap-1 z-[20] empty:hidden overflow-x-visible bottom-0 pb-[18px] lg:pb-[35px]"
+          className="avatarsContainer absolute left-1/2 -translate-x-1/2 w-full max-w-[calc(100%-100px)] overflow-x-scroll h-[calc(100%-40px)] flex items-end justify-center gap-1 z-[20] empty:hidden bottom-0 pb-[18px]"
         >
           {avatars.map((avatar) => (
             <Avatar key={avatar.id} avatar={avatar} boardHeight={height} />
@@ -107,7 +86,8 @@ const Avatar = ({
   boardHeight: number;
 }) => {
   const ftIn = cmToFtAndInch(avatar.height);
-  const height = (avatar.height / boardHeight) * 100;
+  const height =
+    (avatar.height / (boardHeight - boardHeight / TOTAL_SCALES - 24)) * 100;
   const { removeAvatar, setSelectedAvatar, setSelectedScreen } = useGlobals();
   return (
     <Reorder.Item
@@ -117,7 +97,7 @@ const Avatar = ({
       style={{ height: `${height}%` }}
     >
       <div
-        className={`edit-avatar absolute -top-[81px] left-0 w-full flex-col items-center text-[10px] hidden ${
+        className={`edit-avatar absolute -top-[78px] left-0 w-full flex-col items-center text-[10px] hidden ${
           avatar.weight ? "-top-[92px]" : "-top-[78px]"
         }`}
       >

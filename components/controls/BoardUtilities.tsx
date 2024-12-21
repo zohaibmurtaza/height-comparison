@@ -12,6 +12,7 @@ import { CgSpinner } from "react-icons/cg";
 import { useEffect, useState } from "react";
 import { MdReportProblem } from "react-icons/md";
 import axios from "axios";
+import clsx from "clsx";
 
 const BoardUtilities = () => {
   const {
@@ -22,6 +23,8 @@ const BoardUtilities = () => {
     canRedo,
     setAvatars,
     setSelectedScreen,
+    scalingFactor,
+    setScalingFactor,
   } = useGlobals();
   const [shareLink, setShareLink] = useState("");
   const [loading, setLoading] = useState(false);
@@ -65,9 +68,34 @@ const BoardUtilities = () => {
     setShareLink("");
   }, [avatars]);
 
+  const renderScalingFactor = (isMobile: boolean) => {
+    return (
+      <div
+        className={`flex flex-col ${clsx(
+          isMobile ? "block lg:hidden w-full" : "hidden lg:block w-[200px]"
+        )}`}
+      >
+        <input
+          type="range"
+          value={2 - scalingFactor}
+          onChange={(e) => setScalingFactor(2 - Number(e.target.value))}
+          min={0}
+          max={2}
+          step={0.01}
+          className={"w-full accent-primary"}
+        />
+        <div className="relative flex justify-between items-center text-[10px] mt-2">
+          <span className="absolute left-0">0%</span>
+          <span className="absolute left-1/2 -translate-x-1/2">100%</span>
+          <span className="absolute right-0">200%</span>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
-      <div className="flex justify-between items-center z-20 relative">
+      <div className="flex justify-between flex-wrap items-center z-20 relative">
         <div className="flex gap-1 items-center">
           <LuUndo2
             size={45}
@@ -83,6 +111,7 @@ const BoardUtilities = () => {
             }`}
             onClick={redo}
           />
+          {renderScalingFactor(false)}
         </div>
         <div className="flex items-center gap-1">
           <Button
@@ -114,6 +143,7 @@ const BoardUtilities = () => {
         open={shareLinkDialogOpen}
         onClose={() => setShareLinkDialogOpen(false)}
       />
+      {renderScalingFactor(true)}
     </>
   );
 };
