@@ -78,7 +78,7 @@ const FilterCelebrities = ({ category }: { category: string }) => {
               isSearchable={false}
               classNames={classes}
               isLoading={subcategoriesLoading}
-              placeholder="Select Subcategory"
+              placeholder="Select Category"
               value={subcat}
               onChange={(selectedOption) => {
                 setSubcat(selectedOption || null);

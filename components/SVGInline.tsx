@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import { cn } from "@/misc/utils";
 import React, { useEffect, useRef, useState } from "react";
 
 const SvgInline = ({ url, fill }: { url: string; fill: string }) => {
@@ -45,7 +45,7 @@ const SvgInline = ({ url, fill }: { url: string; fill: string }) => {
       ref={ref}
       className={`h-full [&_svg]:h-full [&_svg]:w-auto svgInline--${
         isLoaded ? "loaded" : "loading"
-      } ${clsx(isErrored ? "svgInline--errored" : "")}`}
+      } ${cn(isErrored ? "svgInline--errored" : "")}`}
     />
   );
 };

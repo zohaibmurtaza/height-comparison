@@ -9,7 +9,7 @@ import { useState } from "react";
 import Colors from "./Colors";
 import AvatarSelector from "./AvatarSelector";
 import { FaCaretRight } from "react-icons/fa";
-import { Gender } from "@/misc/enums";
+import { AvatarCategory, BodyType, Gender } from "@/misc/enums";
 
 const EditPersonForm = ({ avatar }: { avatar: Avatar }) => {
   const {
@@ -21,6 +21,8 @@ const EditPersonForm = ({ avatar }: { avatar: Avatar }) => {
     setSelectedScreen,
   } = useGlobals();
   const [unit, setUnit] = useState<"cm" | "ft">("ft");
+  const [bodyType, setBodyType] = useState<BodyType>(BodyType.ECTOMORPH);
+
   return (
     <div className="w-full rounded-lg overflow-hidden border border-gray-300">
       <div className="flex items-center justify-between">
@@ -38,9 +40,9 @@ const EditPersonForm = ({ avatar }: { avatar: Avatar }) => {
             }}
             className="mix-blend-difference text-white transition-all duration-400"
           />
-          <h2 className="flex-grow mix-blend-difference text-white">
+          <div className="flex-grow mix-blend-difference text-white">
             {avatar.name}
-          </h2>
+          </div>
         </div>
         <BiTrash
           className="px-2 cursor-pointer border-b border-gray-200"
@@ -51,65 +53,91 @@ const EditPersonForm = ({ avatar }: { avatar: Avatar }) => {
           }}
         />
       </div>
-
       {/* Editin Form */}
       {selectedAvatar === avatar.id && (
         <div className="p-2 space-y-3">
-          {/* Name */}
-          {(avatar.type === "person" || avatar.type === "image") && (
-            <div>
-              <SectionTitle>Name</SectionTitle>
-              <Input
-                placeholder="Name"
-                name="name"
-                value={avatar.name}
-                onChange={(name) => updateAvatar({ ...avatar, name })}
-              />
-            </div>
-          )}
+          <div className="flex items-center justify-between gap-2">
+            <TabStyleRadio
+              options={Object.values(Gender)}
+              value={
+                avatar.category === AvatarCategory.ADULT ? avatar.gender : ""
+              }
+              onChange={(gender) => {
+                updateAvatar({
+                  ...avatar,
+                  gender: gender as Gender,
+                  category: AvatarCategory.ADULT,
+                });
+              }}
+              className="capitalize w-2/3"
+            />
+            <TabStyleRadio
+              options={[AvatarCategory.CHILD, AvatarCategory.PET]}
+              value={avatar.category}
+              className="capitalize w-1/3"
+              onChange={(avatarCategory) => {
+                updateAvatar({
+                  ...avatar,
+                  category: avatarCategory as AvatarCategory,
+                });
+                if (avatarCategory === AvatarCategory.CHILD) {
+                  setBodyType(BodyType.ECTOMORPH);
+                }
+              }}
+            />
+          </div>
 
-          {avatar.type === "person" && (
-            <div className="space-y-1 mb-2">
+          {/* Height */}
+          <div className="flex items-stretch justify-between gap-2 w-full max-h-[45px]">
+            <HeightInput
+              height={avatar.height}
+              unit={unit}
+              onChange={(height) => updateAvatar({ ...avatar, height: height })}
+            />
+            {/* Type */}
+            <TabStyleRadio
+              options={["ft", "cm"]}
+              value={unit}
+              onChange={(unit) => setUnit(unit as "ft" | "cm")}
+              className="min-w-[100px]"
+            />
+          </div>
+
+          <div className="flex items-center justify-between gap-2">
+            <Input
+              name="name"
+              placeholder="Name"
+              value={avatar.name}
+              onChange={(value) => updateAvatar({ ...avatar, name: value })}
+            />
+            <Input
+              name="weight"
+              placeholder="Weight (kg)"
+              value={avatar.weight === 0 ? "" : avatar.weight}
+              type="number"
+              onChange={(value) => updateAvatar({ ...avatar, weight: value })}
+              className="w-2/3"
+            />
+          </div>
+
+          {/* Color */}
+          <Colors
+            selectedColor={avatar.color || "#fff"}
+            onChange={(color) => updateAvatar({ ...avatar, color: color })}
+          />
+          {avatar.category === AvatarCategory.CHILD && (
+            <div>
               <SectionTitle>Gender</SectionTitle>
               <TabStyleRadio
-                options={[Gender.MALE, Gender.FEMALE]}
-                value={avatar.gender || Gender.MALE}
-                onChange={(gender) =>
-                  updateAvatar({ ...avatar, gender: gender as Gender })
+                options={["Boy", "Girl"]}
+                value={avatar.gender === Gender.MALE ? "Boy" : "Girl"}
+                onChange={(option) =>
+                  updateAvatar({
+                    ...avatar,
+                    gender: option === "Boy" ? Gender.MALE : Gender.FEMALE,
+                  })
                 }
-              />
-            </div>
-          )}
-
-          {/* Height */}
-          {(avatar.type === "person" || avatar.type === "image") && (
-            <div className="space-y-1">
-              <div className="flex items-center justify-between">
-                <SectionTitle>Height</SectionTitle>
-                <TabStyleRadio
-                  options={["cm", "ft"]}
-                  value={unit}
-                  className="min-w-[100px]"
-                  onChange={(unit) => {
-                    setUnit(unit as "cm" | "ft");
-                  }}
-                />
-              </div>
-              <HeightInput
-                height={avatar.height}
-                unit={unit}
-                onChange={(height) => updateAvatar({ ...avatar, height })}
-              />
-            </div>
-          )}
-
-          {/* Height */}
-          {avatar.type === "person" && (
-            <div className="space-y-1 mb-2">
-              <SectionTitle>Color</SectionTitle>
-              <Colors
-                selectedColor={avatar.color}
-                onChange={(color) => updateAvatar({ ...avatar, color })}
+                className="capitalize w-full text-[12px]"
               />
             </div>
           )}
@@ -119,13 +147,17 @@ const EditPersonForm = ({ avatar }: { avatar: Avatar }) => {
             <div className="space-y-1">
               <AvatarSelector
                 gender={avatar.gender || Gender.MALE}
-                avatarCategory={avatar.category}
                 selectedAvatar={avatar.avatar}
-                onGenderChange={(gender) =>
-                  updateAvatar({ ...avatar, gender: gender as Gender })
-                }
                 onAvatarChange={(url) =>
                   updateAvatar({ ...avatar, avatar: url })
+                }
+                avatarCategory={avatar.category}
+                bodyType={bodyType}
+                onBodyTypeChange={(bodyType) =>
+                  setBodyType(bodyType as BodyType)
+                }
+                onGenderChange={(gender) =>
+                  updateAvatar({ ...avatar, gender: gender as Gender })
                 }
               />
             </div>

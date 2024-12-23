@@ -8,9 +8,11 @@ import { RiSkipDownLine } from "react-icons/ri";
 interface AvatarSelectorProps {
   gender: Gender;
   selectedAvatar: string | null;
+  bodyType: BodyType;
   onAvatarChange: (avatar: string) => void;
   avatarCategory?: AvatarCategory;
   onGenderChange: (gender: Gender) => void;
+  onBodyTypeChange: (bodyType: BodyType) => void;
 }
 
 const TOTAL_AVATARS = {
@@ -24,11 +26,12 @@ const INITIAL_SHOW_COUNT = 5;
 const AvatarSelector = ({
   selectedAvatar,
   gender,
+  bodyType,
   avatarCategory = AvatarCategory.ADULT,
   onAvatarChange,
+  onBodyTypeChange,
 }: AvatarSelectorProps) => {
   const [showCount, setShowCount] = useState(INITIAL_SHOW_COUNT);
-  const [bodyType, setBodyType] = useState<BodyType>(BodyType.ECTOMORPH);
   //list of avatars in one single array
   const avatarsList = Array(TOTAL_AVATARS[avatarCategory])
     .fill(null)
@@ -46,18 +49,20 @@ const AvatarSelector = ({
 
   return (
     <div>
-      <SectionTitle className="">Select Avatar</SectionTitle>
-      {avatarCategory === AvatarCategory.PET ? null : (
-        <TabStyleRadio
-          options={Object.values(BodyType)}
-          value={bodyType}
-          onChange={(bodyType) => setBodyType(bodyType as BodyType)}
-          className="text-[12px] capitalize mb-2"
-        />
-      )}
+      {avatarCategory === AvatarCategory.ADULT ? (
+        <>
+          <SectionTitle className="">Select Avatar</SectionTitle>
+          <TabStyleRadio
+            options={Object.values(BodyType)}
+            value={bodyType}
+            onChange={(bodyType) => onBodyTypeChange(bodyType as BodyType)}
+            className="text-[12px] capitalize mb-2"
+          />
+        </>
+      ) : null}
 
       {/* Avatars */}
-      <div className="rounded-lg border-gray-200 p-5 border grid grid-cols-4 sm:grid-cols-5 gap-3 max-h-[300px] justify-items-center items-baseline overflow-y-auto">
+      <div className="rounded-lg border-gray-200 p-5 border grid grid-cols-5 gap-3 max-h-[300px] justify-items-center items-baseline overflow-y-auto">
         {avatarsList.slice(0, showCount).map((avatar, index) => (
           <Image
             key={index}

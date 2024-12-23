@@ -1,6 +1,4 @@
-import clsx from "clsx";
-import React from "react";
-
+import { cn } from "@/misc/utils";
 const SectionTitle = ({
   className,
   children,
@@ -11,9 +9,9 @@ const SectionTitle = ({
   onClick?: () => void;
 }) => {
   return (
-    <h1 className={clsx("text-base font-medium", className)} onClick={onClick}>
+    <span className={cn("text-base font-medium", className)} onClick={onClick}>
       {children}
-    </h1>
+    </span>
   );
 };
 

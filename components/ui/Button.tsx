@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import { cn } from "@/misc/utils";
 import React from "react";
 
 interface ButtonProps {
@@ -10,7 +10,7 @@ interface ButtonProps {
 const Button = ({ className, children, onClick }: ButtonProps) => {
   return (
     <button
-      className={clsx(
+      className={cn(
         "w-full rounded-xl bg-primary text-white p-3 cursor-pointer",
         className
       )}

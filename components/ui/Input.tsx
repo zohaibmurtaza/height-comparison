@@ -1,6 +1,4 @@
-import clsx from "clsx";
-import React from "react";
-
+import { cn } from "@/misc/utils";
 interface InputProps {
   name: string;
   type?: string;
@@ -25,10 +23,7 @@ const Input = ({
       placeholder={placeholder}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className={clsx(
-        `w-full rounded-lg p-2 border border-gray-200`,
-        className
-      )}
+      className={cn(`w-full rounded-lg p-2 border border-gray-200`, className)}
     />
   );
 };

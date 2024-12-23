@@ -81,7 +81,7 @@ export const GlobalContextProvider = ({
   }, []);
 
   useEffect(() => {
-    if (avatars.length > 0) {
+    if (avatars.length > 0 || canUndo || canRedo) {
       localStorage.setItem("avatars", JSON.stringify(avatars));
     }
     if (scalingFactor !== 1.25) {

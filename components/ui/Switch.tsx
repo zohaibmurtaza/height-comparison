@@ -1,5 +1,4 @@
-import clsx from "clsx";
-import React from "react";
+import { cn } from "@/misc/utils";
 
 interface SwitchProps {
   value: boolean;
@@ -13,7 +12,7 @@ const Switch = ({ value, onChange }: SwitchProps) => {
       onClick={onChange}
     >
       <div
-        className={`h-[80%] aspect-square rounded-full bg-white shadow-md absolute top-1/2 -translate-y-1/2 transition-all ${clsx(
+        className={`h-[80%] aspect-square rounded-full bg-white shadow-md absolute top-1/2 -translate-y-1/2 transition-all ${cn(
           value ? "right-0.5" : "left-0.5"
         )}`}
       ></div>

@@ -74,7 +74,9 @@ const AddPerson = () => {
       <div className="flex items-center justify-between gap-2">
         <TabStyleRadio
           options={Object.values(Gender)}
-          value={data.gender}
+          value={
+            data.avatarCategory === AvatarCategory.ADULT ? data.gender : ""
+          }
           onChange={(gender) => {
             setState("gender", gender);
             setState("avatarCategory", AvatarCategory.ADULT);
@@ -85,9 +87,13 @@ const AddPerson = () => {
           options={[AvatarCategory.CHILD, AvatarCategory.PET]}
           value={data.avatarCategory}
           className="capitalize w-1/3"
-          onChange={(avatarCategory) =>
-            setState("avatarCategory", avatarCategory)
-          }
+          onChange={(avatarCategory) => {
+            setState("avatarCategory", avatarCategory);
+            if (avatarCategory === AvatarCategory.CHILD) {
+              setState("bodyType", BodyType.ECTOMORPH);
+              setState("gender", Gender.MALE);
+            }
+          }}
         />
       </div>
 
@@ -130,23 +136,27 @@ const AddPerson = () => {
         onChange={(color) => setState("color", color)}
       />
       {data.avatarCategory === AvatarCategory.CHILD && (
-        <>
+        <div>
           <SectionTitle>Gender</SectionTitle>
           <TabStyleRadio
-            options={Object.values(Gender)}
-            value={data.gender}
-            onChange={(gender) => setState("gender", gender)}
+            options={["Boy", "Girl"]}
+            value={data.gender === Gender.MALE ? "Boy" : "Girl"}
+            onChange={(option) =>
+              setState("gender", option === "Boy" ? Gender.MALE : Gender.FEMALE)
+            }
             className="capitalize w-full text-[12px]"
           />
-        </>
+        </div>
       )}
       {/* Select Avatar */}
       <AvatarSelector
         gender={data.gender}
         avatarCategory={data.avatarCategory}
+        bodyType={data.bodyType}
         selectedAvatar={data.avatar}
         onAvatarChange={(avatar) => setState("avatar", avatar)}
         onGenderChange={(gender) => setState("gender", gender)}
+        onBodyTypeChange={(bodyType) => setState("bodyType", bodyType)}
       />
       {avatars.length < MAX_PERSONS ? (
         <Button

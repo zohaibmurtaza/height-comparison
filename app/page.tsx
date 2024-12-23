@@ -12,7 +12,7 @@ import Celebrities from "@/components/controls/Celebrities";
 import { ItemType } from "@/misc/enums";
 import AddPokemon from "@/components/controls/AddPokemon";
 import { BsImage } from "react-icons/bs";
-import clsx from "clsx";
+import { cn } from "@/misc/utils";
 
 export default function Home() {
   const { selectedScreen, setSelectedScreen } = useGlobals();
@@ -41,16 +41,16 @@ export default function Home() {
         <div className="flex flex-col flex-grow gap-2 order-first lg:order-none">
           <BoardUtilities />
           <Board />
-          <NavBar className="lg:hidden" />
           <span
             onClick={() => setSelectedScreen("Image")}
-            className={`flex md:hidden w-full justify-center items-center gap-2 pb-4 pt-4 px-6 h-full !mt-0 border-b border-transparent bg-white rounded-2xl shadow-sm p-4 border border-gray-200 transition-all duration-300 cursor-pointer hover:text-primary hover:border-primary/40 ${clsx(
+            className={`flex md:hidden w-full justify-center items-center gap-2 pb-4 pt-4 px-6 h-full !mt-0 border-b border-transparent bg-white rounded-2xl shadow-sm p-4 border border-gray-200 transition-all duration-300 cursor-pointer hover:text-primary hover:border-primary/40 ${cn(
               selectedScreen === "Image" && "!text-primary !border-primary"
             )}`}
           >
             <BsImage />
             <span className="text-xs text-center"> Add Image</span>
           </span>
+          <NavBar className="lg:hidden" />
         </div>
       </div>
     </main>

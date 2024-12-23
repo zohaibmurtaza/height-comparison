@@ -2,7 +2,7 @@
 
 import { useGlobals } from "@/contexts/GlobalContext";
 import { cmToFtAndInch } from "@/utils/HeightConversion";
-import clsx from "clsx";
+import { cn } from "@/misc/utils";
 import SvgInline from "@/components/SVGInline";
 import { Avatar as AvatarType } from "@/misc/interfaces";
 import { ItemType } from "@/misc/enums";
@@ -51,7 +51,7 @@ const ScalesAndAvatars = () => {
           return (
             <div
               key={index}
-              className={`w-full h-[calc(100%/27)] border-b flex justify-between items-center ${clsx(
+              className={`w-full h-[calc(100%/27)] border-b flex justify-between items-center ${cn(
                 cm.toFixed(0) === "0" ? "border-primary" : "border-gray-200"
               )}`}
             >
@@ -119,16 +119,18 @@ const Avatar = ({
           />
         </div>
 
-        <h2 className="text-[10px] whitespace-nowrap font-semibold">
+        <div className="text-[10px] whitespace-nowrap font-semibold">
           {avatar.name}
-        </h2>
-        <h2 className="text-[10px] whitespace-nowrap">
+        </div>
+        <div className="text-[10px] whitespace-nowrap">
           {Math.round(avatar.height * 100) / 100} cm
-        </h2>
+        </div>
         {avatar.weight ? (
-          <h2 className="text-[10px] whitespace-nowrap">{avatar.weight} kg</h2>
+          <div className="text-[10px] whitespace-nowrap">
+            {avatar.weight} kg
+          </div>
         ) : null}
-        <h2 className="text-[10px] whitespace-nowrap">{`${ftIn.ft}ft ${ftIn.in}in`}</h2>
+        <div className="text-[10px] whitespace-nowrap">{`${ftIn.ft}ft ${ftIn.in}in`}</div>
         <hr className="w-full border-gray-500" />
       </div>
       {avatar.type === "person" ? (

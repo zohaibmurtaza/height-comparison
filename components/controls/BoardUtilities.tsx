@@ -12,7 +12,7 @@ import { CgSpinner } from "react-icons/cg";
 import { useEffect, useState } from "react";
 import { MdReportProblem } from "react-icons/md";
 import axios from "axios";
-import clsx from "clsx";
+import { cn } from "@/misc/utils";
 
 const BoardUtilities = () => {
   const {
@@ -71,8 +71,8 @@ const BoardUtilities = () => {
   const renderScalingFactor = (isMobile: boolean) => {
     return (
       <div
-        className={`flex flex-col ${clsx(
-          isMobile ? "block lg:hidden w-full" : "hidden lg:block w-[200px]"
+        className={`flex flex-col ${cn(
+          isMobile ? "flex md:hidden w-full" : "hidden md:flex w-[200px]"
         )}`}
       >
         <input
@@ -98,15 +98,15 @@ const BoardUtilities = () => {
       <div className="flex justify-between flex-wrap items-center z-20 relative">
         <div className="flex gap-1 items-center">
           <LuUndo2
-            size={45}
-            className={`bg-white rounded-xl p-3 border border-gray-200 cursor-pointer ${
+            size={40}
+            className={`bg-white rounded-xl p-2 border border-gray-200 cursor-pointer ${
               !canUndo ? "opacity-50 pointer-events-none" : ""
             }`}
             onClick={undo}
           />
           <LuRedo2
-            size={45}
-            className={`bg-white rounded-xl p-3 border border-gray-200 cursor-pointer ${
+            size={40}
+            className={`bg-white rounded-xl p-2 border border-gray-200 cursor-pointer ${
               !canRedo ? "opacity-50 pointer-events-none" : ""
             }`}
             onClick={redo}
@@ -115,14 +115,14 @@ const BoardUtilities = () => {
         </div>
         <div className="flex items-center gap-1">
           <Button
-            className="bg-white !text-black border border-gray-200 flex items-center gap-2"
+            className="bg-white !text-black border border-gray-200 flex items-center gap-2 p-2 text-sm"
             onClick={() => setAvatars([])}
           >
             Clear
             <RxCrossCircled size={15} />
           </Button>
           <Button
-            className="bg-white !text-black border border-gray-200 flex items-center gap-2"
+            className="bg-white !text-black border border-gray-200 flex items-center gap-2 p-2 text-sm"
             onClick={() => setSelectedScreen("Edit Persons")}
           >
             Edit
@@ -130,7 +130,7 @@ const BoardUtilities = () => {
           </Button>
         </div>
         <Button
-          className="!w-fit flex items-center gap-1"
+          className="!w-fit flex items-center gap-1 p-2 text-sm"
           onClick={handleShare}
         >
           Share
