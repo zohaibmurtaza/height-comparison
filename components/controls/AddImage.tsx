@@ -17,6 +17,7 @@ import { ItemType } from "@/misc/enums";
 import { removeBg } from "@/utils/removeBg";
 import { MAX_AVATARS } from "@/misc/data";
 import Message from "../ui/Message";
+import ReactDOM from "react-dom";
 
 const AddImage = () => {
   const [image, setImage] = useState<File | null>(null);
@@ -122,12 +123,12 @@ const AddImageModel = ({
     onAdded();
   };
 
-  return (
+  return ReactDOM.createPortal(
     <>
-      <div className="fixed z-[9998] inset-0 w-full h-full bg-black/50 !m-0"></div>
+      <div className="fixed z-[999998] inset-0 w-full h-full bg-black/50 !m-0"></div>
       <dialog
         open
-        className="fixed z-[9999] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col-reverse md:flex-row w-[700px] max-w-[97vw] md:h-[500px] border-none rounded-xl shadow-xl bg-white overflow-hidden"
+        className="fixed z-[9999999] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col-reverse md:flex-row w-[700px] max-w-[97vw] md:h-[500px] border-none rounded-xl shadow-xl bg-white overflow-hidden"
       >
         <div className="w-full md:w-1/2 h-full p-5 space-y-2.5">
           <SectionTitle className="text-xl">Add Image</SectionTitle>
@@ -175,6 +176,7 @@ const AddImageModel = ({
           />
         </div>
       </dialog>
-    </>
+    </>,
+    document.body
   );
 };
