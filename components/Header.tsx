@@ -16,10 +16,10 @@ const Header = () => {
       </nav>
       <Link
         href="#"
-        className="font-medium text-[#5865F2] text-sm md:text-lg bg-[#5865F21A] rounded-xl px-2 md:px-4 py-3 flex items-center gap-2"
+        className="font-medium text-primary text-sm md:text-lg bg-primary/10 rounded-xl px-2 md:px-4 py-3 flex items-center gap-2"
       >
-        <BsDiscord color="#5865F2" />
-        Join Discord
+        <BsDiscord />
+        Join Reddit
       </Link>
     </header>
   );

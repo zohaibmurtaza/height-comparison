@@ -148,7 +148,7 @@ const FilterCelebrities = ({ category }: { category: string }) => {
                     : "white",
                   height: parseFloat(character.data.meta.height),
                   type: ItemType.OBJECT,
-                  weight: character.data.meta?.weight,
+                  // weight: character.data.meta?.weight,
                 });
               }}
             />

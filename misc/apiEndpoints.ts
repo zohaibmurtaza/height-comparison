@@ -11,7 +11,7 @@ export const API_ENDPOINTS = {
       `/wp/v2/celebrities?celebrity-categories=${categoryId}&per_page=100`,
   },
   items: (type: ItemType, page: number) =>
-    `/jet-cct/items?type=${type}&_limit=${ITEMS_PER_PAGE}&_offset=${
+    `/jet-cct/items?type=${type}&_limit=500&_offset=${
       (page - 1) * ITEMS_PER_PAGE
     }`,
   share: "/jet-cct/shared",
