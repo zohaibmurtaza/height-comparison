@@ -12,7 +12,6 @@ import { CgSpinner } from "react-icons/cg";
 import { useEffect, useState } from "react";
 import { MdReportProblem } from "react-icons/md";
 import axios from "axios";
-import { cn } from "@/misc/utils";
 import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
 
 const BoardUtilities = () => {
