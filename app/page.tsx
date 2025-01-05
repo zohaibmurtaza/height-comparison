@@ -43,7 +43,7 @@ export default function Home() {
           <Board />
           <span
             onClick={() => setSelectedScreen("Image")}
-            className={`flex md:hidden w-full justify-center items-center gap-2 pb-4 pt-4 px-6 h-full !mt-0 border-b border-transparent bg-white rounded-2xl shadow-sm p-4 border border-gray-200 transition-all duration-300 cursor-pointer hover:text-primary hover:border-primary/40 ${cn(
+            className={`flex md:hidden w-full justify-center items-center gap-2 max-h-[50px] py-4 px-6 h-full !mt-0 border-b border-transparent bg-white rounded-2xl shadow-sm border border-gray-200 transition-all duration-300 cursor-pointer hover:text-primary hover:border-primary/40 ${cn(
               selectedScreen === "Image" && "!text-primary !border-primary"
             )}`}
           >

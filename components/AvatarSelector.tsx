@@ -62,7 +62,7 @@ const AvatarSelector = ({
       ) : null}
 
       {/* Avatars */}
-      <div className="rounded-lg border-gray-200 p-5 border grid grid-cols-5 gap-3 max-h-[300px] justify-items-center items-baseline overflow-y-auto">
+      <div className="rounded-lg border-gray-200 p-5 border grid grid-cols-5 gap-3 max-h-[300px] min-h-[100px] justify-items-center items-baseline overflow-y-auto">
         {avatarsList.slice(0, showCount).map((avatar, index) => (
           <Image
             key={index}
@@ -70,7 +70,7 @@ const AvatarSelector = ({
             alt="avatar"
             width={100}
             height={100}
-            className={`w-auto max-h-[80px] h-auto cursor-pointer py-2 px-3 rounded-md ${
+            className={`w-auto h-[80px] max-h-[80px] cursor-pointer py-2 px-3 rounded-md ${
               selectedAvatar === avatar && "bg-primary"
             }`}
             onClick={() => onAvatarChange(avatar)}
