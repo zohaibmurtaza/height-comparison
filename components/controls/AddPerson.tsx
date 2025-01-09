@@ -16,6 +16,7 @@ import { colors } from "@/misc/data";
 import { getAnonymouseAvatar } from "@/utils/getAnonymouseAvatar";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import SectionTitle from "../ui/SectionTitle";
+import AdsenseUnit from "../google-ads/AdsenseUnit";
 
 interface AddPersonData {
   gender: Gender;
@@ -171,6 +172,7 @@ const AddPerson = () => {
           Max {MAX_PERSONS} people at a time. Remove one to add another.
         </Message>
       )}
+      <AdsenseUnit slot="7985047243" format="auto" responsive={true} />
     </div>
   );
 };

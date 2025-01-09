@@ -12,6 +12,7 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { API_ENDPOINTS } from "@/misc/apiEndpoints";
 import { ItemType } from "@/misc/enums";
 import { fetchImageById, ITEMS_PER_PAGE, MAX_AVATARS } from "@/misc/data";
+import AdsenseUnit from "../google-ads/AdsenseUnit";
 
 interface ItemData {
   id: number;
@@ -105,6 +106,7 @@ const AddItems = ({ type }: { type: ItemType }) => {
           Max {MAX_AVATARS} objects at a time. Remove one to add another.
         </Message>
       )}
+      <AdsenseUnit slot="7985047243" format="auto" responsive={true} />
     </div>
   );
 };

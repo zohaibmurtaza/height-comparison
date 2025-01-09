@@ -60,7 +60,7 @@ const FilterCelebrities = ({ category }: { category: string }) => {
   const isUnderSubcat2 = category === "Fictional" && subcat2;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 min-h-[300px]">
       {/* Subcategories */}
       {category &&
         (subcategoriesError ? (

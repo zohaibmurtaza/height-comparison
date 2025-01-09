@@ -2,6 +2,7 @@ import { useGlobals } from "@/contexts/GlobalContext";
 import Message from "../ui/Message";
 import FilterCelebrities from "../FilterCelebrities";
 import { MAX_AVATARS } from "@/misc/data";
+import AdsenseUnit from "../google-ads/AdsenseUnit";
 
 const Celebrities = ({
   category,
@@ -18,6 +19,7 @@ const Celebrities = ({
           Max {MAX_AVATARS} people at a time. Remove one to add another.
         </Message>
       )}
+      <AdsenseUnit slot="7985047243" format="auto" responsive={true} />
     </div>
   );
 };

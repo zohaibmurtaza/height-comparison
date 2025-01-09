@@ -46,3 +46,5 @@ export const fetchImageById = (id: string) =>
 export const MALE_AVATARS = "/images/persons/adult/male/ectomorph/person-2.svg";
 export const FEMALE_AVATARS =
   "/images/persons/adult/female/ectomorph/person-2.svg";
+
+export const GOOGLE_AD_CLIENT = "ca-pub-9835678201672444";

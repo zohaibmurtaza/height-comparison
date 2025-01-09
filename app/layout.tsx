@@ -5,6 +5,8 @@ import Providers from "@/components/Providers";
 import { Toaster } from "react-hot-toast";
 import { CgSpinner } from "react-icons/cg";
 import { Suspense } from "react";
+import GoogleAdHeadCode from "@/components/google-ads/GoogleAdHeadCode";
+import StickyFooter from "@/components/StickyFooter";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -23,7 +25,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html>
+      <head>
+        {process.env.NODE_ENV === "production" && <GoogleAdHeadCode />}
+      </head>
       <body className={`${poppins.variable} antialiased` + " bg-[#F7F8FD]"}>
         <Suspense
           fallback={
@@ -33,6 +38,7 @@ export default function RootLayout({
           }
         >
           <Providers>{children}</Providers>
+          <StickyFooter />
           <Toaster />
         </Suspense>
       </body>

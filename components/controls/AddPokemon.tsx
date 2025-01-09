@@ -19,6 +19,7 @@ import {
   MAX_AVATARS,
 } from "@/misc/data";
 import { Celebrity } from "@/misc/interfaces";
+import AdsenseUnit from "../google-ads/AdsenseUnit";
 
 const AddPokemon = () => {
   const [name, setName] = useState("");
@@ -110,6 +111,7 @@ const AddPokemon = () => {
           Max {MAX_AVATARS} objects at a time. Remove one to add another.
         </Message>
       )}
+      <AdsenseUnit slot="7985047243" format="auto" responsive={true} />
     </div>
   );
 };
