@@ -138,7 +138,7 @@ function PrivacyPolicy() {
 
         <section className="mb-8">
           <h2 className="text-xl font-semibold text-gray-800 mb-4">
-            7. Children's Privacy
+            7. Children&apos;s Privacy
           </h2>
           <p className="text-gray-600">
             Our website is not intended for children under the age of 13, and we
@@ -178,9 +178,9 @@ function PrivacyPolicy() {
           <p className="text-gray-600">
             We may update this Privacy Policy from time to time. When we make
             changes, we will post the new policy on this page and update the
-            "Effective Date" at the top. We encourage you to review this policy
-            periodically to stay informed about how we are protecting your
-            information.
+            &quot;Effective Date&quot; at the top. We encourage you to review
+            this policy periodically to stay informed about how we are
+            protecting your information.
           </p>
         </section>
 

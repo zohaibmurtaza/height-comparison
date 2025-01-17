@@ -14,7 +14,7 @@ function FAQPage() {
             </h2>
             <p className="text-gray-700">
               To use the height comparison tool, simply select the categories or
-              entities you'd like to compare, such as people, animals,
+              entities you&apos;d like to compare, such as people, animals,
               buildings, or fictional characters. Enter the required details,
               and the tool will generate a visual comparison, showing how each
               entity measures up in height.
@@ -41,8 +41,8 @@ function FAQPage() {
               Yes, we have a predefined list of categories and entities, but we
               are continuously adding new comparisons. If you want to compare
               with something other than what we have on this website, you can
-              locate the "Add Image" option in the navbar and upload the image
-              of the element to compare.
+              locate the &quot;Add Image&quot; option in the navbar and upload
+              the image of the element to compare.
             </p>
           </div>
           <div>

@@ -13,9 +13,9 @@ function AboutUs() {
           <span className="font-semibold">HeightComparisonChart.com</span>, the
           ultimate online destination for comparing the heights of people,
           animals, objects, and characters from all walks of life. Whether
-          you're curious about how a famous celebrity measures up to a Pokémon
-          or want to see how the tallest buildings in the world compare to
-          everyday objects, you've come to the right place.
+          you&apos;re curious about how a famous celebrity measures up to a
+          Pokémon or want to see how the tallest buildings in the world compare
+          to everyday objects, you&apos;ve come to the right place.
         </p>
 
         <section className="mb-8">
@@ -52,9 +52,9 @@ function AboutUs() {
             </li>
             <li>
               <span className="font-medium">Diverse Categories:</span> Whether
-              you're interested in comparing real-world heights or imagining how
-              your favorite character stacks up to iconic figures, our
-              categories cover a broad range of interests.
+              you&apos;re interested in comparing real-world heights or
+              imagining how your favorite character stacks up to iconic figures,
+              our categories cover a broad range of interests.
             </li>
           </ul>
         </section>

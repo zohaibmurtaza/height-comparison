@@ -83,13 +83,13 @@ export default function Home() {
             </p>
             <ol className="list-decimal list-inside text-gray-800 leading-relaxed space-y-2">
               <li>
-                Decide whom you want to compare your height with—whether it’s a
-                person, animal, or object. Enter their details (gender, height
-                in cm or in). Then, press the{" "}
-                <span className="font-semibold">"Add"</span> button.
+                Decide whom you want to compare your height with—whether
+                it&apos;s a person, animal, or object. Enter their details
+                (gender, height in cm or in). Then, press the{" "}
+                <span className="font-semibold">&quot;Add&quot; button.</span>
               </li>
               <li>
-                To compare with predefined objects, just input the person’s
+                To compare with predefined objects, just input the person&apos;s
                 details; object heights are already in our database.
               </li>
               <li>
