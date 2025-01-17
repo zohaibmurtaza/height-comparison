@@ -53,6 +53,132 @@ export default function Home() {
           <NavBar className="lg:hidden" />
         </div>
       </div>
+      <div>
+        <main className="max-w-screen-2xl mx-auto px-6 lg:px-12 py-8">
+          <section className="mb-12">
+            <p className="text-lg text-gray-700 leading-relaxed">
+              <span className="font-semibold text-gray-800">
+                Heightcomparisonchart.com
+              </span>{" "}
+              has a straightforward tool for quickly measuring your height
+              compared to your partner, children, and pet. You can visualize the
+              exact dimensions of your body here without going through hundreds
+              of applications or wasting time searching for the best height
+              comparison website.
+            </p>
+            <h2 className="text-3xl font-extrabold text-gray-900 mt-6 mb-4">
+              How to Use Height Comparison Chart
+            </h2>
+            <p className="mb-4 text-gray-700 leading-relaxed">
+              The tool is designed for all users, ensuring inclusivity and ease
+              of use. It provides measurement results in both centimeters (cm)
+              and feet (in), making it flexible for everyone. This chart helps
+              visualize the height difference accurately between individuals or
+              objects.
+            </p>
+            <p className="mb-4 text-gray-700 leading-relaxed">
+              You can measure heights up to 10,000 meters (32,808.4 feet),
+              making it suitable for comparing even monumental structures like
+              Mount Everest, Burj Khalifa, and the Eiffel Tower.
+            </p>
+            <ol className="list-decimal list-inside text-gray-800 leading-relaxed space-y-2">
+              <li>
+                Decide whom you want to compare your height with—whether it’s a
+                person, animal, or object. Enter their details (gender, height
+                in cm or in). Then, press the{" "}
+                <span className="font-semibold">"Add"</span> button.
+              </li>
+              <li>
+                To compare with predefined objects, just input the person’s
+                details; object heights are already in our database.
+              </li>
+              <li>
+                View the results on a visual chart. The tool automatically
+                converts between cm and feet as required.
+              </li>
+            </ol>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="text-3xl font-extrabold text-gray-900 mb-4">
+              Why Compare Your Height On This Chart
+            </h2>
+            <p className="text-gray-700 leading-relaxed">
+              Unlike average visualizers, this tool provides precise, real-world
+              height comparisons with human avatars. Use it to compare heights
+              with friends, family, or celebrities, making it a fun topic for
+              small talk.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">
+              Check Your Kid’s Growth
+            </h3>
+            <p className="text-gray-700 leading-relaxed">
+              This tool is perfect for tracking children’s growth over time. You
+              can easily determine how your child measures up to their peers of
+              the same age, making it an essential tool for parents and
+              educators.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">
+              Other Benefits
+            </h3>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              Explore our extensive celebrity database, including heights of BTS
+              members, tallest U.S. presidents, actors, athletes, and more.
+              Compare yourself with your favorite stars and discover the
+              difference.
+            </p>
+            <p className="text-gray-700 leading-relaxed">
+              Additionally, compare heights with fictional characters like
+              Batman, Pokémon, Spider-Man, and even animals like giraffes,
+              dinosaurs, and bears.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="text-3xl font-extrabold text-gray-900 mb-4">
+              Compare Multiple Heights
+            </h2>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              Planning a wedding or event? Use our chart to compare heights of
+              multiple groomsmen or bridesmaids simultaneously. Visualize how
+              you and your group will appear together.
+            </p>
+            <p className="text-gray-700 leading-relaxed">
+              The side-by-side comparisons are easy to interpret. Print your
+              results and display them for fun or planning purposes.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="text-3xl font-extrabold text-gray-900 mb-4">
+              How Accurate Is It?
+            </h2>
+            <p className="text-gray-700 leading-relaxed">
+              This simulator ensures precise height comparisons. The visual
+              chart provides exact measurements, like comparing heights of 5’2
+              and 5’7 with realistic depictions.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="text-3xl font-extrabold text-gray-900 mb-4">
+              Our Mission
+            </h2>
+            <p className="text-gray-700 leading-relaxed">
+              Our goal is to provide accurate height measurements and a seamless
+              user experience. Visualize your height against anyone worldwide
+              using our advanced mapping features, ensuring a fun and insightful
+              comparison experience.
+            </p>
+          </section>
+        </main>
+      </div>
     </main>
   );
 }
