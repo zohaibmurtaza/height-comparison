@@ -12,11 +12,10 @@ import { v4 } from "uuid";
 import Input from "@/components/ui/Input";
 import Message from "../ui/Message";
 import { AvatarCategory, BodyType, Gender, ItemType } from "@/misc/enums";
-import { colors } from "@/misc/data";
+import { colors, MAX_AVATARS } from "@/misc/data";
 import { getAnonymouseAvatar } from "@/utils/getAnonymouseAvatar";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import SectionTitle from "../ui/SectionTitle";
-import AdsenseUnit from "../google-ads/AdsenseUnit";
 
 interface AddPersonData {
   gender: Gender;
@@ -53,6 +52,7 @@ const AddPerson = () => {
     setData((prev) => ({ ...prev, [key]: value }));
   };
 
+  console.log(data);
   const handleAddAvatar = () => {
     if (!data.height) {
       toast.error("Please enter height");
@@ -159,7 +159,7 @@ const AddPerson = () => {
         onGenderChange={(gender) => setState("gender", gender)}
         onBodyTypeChange={(bodyType) => setState("bodyType", bodyType)}
       />
-      {avatars.length < MAX_PERSONS ? (
+      {avatars.length < MAX_AVATARS ? (
         <Button
           onClick={handleAddAvatar}
           className="flex items-center gap-2 justify-center"
@@ -169,14 +169,11 @@ const AddPerson = () => {
         </Button>
       ) : (
         <Message variant="error">
-          Max {MAX_PERSONS} people at a time. Remove one to add another.
+          Max {MAX_AVATARS} people at a time. Remove one to add another.
         </Message>
       )}
-      <AdsenseUnit slot="7985047243" format="auto" responsive={true} />
     </div>
   );
 };
 
 export default AddPerson;
-
-const MAX_PERSONS = 6;

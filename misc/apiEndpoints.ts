@@ -1,7 +1,8 @@
 import { ITEMS_PER_PAGE } from "./data";
-import { ItemType } from "./enums";
+import { AvatarCategory, BodyType, Gender, ItemType } from "./enums";
 
 export const API_ENDPOINTS = {
+  persons: `/jet-cct/persons`,
   celebrities: {
     search: (name: string) =>
       `/wp/v2/search?search=${name}&type=post&subtype=celebrities`,

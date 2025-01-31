@@ -38,7 +38,9 @@ export const SERVER_BASE_URL = "https://height.dollarbits.ca/wp-json";
 
 export const ITEMS_PER_PAGE = 10;
 
-export const MAX_AVATARS = 6;
+export const MAX_AVATARS = 20;
+
+export const SCALING_FACTOR = 1.8;
 
 export const fetchImageById = (id: string) =>
   `${SERVER_BASE_URL}/custom/v2/get-media/${id}`;

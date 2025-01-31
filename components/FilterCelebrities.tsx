@@ -60,7 +60,7 @@ const FilterCelebrities = ({ category }: { category: string }) => {
   const isUnderSubcat2 = category === "Fictional" && subcat2;
 
   return (
-    <div className="space-y-4 min-h-[300px]">
+    <div className="space-y-4 pb-[300px]">
       {/* Subcategories */}
       {category &&
         (subcategoriesError ? (
@@ -131,7 +131,7 @@ const FilterCelebrities = ({ category }: { category: string }) => {
               isSearchable={false}
               classNames={classes}
               isLoading={loading3}
-              placeholder="Select Subcategory"
+              placeholder={parentId ? "Select Character" : "Select Subcategory"}
               onChange={(character) => {
                 if (avatars.length >= MAX_AVATARS || !character) return;
                 addAvatar({

@@ -12,7 +12,6 @@ import { CgSpinner } from "react-icons/cg";
 import { useEffect, useState } from "react";
 import { MdReportProblem } from "react-icons/md";
 import axios from "axios";
-import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
 
 const BoardUtilities = () => {
   const {
@@ -23,8 +22,6 @@ const BoardUtilities = () => {
     canRedo,
     setAvatars,
     setSelectedScreen,
-    scalingFactor,
-    setScalingFactor,
   } = useGlobals();
   const [shareLink, setShareLink] = useState("");
   const [loading, setLoading] = useState(false);
@@ -68,47 +65,6 @@ const BoardUtilities = () => {
     setShareLink("");
   }, [avatars]);
 
-  console.log(scalingFactor);
-
-  const renderScalingFactor = (isMobile: boolean) => {
-    return (
-      <div
-        className={`flex items-center justify-between gap-2 bg-white rounded-xl p-2 border border-gray-200 ${
-          isMobile ? "flex md:hidden w-full" : "hidden md:flex w-[200px]"
-        }`}
-      >
-        <FaCircleMinus
-          size={15}
-          onClick={() =>
-            scalingFactor < 2.3 && setScalingFactor(scalingFactor + 0.05)
-          }
-        />
-        <div className="flex flex-col flex-1">
-          <input
-            type="range"
-            value={2 - scalingFactor + 0.3}
-            onChange={(e) => setScalingFactor(2 - Number(e.target.value) + 0.3)}
-            min={0}
-            max={2}
-            step={0.01}
-            className={"w-full accent-primary"}
-          />
-          <div className="relative flex justify-between items-center text-[10px] mt-2">
-            <span className="absolute left-0">0%</span>
-            <span className="absolute left-1/2 -translate-x-1/2">100%</span>
-            <span className="absolute right-0">200%</span>
-          </div>
-        </div>
-        <FaCirclePlus
-          size={15}
-          onClick={() =>
-            scalingFactor > 0.3 && setScalingFactor(scalingFactor - 0.05)
-          }
-        />
-      </div>
-    );
-  };
-
   return (
     <>
       <div className="flex justify-between flex-wrap items-center z-20 relative">
@@ -127,7 +83,6 @@ const BoardUtilities = () => {
             }`}
             onClick={redo}
           />
-          {renderScalingFactor(false)}
         </div>
         <div className="flex items-center gap-1">
           <Button
@@ -159,7 +114,6 @@ const BoardUtilities = () => {
         open={shareLinkDialogOpen}
         onClose={() => setShareLinkDialogOpen(false)}
       />
-      {renderScalingFactor(true)}
     </>
   );
 };

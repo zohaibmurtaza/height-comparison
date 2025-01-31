@@ -1,4 +1,4 @@
-import { AvatarCategory, Gender, ItemType } from "./enums";
+import { AvatarCategory, BodyType, Gender, ItemType } from "./enums";
 
 export interface Avatar {
   id: string;
@@ -19,6 +19,15 @@ export interface ObjectData {
   height: number;
   adjust_position: number;
   datetime: string;
+}
+
+export interface Person {
+  id: string;
+  name: string;
+  image: string;
+  category: AvatarCategory;
+  bodytype: BodyType;
+  gender: Gender;
 }
 
 export interface Character {

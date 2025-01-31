@@ -70,7 +70,7 @@ export const GlobalContextProvider = ({
     canUndo,
     canRedo,
   } = useHistoryState<Avatar[]>([]);
-  const [scalingFactor, setScalingFactor] = useState(1.25);
+  const [scalingFactor, setScalingFactor] = useState(1.8);
 
   const searchParams = useSearchParams();
 

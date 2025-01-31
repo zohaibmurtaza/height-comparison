@@ -13,6 +13,7 @@ import { ItemType } from "@/misc/enums";
 import AddPokemon from "@/components/controls/AddPokemon";
 import { BsImage } from "react-icons/bs";
 import { cn } from "@/misc/utils";
+import AdsenseUnit from "@/components/google-ads/AdsenseUnit";
 
 export default function Home() {
   const { selectedScreen, setSelectedScreen } = useGlobals();
@@ -53,7 +54,10 @@ export default function Home() {
           <NavBar className="lg:hidden" />
         </div>
       </div>
-      <div>
+      <div className="flex">
+        <div className="w-full md:min-w-[400px] md:max-w-[400px]">
+          <AdsenseUnit slot="7985047243" format="auto" responsive={true} />
+        </div>
         <main className="max-w-screen-2xl mx-auto px-6 lg:px-12 py-8">
           <section className="mb-12">
             <p className="text-lg text-gray-700 leading-relaxed">

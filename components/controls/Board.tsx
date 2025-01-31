@@ -9,7 +9,8 @@ import { ItemType } from "@/misc/enums";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { BiSolidEdit } from "react-icons/bi";
 import { Reorder } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { SCALING_FACTOR } from "@/misc/data";
 const Board = () => {
   return (
     <div className="relative w-full h-[calc(100%-80px)] min-h-[500px] bg-gray-100 rounded-xl p-2 border border-gray-200 overflow-hidden">
@@ -23,16 +24,49 @@ export default Board;
 const TOTAL_SCALES = 27;
 
 const ScalesAndAvatars = () => {
-  const { avatars, setAvatars, scalingFactor } = useGlobals();
+  const { avatars, setAvatars } = useGlobals();
+  const [scalingFactorByWidth, setScalingFactorByWidth] = useState(1);
   const tallestAvatarHeight = Math.max(
     ...avatars.map((avatar) => avatar.height),
     285
   );
-  const height = tallestAvatarHeight * scalingFactor;
+  const height = tallestAvatarHeight * SCALING_FACTOR * scalingFactorByWidth;
   const delta = height / TOTAL_SCALES;
 
   const boardRef = useRef<HTMLDivElement>(null);
   const avatarsRef = useRef<HTMLDivElement>(null);
+
+  const getWidths = () => {
+    const avatarsWidthLocal = Array.from(
+      avatarsRef.current?.firstChild?.childNodes || []
+    ).reduce((acc, child) => {
+      const width = (child as HTMLElement).offsetWidth;
+      return acc + width;
+    }, 0);
+    const boardWidthLocal = boardRef.current?.offsetWidth || 0;
+    return { avatarsWidthLocal, boardWidthLocal };
+  };
+
+  useEffect(() => {
+    console.log("resetting scaling factor");
+    setScalingFactorByWidth(1);
+  }, [avatars]);
+
+  useEffect(() => {
+    if (boardRef.current === null || avatarsRef.current === null) return;
+    const { avatarsWidthLocal, boardWidthLocal } = getWidths();
+    const isFit = avatarsWidthLocal <= boardWidthLocal - 200;
+    console.log(!isFit ? "fitting avatars" : "Already fitt");
+    console.log({
+      avatarsWidthLocal,
+      boardWidthLocal,
+      isFit,
+      scalingFactorByWidth,
+    });
+    if (!isFit) {
+      setScalingFactorByWidth(scalingFactorByWidth + 0.05);
+    }
+  }, [avatars, scalingFactorByWidth, boardRef, avatarsRef]);
 
   return (
     <>
@@ -42,7 +76,7 @@ const ScalesAndAvatars = () => {
       >
         <div className="w-full flex justify-between items-center font-bold">
           <span>cm</span>
-          <span>Height Comparison Chart</span>
+          <h1>Height Comparison Chart</h1>
           <span>ft</span>
         </div>
         {Array.from({ length: TOTAL_SCALES - 1 }).map((_, index) => {
@@ -87,8 +121,10 @@ const Avatar = ({
 }) => {
   const ftIn = cmToFtAndInch(avatar.height);
   const height =
-    (avatar.height / (boardHeight - boardHeight / TOTAL_SCALES - 24)) * 100;
-  const { removeAvatar, setSelectedAvatar, setSelectedScreen } = useGlobals();
+    (avatar.height / (boardHeight - boardHeight / TOTAL_SCALES - 24)) *
+    (107.5 + SCALING_FACTOR);
+  const { avatars, removeAvatar, setSelectedAvatar, setSelectedScreen } =
+    useGlobals();
   return (
     <Reorder.Item
       as="div"
@@ -115,7 +151,12 @@ const Avatar = ({
           <IoIosCloseCircleOutline
             size={30}
             className="cursor-pointer p-2"
-            onClick={() => removeAvatar(avatar.id)}
+            onClick={() => {
+              removeAvatar(avatar.id);
+              if (avatars.length === 0) {
+                setSelectedScreen("Add Person");
+              }
+            }}
           />
         </div>
 
