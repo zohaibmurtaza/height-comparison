@@ -3,7 +3,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="w-full h-auto bg-primary flex items-center justify-center p-10 mb-[100px]">
+    <div className="w-full h-auto bg-primary flex flex-col md:flex-row items-center justify-center p-10 mb-[100px] gap-10 text-white">
       {footerLinks.map((link) => (
         <Link key={link.title} href={link.href}>
           {link.title}
