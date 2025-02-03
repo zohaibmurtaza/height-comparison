@@ -4,11 +4,7 @@ export const routes = {
     path: "/",
     showInNav: true,
   },
-  heightCalculator: {
-    title: "Height Calculator",
-    path: "/height-calculator",
-    showInNav: true,
-  },
+
   about: {
     title: "About",
     path: "/about",

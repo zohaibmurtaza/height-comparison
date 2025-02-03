@@ -7,6 +7,7 @@ import { CgSpinner } from "react-icons/cg";
 import { Suspense } from "react";
 import GoogleAdHeadCode from "@/components/google-ads/GoogleAdHeadCode";
 import StickyFooter from "@/components/StickyFooter";
+import Header from "@/components/Header";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -15,8 +16,9 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Height Comparison",
-  description: "Compare your height to celebrities and figures",
+  title: "Height Comparison Chart - Compare Multiple Heights Visually",
+  description:
+    "Heightcomparisonchart.com has a straightforward tool for quickly measuring your height compared to your partner, children, and pet.",
 };
 
 export default function RootLayout({
@@ -37,6 +39,7 @@ export default function RootLayout({
             </div>
           }
         >
+          <Header />
           <Providers>{children}</Providers>
           <StickyFooter />
           <Toaster />

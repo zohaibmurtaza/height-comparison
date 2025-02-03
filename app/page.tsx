@@ -2,7 +2,6 @@
 import AddPerson from "@/components/controls/AddPerson";
 import Board from "@/components/controls/Board";
 import AddItems from "@/components/controls/AddItems";
-import Header from "@/components/Header";
 import NavBar from "@/components/NavBar";
 import { useGlobals } from "@/contexts/GlobalContext";
 import AddImage from "@/components/controls/AddImage";
@@ -33,8 +32,11 @@ export default function Home() {
 
   return (
     <main className="p-2.5 space-y-2.5 flex flex-col items-stretch">
-      <Header />
       <NavBar className="hidden lg:flex z-[9999]" />
+      <div className="md:hidden">
+        <AdsenseUnit slot="1419638897" format="auto" responsive={true} />
+      </div>
+
       <div className="flex flex-col lg:flex-row gap-2.5  h-fit lg:min-h-screen relative z-10">
         <div className="w-full h-full lg:max-w-[400px] bg-white rounded-2xl shadow-sm p-4 border border-gray-200 overflow-y-auto">
           {screens[selectedScreen as keyof typeof screens]}
@@ -58,131 +60,116 @@ export default function Home() {
         <div className="w-full md:min-w-[400px] md:max-w-[400px]">
           <AdsenseUnit slot="7985047243" format="auto" responsive={true} />
         </div>
-        <main className="max-w-screen-2xl mx-auto px-6 lg:px-12 py-8">
-          <section className="mb-12">
-            <p className="text-lg text-gray-700 leading-relaxed">
-              <span className="font-semibold text-gray-800">
-                Heightcomparisonchart.com
-              </span>{" "}
-              has a straightforward tool for quickly measuring your height
-              compared to your partner, children, and pet. You can visualize the
-              exact dimensions of your body here without going through hundreds
-              of applications or wasting time searching for the best height
-              comparison website.
-            </p>
-            <h2 className="text-3xl font-extrabold text-gray-900 mt-6 mb-4">
-              How to Use Height Comparison Chart
-            </h2>
-            <p className="mb-4 text-gray-700 leading-relaxed">
-              The tool is designed for all users, ensuring inclusivity and ease
-              of use. It provides measurement results in both centimeters (cm)
-              and feet (in), making it flexible for everyone. This chart helps
-              visualize the height difference accurately between individuals or
-              objects.
-            </p>
-            <p className="mb-4 text-gray-700 leading-relaxed">
-              You can measure heights up to 10,000 meters (32,808.4 feet),
-              making it suitable for comparing even monumental structures like
-              Mount Everest, Burj Khalifa, and the Eiffel Tower.
-            </p>
-            <ol className="list-decimal list-inside text-gray-800 leading-relaxed space-y-2">
-              <li>
-                Decide whom you want to compare your height with—whether
-                it&apos;s a person, animal, or object. Enter their details
-                (gender, height in cm or in). Then, press the{" "}
-                <span className="font-semibold">&quot;Add&quot; button.</span>
-              </li>
-              <li>
-                To compare with predefined objects, just input the person&apos;s
-                details; object heights are already in our database.
-              </li>
-              <li>
-                View the results on a visual chart. The tool automatically
-                converts between cm and feet as required.
-              </li>
-            </ol>
-          </section>
-
-          <section className="mb-12">
-            <h2 className="text-3xl font-extrabold text-gray-900 mb-4">
-              Why Compare Your Height On This Chart
-            </h2>
-            <p className="text-gray-700 leading-relaxed">
-              Unlike average visualizers, this tool provides precise, real-world
-              height comparisons with human avatars. Use it to compare heights
-              with friends, family, or celebrities, making it a fun topic for
-              small talk.
-            </p>
-          </section>
-
-          <section className="mb-12">
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">
-              Check Your Kid’s Growth
-            </h3>
-            <p className="text-gray-700 leading-relaxed">
-              This tool is perfect for tracking children’s growth over time. You
-              can easily determine how your child measures up to their peers of
-              the same age, making it an essential tool for parents and
-              educators.
-            </p>
-          </section>
-
-          <section className="mb-12">
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">
-              Other Benefits
-            </h3>
-            <p className="text-gray-700 leading-relaxed mb-4">
-              Explore our extensive celebrity database, including heights of BTS
-              members, tallest U.S. presidents, actors, athletes, and more.
-              Compare yourself with your favorite stars and discover the
-              difference.
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              Additionally, compare heights with fictional characters like
-              Batman, Pokémon, Spider-Man, and even animals like giraffes,
-              dinosaurs, and bears.
-            </p>
-          </section>
-
-          <section className="mb-12">
-            <h2 className="text-3xl font-extrabold text-gray-900 mb-4">
-              Compare Multiple Heights
-            </h2>
-            <p className="text-gray-700 leading-relaxed mb-4">
-              Planning a wedding or event? Use our chart to compare heights of
-              multiple groomsmen or bridesmaids simultaneously. Visualize how
-              you and your group will appear together.
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              The side-by-side comparisons are easy to interpret. Print your
-              results and display them for fun or planning purposes.
-            </p>
-          </section>
-
-          <section className="mb-12">
-            <h2 className="text-3xl font-extrabold text-gray-900 mb-4">
-              How Accurate Is It?
-            </h2>
-            <p className="text-gray-700 leading-relaxed">
-              This simulator ensures precise height comparisons. The visual
-              chart provides exact measurements, like comparing heights of 5’2
-              and 5’7 with realistic depictions.
-            </p>
-          </section>
-
-          <section className="mb-12">
-            <h2 className="text-3xl font-extrabold text-gray-900 mb-4">
-              Our Mission
-            </h2>
-            <p className="text-gray-700 leading-relaxed">
-              Our goal is to provide accurate height measurements and a seamless
-              user experience. Visualize your height against anyone worldwide
-              using our advanced mapping features, ensuring a fun and insightful
-              comparison experience.
-            </p>
-          </section>
-        </main>
+        <Content />
       </div>
     </main>
   );
 }
+
+const Content = () => {
+  return (
+    <div className="max-w-screen-2xl mx-auto px-6 lg:px-12 py-8">
+      <p>
+        Heightcomparisonchart.com has a straightforward tool for quickly
+        measuring your height compared to your partner, children, and pet. You
+        can visualize the exact dimensions of your body here without going
+        through hundreds of applications or wasting your time online searching
+        for the best height comparison website.
+      </p>
+      <h2>How to Use Height Comparison Chart</h2>
+      <p>
+        The tool has been created with all types of users in mind, so you and
+        anyone like you can use it regardless of gender discrimination. The
+        comparing height tool has a unique measurement function that can display
+        results in both cm (centimeters) and feet (inches) so that you can
+        choose any of them. This visual chart helps you find the true height
+        difference between men and women. You can measure up to 10,000 meters,
+        which is about 32,808.4 feet. It means you can measure any height, even
+        Mount Everest, the Statue of Liberty, Burj Khalifa , Burj Al Arab ,
+        London eye , the Eiffel Tower and many more.
+      </p>
+      <ul>
+        <li>
+          First, You have to decide with whom you want to compare your height.
+          It will be an object, building, animal, fictional character, or
+          male/female. If you want to compare two people&apos;s height, then
+          specify the gender, weight, and height of the first person in inches
+          or centimeters. The same goes for other persons, kids, and pets. Now
+          it&apos;s time to press the &quot; Add &quot; Button.
+        </li>
+
+        <li>
+          To compare persons with other elements like objects, you only need to
+          put the height and gender of the person. The height of all objects and
+          other elements is already specified in our database, so there is no
+          need to put their height.
+        </li>
+        <li>
+          In the meantime, everything that you wished and submitted to compare
+          is now clearly visible on the chart with the most accurate difference
+          in measurements. Also, the tool automatically converts measurements in
+          centimeters to feet and vice versa as needed.
+        </li>
+      </ul>
+      <h2>Why Compare Your Height On This Chart </h2>
+      <p>
+        Normal visualizers show the average difference in Height for men, women,
+        and children. But here, you will find real height comparisons in a
+        visual chart with a human Avatar. It is easy to get accurate results, so
+        you can use it to find out what difference your friends or celebrities’
+        height is and use it as a discussion point for the next time you make
+        small talk with someone taller/shorter than you.
+      </p>
+      <h3>Check Your Kid&apos;s Growth</h3>
+      <p>
+        As you know, the use of height comparison charts is common in schools,
+        offices, and homes. It measures your child&apos;s height. Now you can
+        determine online who the biggest and tallest kid in town is, according
+        to the same age! So check instantly to acknowledge your kid&apos;s
+        growth over time.
+      </p>
+      <h3>Other Benefits</h3>
+      <p>
+        In the celebrity section, we have maintained a big database of the
+        heights of celebrities like BTS, the tallest USA presidents, Actors,
+        Boxers, MMA stars, UFC fighters, Tennis Players, and many others. So you
+        can compare yourself with your favourite celebrity to see the difference
+        in your height with them. You can also compare the height of many
+        fictional and animated characters like Batman, Pokémon, Naruto,
+        Spider-Man, Dragon Ball Z and animals like dinosaurs, giraffes, bears,
+        Elephants, Moose and many more.
+      </p>
+      <h2>Compare Multiple Heights</h2>
+      <p>
+        Do you want to know how your groomsmen or bridesmaids will look with
+        you? At heightcomparisonchart.com, compare the heights of multiple boys
+        and girls at the same time to see the difference in your height with
+        them! Based on the real height visualization of men and women, The chart
+        gives you the ability to calculate how tall your spouse and someone else
+        is. So, you can make the right choice of the person you are going to
+        stand with for years. By presenting the data side-by-side, it&apos;s
+        easy to see how tall or small you look with them. You can print it out,
+        place it in your room, or display it proudly on your wall.
+      </p>
+      <h2>How Much Accurate Is It?</h2>
+      <p>
+        Could you do an accurate comparison with the help of this chart? The
+        answer is Yes! The tool is a simulator that compares the height on the
+        chart and shows the reader accurate information about the heights of
+        multiple people. It compares your height with other people&apos;s
+        heights in a highly straightforward manner on a well-designed interface.
+        It displays an exact visual measurement of the 5&apos;2 and 5&apos;7
+        difference in the way they look real.
+      </p>
+      <h2>Our Mission</h2>
+      <p>
+        We are not just giving you accurate height measurements, but we also
+        want to help you get the best possible experience. We have a unique
+        mapping feature that helps you to see your accurate comparison in feet
+        and inches. We will help you measure your height and compare it to the
+        real height of someone with a different gender and body type. You can
+        visualize your height compared to anybody in this world.
+      </p>
+    </div>
+  );
+};
