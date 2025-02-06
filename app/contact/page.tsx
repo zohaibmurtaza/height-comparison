@@ -1,4 +1,12 @@
 import React from "react";
+import type { Metadata } from "next";
+import { EMAIL } from "@/misc/data";
+import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Contact Us - Height Comparison Chart",
+  description: "Contact us at HeightComparisonChart.com",
+};
 
 function ContactPage() {
   return (
@@ -10,13 +18,12 @@ function ContactPage() {
         <p className="text-gray-700 text-lg leading-relaxed text-center mb-6">
           If you have any questions, concerns, suggestions, or feedback, feel
           free to send us a message at
-          <a
-            href="mailto:contact@heightcomparison.com"
+          <Link
+            href={`mailto:${EMAIL}`}
             className="text-blue-600 font-medium hover:underline"
           >
-            {" "}
-            contact@heightcomparison.com
-          </a>
+            {" " + EMAIL}
+          </Link>
         </p>
         {/* <div className="w-full h-full rounded-md overflow-hidden shadow-md">
           <iframe

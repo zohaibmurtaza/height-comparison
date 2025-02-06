@@ -1,4 +1,10 @@
 import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "FAQ - Height Comparison Chart",
+  description: "Frequently asked questions about HeightComparisonChart.com",
+};
 
 function FAQPage() {
   return (

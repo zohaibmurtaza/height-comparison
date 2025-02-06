@@ -13,9 +13,15 @@ import AddPokemon from "@/components/controls/AddPokemon";
 import { BsImage } from "react-icons/bs";
 import { cn } from "@/misc/utils";
 import AdsenseUnit from "@/components/google-ads/AdsenseUnit";
+import { useEffect } from "react";
 
 export default function Home() {
   const { selectedScreen, setSelectedScreen } = useGlobals();
+
+  useEffect(() => {
+    document.title =
+      "Height Comparison Chart - Compare Multiple Heights Visually";
+  }, []);
 
   // Define the screens inside the component
   const screens = {
@@ -27,7 +33,7 @@ export default function Home() {
     Buildings: <AddItems type={ItemType.BUILDING} key="add-items-building" />,
     Animals: <AddItems type={ItemType.ANIMAL} key="add-items-animal" />,
     Pokemon: <AddPokemon key="add-items-pokemon" />,
-    Image: <AddImage key="add-image" />,
+    "Add Image": <AddImage key="add-image" />,
   };
 
   return (
@@ -68,7 +74,7 @@ export default function Home() {
 
 const Content = () => {
   return (
-    <div className="max-w-screen-2xl mx-auto px-6 lg:px-12 py-8">
+    <div className="max-w-screen-2xl mx-auto px-6 lg:px-12 py-8 [&_p]:text-sm [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-gray-800 [&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-gray-800 [&_h3]:mt-4 [&_h2]:mt-4 [&_p]:mt-2 [&_ul]:list-disc [&_ul]:list-inside [&_ul]:space-y-2  [&_ul]:text-sm [&_ul]:mt-2 [&_li]:text-sm [&_li]:mt-2 [&_li]:mb-2">
       <p>
         Heightcomparisonchart.com has a straightforward tool for quickly
         measuring your height compared to your partner, children, and pet. You

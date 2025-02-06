@@ -1,4 +1,10 @@
 import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About Us - Height Comparison Chart",
+  description: "Learn more about HeightComparisonChart.com",
+};
 
 function AboutUs() {
   return (

@@ -1,4 +1,11 @@
 import React from "react";
+import type { Metadata } from "next";
+import { EMAIL } from "@/misc/data";
+
+export const metadata: Metadata = {
+  title: "Terms and Conditions - Height Comparison Chart",
+  description: "Terms and conditions for HeightComparisonChart.com",
+};
 
 function TermsAndConditions() {
   return (
@@ -196,10 +203,7 @@ function TermsAndConditions() {
             <span className="font-semibold">HeightComparisonChart.com</span>
           </p>
           <p className="text-gray-600">
-            Email:{" "}
-            <span className="text-blue-600">
-              heightcomparisonchart@gmail.com
-            </span>
+            Email: <span className="text-blue-600">{EMAIL}</span>
           </p>
         </section>
       </div>

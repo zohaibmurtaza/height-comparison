@@ -1,4 +1,11 @@
 import React from "react";
+import type { Metadata } from "next";
+import { EMAIL } from "@/misc/data";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy - Height Comparison Chart",
+  description: "Privacy policy for HeightComparisonChart.com",
+};
 
 function PrivacyPolicy() {
   return (
@@ -165,9 +172,7 @@ function PrivacyPolicy() {
           </ul>
           <p className="text-gray-600 mt-4">
             To exercise these rights, please contact us at{" "}
-            <span className="text-blue-600">
-              heightcomparisonchart@gmail.com
-            </span>
+            <span className="text-blue-600">{EMAIL}</span>
           </p>
         </section>
 
@@ -196,10 +201,7 @@ function PrivacyPolicy() {
             <span className="font-semibold">HeightComparisonChart.com</span>
           </p>
           <p className="text-gray-600">
-            Email:{" "}
-            <span className="text-blue-600">
-              heightcomparisonchart@gmail.com
-            </span>
+            Email: <span className="text-blue-600">{EMAIL}</span>
           </p>
         </section>
       </div>
