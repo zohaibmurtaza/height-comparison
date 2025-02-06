@@ -3,7 +3,7 @@ import { APP_URL } from "@/misc/routes";
 
 const Footer = () => {
   return (
-    <div className="w-full h-auto bg-primary flex flex-col md:flex-row items-center justify-between p-10 mb-[100px] gap-10 text-white">
+    <div className="w-full h-auto bg-primary flex flex-col md:flex-row items-center justify-between p-10 gap-10 text-white">
       <h2 className="text-center">
         &copy; 2024 Height Comparison Chart | All Rights Reserved
       </h2>

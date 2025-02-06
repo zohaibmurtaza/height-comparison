@@ -6,7 +6,7 @@ import { Toaster } from "react-hot-toast";
 import { CgSpinner } from "react-icons/cg";
 import { Suspense } from "react";
 import GoogleAdHeadCode from "@/components/google-ads/GoogleAdHeadCode";
-import StickyFooter from "@/components/StickyFooter";
+// import StickyFooter from "@/components/StickyFooter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -43,7 +43,7 @@ export default function RootLayout({
           <Header />
           <Providers>{children}</Providers>
           <Footer />
-          <StickyFooter />
+          {/* <StickyFooter /> */}
           <Toaster />
         </Suspense>
       </body>
