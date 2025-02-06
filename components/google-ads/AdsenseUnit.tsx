@@ -8,6 +8,7 @@ type AdSenseAdProps = {
   format: string;
   responsive: boolean;
   className?: string;
+  style?: React.CSSProperties;
 };
 
 type WindowObject = Window & typeof globalThis & { adsbygoogle: object[] };
@@ -17,6 +18,7 @@ const AdsenseUnit = ({
   format,
   responsive,
   className = "",
+  style,
 }: AdSenseAdProps) => {
   useEffect(() => {
     if (
@@ -41,6 +43,7 @@ const AdsenseUnit = ({
       data-ad-slot={slot}
       data-ad-format={format}
       data-full-width-responsive={responsive}
+      style={style}
     ></ins>
   );
 };
