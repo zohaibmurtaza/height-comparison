@@ -51,7 +51,7 @@ export default function Home() {
           <BoardUtilities />
           <Board />
           <span
-            onClick={() => setSelectedScreen("Image")}
+            onClick={() => setSelectedScreen("Add Image")}
             className={`flex md:hidden w-full justify-center items-center gap-2 max-h-[50px] py-4 px-6 h-full !mt-0 border-b border-transparent bg-white rounded-2xl shadow-sm border border-gray-200 transition-all duration-300 cursor-pointer hover:text-primary hover:border-primary/40 ${cn(
               selectedScreen === "Image" && "!text-primary !border-primary"
             )}`}
