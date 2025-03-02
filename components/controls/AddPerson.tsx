@@ -52,16 +52,21 @@ const AddPerson = () => {
     setData((prev) => ({ ...prev, [key]: value }));
   };
 
-  console.log(data);
+  console.log({ data });
   const handleAddAvatar = () => {
     if (!data.height) {
       toast.error("Please enter height");
       return;
     }
+    const baseUrl = window.location.origin;
+    const anonymouseAvatar =
+      baseUrl +
+      getAnonymouseAvatar(data.height, data.gender, data.avatarCategory);
+    console.log({ anonymouseAvatar });
     addAvatar({
       id: v4(),
       name: data?.name || "Unknown",
-      avatar: data.avatar || getAnonymouseAvatar(data.height, data.gender),
+      avatar: data.avatar || anonymouseAvatar,
       gender: data.gender,
       color: data.color || colors[Math.floor(Math.random() * colors.length)],
       height: data.height,
@@ -69,6 +74,13 @@ const AddPerson = () => {
       type: ItemType.PERSON,
       weight: data.weight,
     });
+    setData((prev) => ({
+      ...prev,
+      name: "",
+      weight: 0,
+      avatar: null,
+      color: null,
+    }));
   };
   return (
     <div className="w-full min-h-full space-y-3">

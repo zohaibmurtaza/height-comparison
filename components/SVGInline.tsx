@@ -8,7 +8,7 @@ const SvgInline = ({ url, fill }: { url: string; fill: string }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    fetch(url)
+    fetch(`/api/proxy-svg?url=${encodeURIComponent(url)}`)
       .then((res) => res.text())
       .then((svgText) => {
         setSvg(svgText);
