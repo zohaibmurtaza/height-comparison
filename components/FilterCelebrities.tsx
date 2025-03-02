@@ -6,7 +6,7 @@ import { useGlobals } from "@/contexts/GlobalContext";
 import { v4 } from "uuid";
 import { colors, fetchImageById, MAX_AVATARS } from "@/misc/data";
 import Message from "./ui/Message";
-import { ItemType } from "@/misc/enums";
+import { AvatarCategory, ItemType } from "@/misc/enums";
 import { API_ENDPOINTS } from "@/misc/apiEndpoints";
 import { Celebrity } from "@/misc/interfaces";
 import { getAnonymouseAvatar } from "@/utils/getAnonymouseAvatar";
@@ -141,7 +141,8 @@ const FilterCelebrities = ({ category }: { category: string }) => {
                     ? fetchImageById(character.data.meta.image)
                     : getAnonymouseAvatar(
                         parseFloat(character.data.meta.height),
-                        character.data.meta.gender || "male"
+                        character.data.meta.gender || "male",
+                        AvatarCategory.ADULT
                       ),
                   color: character.data.meta.image
                     ? colors[Math.floor(Math.random() * colors.length)]
